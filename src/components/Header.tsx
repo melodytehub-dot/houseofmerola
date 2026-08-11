@@ -12,11 +12,52 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const drawerCloseRef = useRef<HTMLButtonElement>(null);
+  const burgerRef = useRef<HTMLButtonElement>(null);
+  const wasOpenRef = useRef(false);
 
   const closeMenus = () => {
     setMenuOpen(false);
     setShopOpen(false);
   };
+
+  // Lock body scroll while the mobile drawer is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  // Close the drawer automatically when crossing up to the desktop breakpoint
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const handleChange = (e: MediaQueryListEvent) => {
+      if (e.matches) setMenuOpen(false);
+    };
+    mq.addEventListener("change", handleChange);
+    return () => mq.removeEventListener("change", handleChange);
+  }, []);
+
+  // Focus the close button when opening; return focus to the burger when closing
+  useEffect(() => {
+    if (menuOpen) {
+      drawerCloseRef.current?.focus();
+    } else if (wasOpenRef.current) {
+      burgerRef.current?.focus();
+    }
+    wasOpenRef.current = menuOpen;
+  }, [menuOpen]);
+
+  // Close on Escape
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [menuOpen]);
 
   useEffect(() => {
     if (!shopOpen) return;
@@ -38,29 +79,13 @@ export default function Header() {
 
   return (
     <>
-      {/* Utility bar */}
-      <div className="bg-navy-deep text-cream/80">
-        <div className="mx-auto flex h-9 w-full max-w-7xl items-center justify-between px-6 lg:px-10">
-          <p className="text-[9px] uppercase tracking-[0.3em]">
-            Free UK delivery on orders over &pound;50
-          </p>
-          <Link
-            href="/#newsletter"
-            className="text-[9px] uppercase tracking-[0.3em] text-ochre-light transition-colors duration-300 hover:text-ochre"
-          >
-            Subscribe &amp; save 10% &rarr;
-          </Link>
-        </div>
-      </div>
-
-      {/* Main header */}
       <header className="sticky top-0 z-50 border-b border-cream-dark/50 bg-cream-light/90 backdrop-blur-md">
-        <nav className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-6 lg:px-10">
+        <nav className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
           {/* Logo lockup */}
           <Link
             href="/"
             onClick={closeMenus}
-            className="group flex items-center gap-3 sm:gap-3.5"
+            className="group flex min-w-0 items-center gap-2.5 sm:gap-3.5"
           >
             <Image
               src="/logo.png"
@@ -68,13 +93,13 @@ export default function Header() {
               width={52}
               height={40}
               priority
-              className="h-10 w-auto shrink-0 transition-transform duration-500 group-hover:scale-105 sm:h-11"
+              className="h-8 w-auto shrink-0 transition-transform duration-500 group-hover:scale-105 sm:h-11"
             />
-            <span className="flex flex-col items-start">
-              <span className="font-serif text-lg font-semibold uppercase leading-none tracking-[0.16em] text-navy transition-colors duration-300 sm:text-xl group-hover:text-oxblood">
+            <span className="flex min-w-0 flex-col items-start">
+              <span className="whitespace-nowrap font-serif text-[17px] font-semibold uppercase leading-none tracking-[0.14em] text-navy transition-colors duration-300 sm:text-xl sm:tracking-[0.16em] group-hover:text-oxblood">
                 House of Merola
               </span>
-              <span className="mt-1.5 text-[8px] font-medium uppercase tracking-[0.42em] text-dusty-blue sm:text-[9px]">
+              <span className="mt-1.5 whitespace-nowrap text-[7px] font-medium uppercase tracking-[0.28em] text-dusty-blue sm:text-[9px] sm:tracking-[0.42em]">
                 Arte &bull; Casa &bull; Mediterraneo
               </span>
             </span>
@@ -169,11 +194,13 @@ export default function Header() {
 
           {/* Mobile burger */}
           <button
+            ref={burgerRef}
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
             className="flex flex-col gap-1.5 p-2 md:hidden"
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
           >
             <span
               className={`h-0.5 w-6 bg-navy transition-all duration-300 ${
@@ -192,56 +219,122 @@ export default function Header() {
             />
           </button>
         </nav>
-
-        {/* Mobile menu */}
-        {menuOpen && (
-          <div className="border-t border-cream-dark/40 bg-cream-light md:hidden">
-            <div className="flex flex-col px-6 py-6">
-              <Link
-                href="/"
-                className="py-3 font-serif text-2xl text-navy"
-                onClick={() => setMenuOpen(false)}
-              >
-                Home
-              </Link>
-              <Link
-                href="/shop"
-                className="py-3 font-serif text-2xl text-navy"
-                onClick={() => setMenuOpen(false)}
-              >
-                Shop
-              </Link>
-              <p className="pb-2 pt-3 text-[9px] uppercase tracking-[0.35em] text-dusty-blue">
-                Collections
-              </p>
-              {collections.map((collection) => (
-                <Link
-                  key={collection.slug}
-                  href={`/shop/${collection.slug}`}
-                  onClick={() => setMenuOpen(false)}
-                  className="border-l border-cream-dark/60 py-2 pl-4 text-sm text-navy/80 transition-colors hover:text-oxblood"
-                >
-                  {collection.name}
-                </Link>
-              ))}
-              <Link
-                href="/about"
-                className="mt-2 py-3 font-serif text-2xl text-navy"
-                onClick={() => setMenuOpen(false)}
-              >
-                About
-              </Link>
-              <Link
-                href="/#newsletter"
-                onClick={() => setMenuOpen(false)}
-                className="mt-4 bg-oxblood px-6 py-3.5 text-center text-[10px] font-medium uppercase tracking-[0.3em] text-cream"
-              >
-                Join the House
-              </Link>
-            </div>
-          </div>
-        )}
       </header>
+
+      {/* Mobile slide-in drawer */}
+      <div
+        id="mobile-menu"
+        inert={!menuOpen}
+        className={`fixed inset-0 z-[90] md:hidden ${
+          menuOpen ? "pointer-events-auto" : "pointer-events-none"
+        }`}
+        aria-hidden={!menuOpen}
+      >
+        {/* Backdrop */}
+        <div
+          className={`absolute inset-0 bg-navy-deep/70 backdrop-blur-sm transition-opacity duration-500 ${
+            menuOpen ? "opacity-100" : "opacity-0"
+          }`}
+          onClick={() => setMenuOpen(false)}
+        />
+
+        {/* Panel */}
+        <aside
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile menu"
+          className={`absolute right-0 top-0 flex h-full w-[86%] max-w-sm flex-col bg-cream-light shadow-2xl shadow-navy-deep/40 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            menuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          {/* Drawer header */}
+          <div className="flex items-center justify-between border-b border-cream-dark/40 px-6 py-5">
+            <Link
+              href="/"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center gap-2.5"
+            >
+              <Image
+                src="/logo.png"
+                alt="House of Merola"
+                width={40}
+                height={31}
+                className="h-8 w-auto"
+              />
+              <span className="whitespace-nowrap font-serif text-base font-semibold uppercase leading-none tracking-[0.14em] text-navy">
+                House of Merola
+              </span>
+            </Link>
+            <button
+              ref={drawerCloseRef}
+              type="button"
+              onClick={() => setMenuOpen(false)}
+              aria-label="Close menu"
+              className="flex h-9 w-9 shrink-0 items-center justify-center border border-cream-dark/50 text-navy transition-colors duration-300 hover:bg-navy hover:text-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ochre"
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 18 18"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              >
+                <path d="M1 1L17 17M17 1L1 17" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Nav */}
+          <nav className="flex-1 overflow-y-auto px-6 py-6">
+            <Link
+              href="/"
+              className="block py-3 font-serif text-2xl text-navy transition-colors hover:text-oxblood"
+              onClick={() => setMenuOpen(false)}
+            >
+              Home
+            </Link>
+            <Link
+              href="/shop"
+              className="block py-3 font-serif text-2xl text-navy transition-colors hover:text-oxblood"
+              onClick={() => setMenuOpen(false)}
+            >
+              Shop
+            </Link>
+            <p className="pb-2 pt-4 text-[9px] uppercase tracking-[0.35em] text-dusty-blue">
+              Collections
+            </p>
+            {collections.map((collection) => (
+              <Link
+                key={collection.slug}
+                href={`/shop/${collection.slug}`}
+                onClick={() => setMenuOpen(false)}
+                className="border-l border-cream-dark/60 py-2 pl-4 text-sm text-navy/80 transition-colors hover:text-oxblood"
+              >
+                {collection.name}
+              </Link>
+            ))}
+            <Link
+              href="/about"
+              className="mt-3 block py-3 font-serif text-2xl text-navy transition-colors hover:text-oxblood"
+              onClick={() => setMenuOpen(false)}
+            >
+              About
+            </Link>
+          </nav>
+
+          {/* Drawer footer */}
+          <div className="border-t border-cream-dark/40 px-6 py-6">
+            <Link
+              href="/#newsletter"
+              onClick={() => setMenuOpen(false)}
+              className="block bg-oxblood px-6 py-4 text-center text-[10px] font-medium uppercase tracking-[0.3em] text-cream transition-colors duration-300 hover:bg-oxblood-dark"
+            >
+              Join the House
+            </Link>
+          </div>
+        </aside>
+      </div>
     </>
   );
 }

@@ -21,7 +21,7 @@ export default function AboutPage() {
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/80 via-navy-deep/25 to-navy-deep/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/55 to-navy-deep/70" />
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
           <p className="text-[10px] font-medium uppercase tracking-[0.45em] text-ochre-light">
             La Nostra Storia
@@ -109,7 +109,7 @@ export default function AboutPage() {
           <div className="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-3">
             {[
               {
-                title: "Handcrafted with love",
+                title: "Made by hand",
                 body: "Meticulous attention to detail and deep respect for traditional Mediterranean techniques in every single piece.",
               },
               {
@@ -118,7 +118,7 @@ export default function AboutPage() {
               },
               {
                 title: "Timeless beauty",
-                body: "Objects that transcend trends — lasting pieces that bring warmth, character and soul to any space.",
+                body: "Objects that transcend trends — lasting pieces that bring warmth and character to any space.",
               },
             ].map((value, index) => (
               <Reveal key={value.title} delay={index * 100} className="text-center">

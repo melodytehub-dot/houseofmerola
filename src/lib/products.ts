@@ -19,7 +19,7 @@ export const collections: Collection[] = [
   {
     slug: "mediterranean-heritage",
     name: "Mediterranean Heritage",
-    tagline: "Italian heritage. Sun-drenched coasts. Timeless beauty.",
+    tagline: "Hand-painted Sicilian tiles and coastal ceramics",
     description:
       "Hand-painted tiles and decorative pieces inspired by the sun-kissed shores of the Mediterranean. Each piece captures the warmth of Sicilian ceramic tradition, the vibrant colours of coastal villages, and the timeless beauty of Italian craftsmanship.",
     bannerImage: "/collection2.jpg",
@@ -27,7 +27,7 @@ export const collections: Collection[] = [
   {
     slug: "botanical-natural-history",
     name: "Botanical & Natural History",
-    tagline: "Curated by nature. Rooted in botany. Inspired by wonder.",
+    tagline: "Engraved wood and painted botanical studies",
     description:
       "Engraved and painted wood pieces celebrating the natural world — from the intricate anatomy of fungi to the ancient wisdom of herbal medicine. Each piece is a tribute to the beauty and mystery of the natural sciences.",
     bannerImage: "/collection1.jpg",
@@ -35,7 +35,7 @@ export const collections: Collection[] = [
   {
     slug: "sacred-mystical",
     name: "Sacred & Mystical",
-    tagline: "Sacred tradition. Celestial beauty. Devotional art.",
+    tagline: "Devotional tiles, moons and sacred imagery",
     description:
       "Art pieces rooted in centuries of Mediterranean devotion and mystical symbolism. From the Virgin Mary to celestial moon phases, each work carries the weight of sacred tradition and the ethereal beauty of the divine.",
     bannerImage: "/prod1.jpg",
@@ -43,7 +43,7 @@ export const collections: Collection[] = [
   {
     slug: "decorative-curiosities",
     name: "Decorative Curiosities",
-    tagline: "Timeless curiosities. Art for the soul. Objects of wonder.",
+    tagline: "Characterful signs and decorative curiosities",
     description:
       "Unique decorative objects and signs that bring character and conversation to any space. Quirky, beautiful, and unmistakably Mediterranean — each piece tells a story.",
     bannerImage: "/prod5.jpg",

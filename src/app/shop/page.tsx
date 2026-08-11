@@ -17,7 +17,7 @@ export default function ShopPage() {
         <p className="text-[10px] font-medium uppercase tracking-[0.45em] text-dusty-blue">
           Il Negozio
         </p>
-        <h1 className="mt-4 font-serif text-5xl font-medium uppercase tracking-[0.06em] text-navy sm:text-6xl">
+        <h1 className="mt-4 font-serif text-4xl font-medium uppercase leading-tight tracking-[0.04em] text-navy sm:text-6xl sm:tracking-[0.06em]">
           The Collections
         </h1>
         <div className="mt-6 flex items-center justify-center gap-4">
@@ -26,8 +26,8 @@ export default function ShopPage() {
           <span className="h-px w-14 bg-ochre/60" />
         </div>
         <p className="mx-auto mt-6 max-w-xl text-sm font-light leading-relaxed text-navy/60">
-          Four families of pieces, one Mediterranean soul. Wander through the
-          collections and find the piece that calls to you.
+          Four collections of hand-painted tiles, engraved botanicals and
+          sacred art. Wander through and find the piece for your home.
         </p>
       </section>
 
@@ -57,7 +57,7 @@ export default function ShopPage() {
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.05]"
                   />
-                  <div className="absolute inset-0 bg-navy-deep/20 transition-opacity duration-500 group-hover:bg-navy-deep/10" />
+                  <div className="absolute inset-0 bg-navy-deep/35 transition-opacity duration-500 group-hover:bg-navy-deep/25" />
                   <span className="absolute bottom-5 left-5 flex items-center gap-2 bg-navy/70 px-4 py-2 text-[9px] uppercase tracking-[0.3em] text-cream opacity-0 backdrop-blur-sm transition-opacity duration-500 group-hover:opacity-100">
                     View collection &rarr;
                   </span>
@@ -105,8 +105,7 @@ export default function ShopPage() {
             Not sure where to begin?
           </h2>
           <p className="mx-auto mt-5 max-w-md text-sm font-light leading-relaxed text-navy/60">
-            Every piece in the house is a small Mediterranean daydream. Start
-            with the one that makes you smile.
+            Browse the collections and start with your favourite piece.
           </p>
           <Link
             href="/shop/mediterranean-heritage"

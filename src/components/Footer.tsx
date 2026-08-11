@@ -36,10 +36,6 @@ export default function Footer() {
             <p className="mt-2 text-[9px] font-medium uppercase tracking-[0.42em] text-ochre-light">
               Arte &bull; Casa &bull; Mediterraneo
             </p>
-            <p className="mt-6 max-w-sm text-sm font-light leading-relaxed text-cream/55">
-              Hand-painted tiles, engraved botanicals and sacred art — crafted
-              in the spirit of the Mediterranean, with love and patience.
-            </p>
             <div className="mt-6 flex gap-6">
               {["Instagram", "Etsy", "Pinterest"].map((social) => (
                 <a
@@ -112,11 +108,10 @@ export default function Footer() {
             <div className="mt-5 flex flex-col gap-3 text-sm font-light text-cream/70">
               <a
                 href="mailto:hello@houseofmerola.com"
-                className="w-fit transition-colors duration-300 hover:text-ochre-light"
+                className="w-fit break-all transition-colors duration-300 hover:text-ochre-light"
               >
                 hello@houseofmerola.com
               </a>
-              <p className="text-cream/45">Studio — Sicily, Italy</p>
             </div>
           </div>
         </div>
@@ -126,9 +121,6 @@ export default function Footer() {
           <p className="text-[10px] uppercase tracking-[0.25em] text-cream/35">
             &copy; {new Date().getFullYear()} House of Merola. All rights
             reserved.
-          </p>
-          <p className="font-serif text-sm italic text-cream/40">
-            Handcrafted with love, from the Mediterranean.
           </p>
         </div>
       </div>

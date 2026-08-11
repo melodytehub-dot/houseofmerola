@@ -41,7 +41,7 @@ export default function Home() {
           sizes="100vw"
           className="animate-kenburns object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/75 via-navy-deep/15 to-navy-deep/35" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/55 to-navy-deep/65" />
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
           <p
             className="animate-fade-up text-[10px] font-medium uppercase tracking-[0.5em] text-cream/85 sm:text-xs"
@@ -192,7 +192,7 @@ export default function Home() {
               sizes="100vw"
               className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/80 via-navy-deep/25 to-navy-deep/40 transition-opacity duration-700 group-hover:opacity-90" />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/55 to-navy-deep/70 transition-opacity duration-700 group-hover:opacity-95" />
             <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
               <p className="text-[10px] font-medium uppercase tracking-[0.45em] text-ochre-light">
                 Collezione 0{index + 1}
@@ -242,7 +242,7 @@ export default function Home() {
               },
               {
                 title: "Made to be lived with",
-                body: "More than decor — objects with soul, made to become part of your everyday life.",
+                body: "More than decor — pieces made to become part of your everyday life.",
               },
             ].map((value, index) => (
               <Reveal key={value.title} delay={index * 100} className="text-center">
@@ -282,9 +282,6 @@ export default function Home() {
           <div className="mx-auto mt-10 max-w-md">
             <NewsletterForm />
           </div>
-          <p className="mt-5 text-[9px] uppercase tracking-[0.25em] text-cream/35">
-            No spam, only the Mediterranean — unsubscribe anytime
-          </p>
         </Reveal>
       </section>
 
