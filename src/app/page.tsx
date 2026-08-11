@@ -11,9 +11,9 @@ import Reveal from "@/components/Reveal";
 import type { Product } from "@/lib/products";
 
 const marqueePhrase = [
-  "Arte",
-  "Casa",
-  "Mediterraneo",
+  "Art",
+  "Home",
+  "Mediterranean",
   "Hand-painted tiles",
   "Botanical art",
   "Sacred tradition",
@@ -41,13 +41,13 @@ export default function Home() {
           sizes="100vw"
           className="animate-kenburns object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/55 to-navy-deep/65" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/75 to-navy-deep/80" />
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
           <p
             className="animate-fade-up text-[10px] font-medium uppercase tracking-[0.5em] text-cream/85 sm:text-xs"
             style={{ animationDelay: "150ms" }}
           >
-            Arte &bull; Casa &bull; Mediterraneo
+            Art &bull; Home &bull; Mediterranean
           </p>
           <h1
             className="animate-fade-up mt-6 font-serif text-[clamp(2.75rem,9vw,7rem)] font-semibold uppercase leading-[1.02] tracking-[0.1em] text-cream drop-shadow-lg"
@@ -122,7 +122,7 @@ export default function Home() {
       <section className="px-6 py-24 sm:py-32 lg:px-10">
         <Reveal className="mx-auto max-w-3xl text-center">
           <p className="text-[10px] font-medium uppercase tracking-[0.4em] text-dusty-blue">
-            La Casa delle Meraviglie
+            The House of Wonders
           </p>
           <h2 className="mt-5 font-serif text-4xl font-medium leading-[1.15] text-navy sm:text-5xl md:text-6xl">
             A love letter to the{" "}
@@ -192,10 +192,10 @@ export default function Home() {
               sizes="100vw"
               className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/55 to-navy-deep/70 transition-opacity duration-700 group-hover:opacity-95" />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/75 to-navy-deep/85" />
             <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
               <p className="text-[10px] font-medium uppercase tracking-[0.45em] text-ochre-light">
-                Collezione 0{index + 1}
+                Collection 0{index + 1}
               </p>
               <h3 className="mt-5 font-serif text-4xl font-semibold uppercase leading-tight tracking-[0.08em] text-cream sm:text-5xl md:text-6xl">
                 {collection.name}
@@ -224,7 +224,7 @@ export default function Home() {
         <div className="mx-auto w-full max-w-7xl px-6 lg:px-10">
           <Reveal className="mx-auto max-w-2xl text-center">
             <p className="text-[10px] font-medium uppercase tracking-[0.4em] text-ochre-light">
-              Il Mestiere
+              The Craft
             </p>
             <h2 className="mt-4 font-serif text-4xl font-medium sm:text-5xl">
               Made slowly, by hand
@@ -272,10 +272,10 @@ export default function Home() {
             Stay Connected
           </p>
           <h2 className="mt-4 font-serif text-4xl font-medium text-cream sm:text-5xl">
-            Join the House
+            Get 10% Off
           </h2>
           <p className="mx-auto mt-5 max-w-md text-sm font-light leading-relaxed text-cream/65">
-            Become part of our world — receive{" "}
+            Receive{" "}
             <span className="text-ochre-light">10% off your first piece</span>,
             early access to new collections and stories from the studio.
           </p>

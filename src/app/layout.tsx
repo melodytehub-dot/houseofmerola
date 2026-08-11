@@ -21,11 +21,12 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: {
-    default: "House of Merola — Arte • Casa • Mediterraneo",
+    default: "House of Merola — Art • Home • Mediterranean",
     template: "%s — House of Merola",
   },
   description:
-    "Hand-painted tiles, engraved botanicals and sacred art — crafted in the spirit of the Mediterranean. Arte, casa, Mediterraneo.",
+    "Hand-painted tiles, engraved botanicals and sacred art — crafted in the spirit of the Mediterranean. Art, home, Mediterranean.",
+
   keywords: [
     "Mediterranean art",
     "hand-painted ceramic tiles",

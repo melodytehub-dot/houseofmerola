@@ -84,6 +84,28 @@ h6 {
   }
 }
 
+@keyframes fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @keyframes kenburns {
   from {
     transform: scale(1.02);
@@ -102,12 +124,30 @@ h6 {
   }
 }
 
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
 .animate-fade-up {
   animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .animate-fade-in {
   animation: fade-in 0.6s ease-out both;
+}
+
+.animate-fade-slide-up {
+  animation: fade-slide-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .animate-kenburns {
@@ -118,12 +158,64 @@ h6 {
   animation: marquee 42s linear infinite;
 }
 
+/* Page-level transition (remounts on route change via template.tsx) */
+.animate-page-enter {
+  animation: fade-in 0.45s ease-out both;
+}
+
+/* ---------- Premium micro-interactions ---------- */
+
+/* Soft lift + shadow for cards on hover */
+.lift {
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.lift:hover {
+  transform: translateY(-4px);
+}
+
+/* Shimmering underline sweep for CTA text */
+.cta-sweep {
+  position: relative;
+}
+.cta-sweep::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.cta-sweep:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ---------- Reduced motion ---------- */
+
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
   .animate-kenburns,
   .animate-fade-up,
-  .animate-fade-in {
+  .animate-fade-in,
+  .animate-fade-slide-up,
+  .animate-scale-in,
+  .animate-page-enter {
     animation: none !important;
+  }
+
+  .lift {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .cta-sweep::after {
+    transition: none !important;
   }
 
   .reveal {

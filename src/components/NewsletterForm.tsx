@@ -18,7 +18,7 @@ export default function NewsletterForm() {
   if (done) {
     return (
       <div className="w-full border border-ochre/40 bg-cream/5 px-6 py-6 text-center">
-        <p className="font-serif text-2xl text-ochre-light">Benvenuto!</p>
+        <p className="font-serif text-2xl text-ochre-light">Welcome!</p>
         <p className="mx-auto mt-1 max-w-sm text-xs leading-relaxed text-cream/70">
           Your 10% welcome code —{" "}
           <span className="font-semibold tracking-[0.2em] text-ochre-light">

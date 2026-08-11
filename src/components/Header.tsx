@@ -100,13 +100,13 @@ export default function Header() {
                 House of Merola
               </span>
               <span className="mt-1.5 whitespace-nowrap text-[7px] font-medium uppercase tracking-[0.28em] text-dusty-blue sm:text-[9px] sm:tracking-[0.42em]">
-                Arte &bull; Casa &bull; Mediterraneo
+                Art &bull; Home &bull; Mediterranean
               </span>
             </span>
           </Link>
 
           {/* Desktop nav */}
-          <div className="hidden items-center gap-10 md:flex">
+          <div className="hidden items-center gap-6 lg:gap-9 md:flex">
             <Link href="/" onClick={closeMenus} className={navLinkClasses}>
               Home
             </Link>
@@ -179,16 +179,19 @@ export default function Header() {
             <Link href="/about" onClick={closeMenus} className={navLinkClasses}>
               About
             </Link>
+            <Link href="/contact" onClick={closeMenus} className={navLinkClasses}>
+              Contact
+            </Link>
           </div>
 
-          {/* Join the House */}
+          {/* Get 10% Off */}
           <div className="hidden md:block">
             <Link
               href="/#newsletter"
               onClick={closeMenus}
-              className="border border-navy/25 px-6 py-2.5 text-[10px] font-medium uppercase tracking-[0.28em] text-navy transition-all duration-300 hover:border-navy hover:bg-navy hover:text-cream"
+              className="border border-navy/25 px-4 py-2.5 text-[10px] font-medium uppercase tracking-[0.28em] text-navy transition-all duration-300 hover:border-navy hover:bg-navy hover:text-cream lg:px-6"
             >
-              Join the House
+              Get 10% Off
             </Link>
           </div>
 
@@ -301,25 +304,42 @@ export default function Header() {
             >
               Shop
             </Link>
-            <p className="pb-2 pt-4 text-[9px] uppercase tracking-[0.35em] text-dusty-blue">
-              Collections
+
+            {/* Collections — tidy, organised rows */}
+            <p className="pb-1 pt-5 text-[9px] uppercase tracking-[0.35em] text-dusty-blue">
+              The Collections
             </p>
-            {collections.map((collection) => (
-              <Link
-                key={collection.slug}
-                href={`/shop/${collection.slug}`}
-                onClick={() => setMenuOpen(false)}
-                className="border-l border-cream-dark/60 py-2 pl-4 text-sm text-navy/80 transition-colors hover:text-oxblood"
-              >
-                {collection.name}
-              </Link>
-            ))}
+            <div className="mt-1 border-t border-cream-dark/40">
+              {collections.map((collection) => (
+                <Link
+                  key={collection.slug}
+                  href={`/shop/${collection.slug}`}
+                  onClick={() => setMenuOpen(false)}
+                  className="group flex items-center justify-between border-b border-cream-dark/40 py-3 transition-colors duration-200 hover:bg-cream/40"
+                >
+                  <span className="font-serif text-lg leading-tight text-navy transition-colors duration-200 group-hover:text-oxblood">
+                    {collection.name}
+                  </span>
+                  <span className="translate-x-0 text-ochre opacity-0 transition-all duration-300 group-hover:-translate-x-0.5 group-hover:opacity-100">
+                    &rarr;
+                  </span>
+                </Link>
+              ))}
+            </div>
+
             <Link
               href="/about"
-              className="mt-3 block py-3 font-serif text-2xl text-navy transition-colors hover:text-oxblood"
+              className="block py-3 font-serif text-2xl text-navy transition-colors hover:text-oxblood"
               onClick={() => setMenuOpen(false)}
             >
               About
+            </Link>
+            <Link
+              href="/contact"
+              className="block py-3 font-serif text-2xl text-navy transition-colors hover:text-oxblood"
+              onClick={() => setMenuOpen(false)}
+            >
+              Contact
             </Link>
           </nav>
 
@@ -330,7 +350,7 @@ export default function Header() {
               onClick={() => setMenuOpen(false)}
               className="block bg-oxblood px-6 py-4 text-center text-[10px] font-medium uppercase tracking-[0.3em] text-cream transition-colors duration-300 hover:bg-oxblood-dark"
             >
-              Join the House
+              Get 10% Off
             </Link>
           </div>
         </aside>

@@ -12,7 +12,7 @@ export default function Footer() {
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 py-14 lg:flex-row lg:items-center lg:justify-between lg:px-10">
           <div className="max-w-md">
             <h3 className="font-serif text-3xl font-medium text-cream">
-              Join the House
+              Get 10% Off
             </h3>
             <p className="mt-2 text-sm font-light leading-relaxed text-cream/60">
               10% off your first piece, early access to new collections, and
@@ -34,7 +34,7 @@ export default function Footer() {
               House of Merola
             </p>
             <p className="mt-2 text-[9px] font-medium uppercase tracking-[0.42em] text-ochre-light">
-              Arte &bull; Casa &bull; Mediterraneo
+              Art &bull; Home &bull; Mediterranean
             </p>
             <div className="mt-6 flex gap-6">
               {["Instagram", "Etsy", "Pinterest"].map((social) => (
@@ -92,6 +92,12 @@ export default function Footer() {
                 About the House
               </Link>
               <Link
+                href="/contact"
+                className="w-fit text-sm font-light text-cream/70 transition-colors duration-300 hover:text-ochre-light"
+              >
+                Contact
+              </Link>
+              <Link
                 href="/#newsletter"
                 className="w-fit text-sm font-light text-cream/70 transition-colors duration-300 hover:text-ochre-light"
               >
@@ -112,6 +118,12 @@ export default function Footer() {
               >
                 hello@houseofmerola.com
               </a>
+              <Link
+                href="/contact"
+                className="w-fit text-sm font-light text-ochre-light transition-colors duration-300 hover:text-ochre"
+              >
+                Send us a message &rarr;
+              </Link>
             </div>
           </div>
         </div>

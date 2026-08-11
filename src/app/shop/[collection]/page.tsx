@@ -28,7 +28,7 @@ export default function CollectionPage({
       <div className="flex min-h-[60vh] items-center justify-center px-6">
         <div className="text-center">
           <p className="text-[10px] font-medium uppercase tracking-[0.4em] text-dusty-blue">
-            Collezione non trovata
+            Collection not found
           </p>
           <h1 className="mt-4 font-serif text-4xl font-medium text-navy">
             Collection not found
@@ -59,10 +59,10 @@ export default function CollectionPage({
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/55 to-navy-deep/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/75 to-navy-deep/85" />
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
           <p className="text-[10px] font-medium uppercase tracking-[0.45em] text-ochre-light">
-            Collezione 0{collectionIndex + 1}
+            Collection 0{collectionIndex + 1}
           </p>
           <h1 className="mt-5 font-serif text-4xl font-semibold uppercase leading-tight tracking-[0.08em] text-cream sm:text-5xl md:text-6xl">
             {collection.name}
@@ -163,7 +163,7 @@ export default function CollectionPage({
                     sizes="(max-width: 640px) 100vw, 33vw"
                     className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/85 via-navy-deep/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/60 to-navy-deep/20" />
                   <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">
                     <span className="font-serif text-2xl font-medium text-cream">
                       {col.name}

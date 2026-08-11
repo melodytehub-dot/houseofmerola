@@ -63,7 +63,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
       {/* Panel */}
       <div
         ref={panelRef}
-        className="relative grid max-h-[92svh] w-full max-w-4xl animate-fade-up overflow-y-auto bg-cream-light shadow-2xl shadow-navy-deep/60 md:grid-cols-2"
+        className="relative grid max-h-[92svh] w-full max-w-4xl animate-scale-in overflow-y-auto bg-cream-light shadow-2xl shadow-navy-deep/60 md:grid-cols-2"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close */}
@@ -95,7 +95,9 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
           />
-          <div className="absolute bottom-0 left-0 flex items-center gap-2 bg-navy/70 px-4 py-2 backdrop-blur-sm">
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/35 via-transparent to-transparent" />
+          <div className="absolute bottom-0 left-0 flex items-center gap-2 bg-navy/80 px-4 py-2.5 backdrop-blur-sm">
+            <span className="h-1.5 w-1.5 animate-pulse-dot bg-ochre-light" />
             <span className="text-[9px] uppercase tracking-[0.25em] text-ochre-light">
               Hand-painted &bull; One of a kind
             </span>
@@ -105,19 +107,23 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
         {/* Details */}
         <div className="flex flex-col justify-center p-8 md:p-12">
           {collection && (
-            <p className="text-[10px] uppercase tracking-[0.35em] text-oxblood">
+            <p className="text-[10px] font-medium uppercase tracking-[0.35em] text-oxblood">
               {collection.name}
             </p>
           )}
           <h2 className="mt-3 font-serif text-3xl font-semibold leading-tight text-navy md:text-4xl">
             {product.name}
           </h2>
-          <div className="mt-4 h-px w-12 bg-ochre/60" />
-          <p className="mt-5 text-sm font-light leading-relaxed text-navy/70">
+          <div className="mt-5 flex items-center gap-3">
+            <span className="h-px w-12 bg-ochre/60" />
+            <span className="text-sm text-ochre">&#10043;</span>
+            <span className="h-px w-6 bg-ochre/60" />
+          </div>
+          <p className="mt-6 text-[15px] font-light leading-relaxed text-navy/70">
             {product.description}
           </p>
 
-          <p className="mt-6 font-serif text-3xl font-semibold text-ochre-dark">
+          <p className="mt-7 font-serif text-3xl font-semibold text-ochre-dark">
             &pound;{product.price.toFixed(2)}
           </p>
 
@@ -134,7 +140,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
           </button>
 
           {added && (
-            <p className="mt-4 animate-fade-up text-center text-xs leading-relaxed text-navy/60">
+            <p className="mt-4 animate-fade-slide-up text-center text-xs leading-relaxed text-navy/60">
               This is a preview — orders are taken via{" "}
               <a
                 href="mailto:hello@houseofmerola.com"
@@ -150,9 +156,15 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
             </p>
           )}
 
-          <div className="mt-6 flex flex-col gap-1.5 border-t border-cream-dark/50 pt-5 text-[11px] font-light tracking-wide text-navy/50">
-            <p>Handmade in small batches — dispatch in 3&ndash;5 days.</p>
-            <p>Free UK delivery on orders over &pound;50.</p>
+          <div className="mt-7 flex flex-col gap-2.5 border-t border-cream-dark/50 pt-6 text-[11px] font-light tracking-wide text-navy/50">
+            <p className="flex items-center gap-2.5">
+              <span className="h-px w-4 bg-ochre/50" />
+              Handmade in small batches — dispatch in 3&ndash;5 days.
+            </p>
+            <p className="flex items-center gap-2.5">
+              <span className="h-px w-4 bg-ochre/50" />
+              Free delivery on orders over &pound;50.
+            </p>
           </div>
         </div>
       </div>

@@ -58,7 +58,7 @@ export const products: Product[] = [
     image: "/prod1.jpg",
     collection: "sacred-mystical",
     description:
-      "A stunning hand-painted tile featuring the Virgin Mary against a Mediterranean coastal backdrop. Gold leaf halos and ornate blue borders create a piece of timeless devotional art.",
+      "A hand-painted ceramic tile of the Virgin Mary against a Mediterranean coastal backdrop, with gold-leaf halos and deep cobalt borders. A devotional piece to hang, prop or gift.",
   },
   {
     id: "snakeology-sign",
@@ -67,7 +67,7 @@ export const products: Product[] = [
     image: "/prod2.jpg",
     collection: "botanical-natural-history",
     description:
-      "A beautifully detailed engraved and painted wood sign exploring the study of snakes. Features anatomy, life cycles, and species illustrations in an antique botanical style.",
+      "An engraved and painted wood sign dedicated to the study of snakes — anatomy, life cycles and species drawn in a fine antique botanical style. A quiet, curious conversation piece for the wall.",
   },
   {
     id: "herbolologia-medica",
@@ -76,7 +76,7 @@ export const products: Product[] = [
     image: "/prod3.jpg",
     collection: "botanical-natural-history",
     description:
-      "An exquisite engraved sign documenting healing plants and their medicinal properties. Lavender, chamomile, rosemary, and more — a celebration of herbal wisdom.",
+      "An engraved wood sign recording the healing plants of the old apothecary — lavender, chamomile and rosemary set out in fine antique script. Botany, rendered by hand.",
   },
   {
     id: "frogology-sign",
@@ -85,7 +85,7 @@ export const products: Product[] = [
     image: "/prod4.jpg",
     collection: "botanical-natural-history",
     description:
-      "A charming engraved and painted wood sign dedicated to the study of frogs. Featuring anatomy, life cycles, and species from tree frogs to bullfrogs.",
+      "A playful engraved wood sign charting the life of frogs — from tadpole to bullfrog — drawn in careful antique style. For natural-history lovers and curious walls alike.",
   },
   {
     id: "phases-of-the-moon",
@@ -94,7 +94,7 @@ export const products: Product[] = [
     image: "/prod5.jpg",
     collection: "sacred-mystical",
     description:
-      "A mystical engraved wood piece depicting the lunar cycle with ornate botanical borders. Bats, moths, and celestial symbols adorn this enchanting wall art.",
+      "An engraved wood study of the lunar cycle, framed by ornate botanical borders and dotted with bats, moths and celestial marks. A little night sky for the wall.",
   },
   {
     id: "mediterranean-ape-truck",
@@ -103,7 +103,7 @@ export const products: Product[] = [
     image: "/prod6.jpg",
     collection: "mediterranean-heritage",
     description:
-      "A charming hand-painted tile featuring a classic Italian Ape truck adorned with blue ceramic patterns and loaded with lemons. Pure Mediterranean joy.",
+      "A hand-painted tile of the classic Italian Ape truck, loaded with lemons and patterned in blue ceramic motifs. Sunshine, set in clay.",
   },
   {
     id: "pomegranate-vase-tile",
@@ -112,7 +112,7 @@ export const products: Product[] = [
     image: "/prod7.jpg",
     collection: "mediterranean-heritage",
     description:
-      "A vibrant hand-painted tile depicting a traditional Mediterranean vase overflowing with ripe pomegranates. Rich blues, reds, and ochre tones.",
+      "A hand-painted tile of a traditional vase spilling ripe pomegranates — rich blues, reds and ochres laid in the old Sicilian palette.",
   },
   {
     id: "sun-and-moon-tile",
@@ -121,7 +121,7 @@ export const products: Product[] = [
     image: "/prod8.jpg",
     collection: "sacred-mystical",
     description:
-      "A celestial tile featuring the sun and crescent moon in an embrace, surrounded by stars, clouds, and botanical elements in deep navy and rose tones.",
+      "A celestial tile in deep navy and rose, where sun and crescent moon meet among stars, clouds and botanical tendrils. A meditation in glaze.",
   },
   {
     id: "mycology-sign",
@@ -130,7 +130,7 @@ export const products: Product[] = [
     image: "/prod9.jpg",
     collection: "botanical-natural-history",
     description:
-      "A detailed engraved sign celebrating the kingdom of fungi. Features mushroom species, anatomy, and the vital ecological roles of mycelium networks.",
+      "An engraved wood sign celebrating the kingdom of fungi — mushroom species, anatomy and the quiet work of mycelium, drawn in antique naturalist style.",
   },
   {
     id: "virgin-mary-blue-tile",
@@ -139,7 +139,7 @@ export const products: Product[] = [
     image: "/prod10.jpg",
     collection: "sacred-mystical",
     description:
-      "A breathtaking hand-painted tile of the Madonna in traditional blue and white, surrounded by lemons and Mediterranean botanicals. Classic ceramic artistry.",
+      "A hand-painted tile of the Madonna in traditional blue and white, ringed by lemons and Mediterranean botanicals. Classic ceramic artistry, glazed by hand.",
   },
   {
     id: "amalfi-ape-truck-tile",
@@ -148,7 +148,7 @@ export const products: Product[] = [
     image: "/prod11.jpg",
     collection: "mediterranean-heritage",
     description:
-      "A picturesque tile depicting a vintage Ape truck against the stunning Amalfi Coast, loaded with lemons and framed by ornate blue ceramic borders.",
+      "A hand-painted tile of a vintage Ape truck against the Amalfi coast, piled with lemons and framed by ornate blue borders. A postcard in ceramic.",
   },
   {
     id: "virgin-mary-sunset-tile",
@@ -157,7 +157,7 @@ export const products: Product[] = [
     image: "/prod14.jpg",
     collection: "sacred-mystical",
     description:
-      "The Virgin Mary bathed in warm sunset light, with a Mediterranean village backdrop. A deeply atmospheric piece of devotional art.",
+      "The Virgin Mary bathed in warm sunset light above a Mediterranean village — a deeply atmospheric piece of devotional art in glaze.",
   },
   {
     id: "lemon-botanical-tile",
@@ -166,7 +166,7 @@ export const products: Product[] = [
     image: "/prod15.jpg",
     collection: "mediterranean-heritage",
     description:
-      "A fresh hand-painted tile featuring lemons on the branch with white blossoms. Classic Mediterranean ceramic art in blue, gold, and green.",
+      "A hand-painted tile of lemons on the branch with white blossom, in classic blue, gold and green. Simple, sunny and timeless.",
   },
 ];
 

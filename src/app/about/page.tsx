@@ -21,10 +21,10 @@ export default function AboutPage() {
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-navy-deep/55 to-navy-deep/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/75 to-navy-deep/85" />
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
           <p className="text-[10px] font-medium uppercase tracking-[0.45em] text-ochre-light">
-            La Nostra Storia
+            Our Story
           </p>
           <h1 className="mt-5 font-serif text-4xl font-semibold uppercase tracking-[0.08em] text-cream sm:text-5xl md:text-6xl">
             About the House
