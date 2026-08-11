@@ -54,7 +54,7 @@ export const products: Product[] = [
   {
     id: "sacred-art-virgin-mary",
     name: "Sacred Art Virgin Mary",
-    price: 10,
+    price: 28,
     image: "/prod1.jpg",
     collection: "sacred-mystical",
     description:
@@ -63,7 +63,7 @@ export const products: Product[] = [
   {
     id: "snakeology-sign",
     name: "Snakeology Engraved Sign",
-    price: 10,
+    price: 24,
     image: "/prod2.jpg",
     collection: "botanical-natural-history",
     description:
@@ -72,7 +72,7 @@ export const products: Product[] = [
   {
     id: "herbolologia-medica",
     name: "Herbolologia Medica Sign",
-    price: 10,
+    price: 26,
     image: "/prod3.jpg",
     collection: "botanical-natural-history",
     description:
@@ -81,7 +81,7 @@ export const products: Product[] = [
   {
     id: "frogology-sign",
     name: "Frogology Engraved Sign",
-    price: 10,
+    price: 22,
     image: "/prod4.jpg",
     collection: "botanical-natural-history",
     description:
@@ -90,7 +90,7 @@ export const products: Product[] = [
   {
     id: "phases-of-the-moon",
     name: "Phases of the Moon Sign",
-    price: 10,
+    price: 24,
     image: "/prod5.jpg",
     collection: "sacred-mystical",
     description:
@@ -99,7 +99,7 @@ export const products: Product[] = [
   {
     id: "mediterranean-ape-truck",
     name: "Italian Ape Truck Tile",
-    price: 10,
+    price: 18,
     image: "/prod6.jpg",
     collection: "mediterranean-heritage",
     description:
@@ -108,7 +108,7 @@ export const products: Product[] = [
   {
     id: "pomegranate-vase-tile",
     name: "Pomegranate Vase Tile",
-    price: 10,
+    price: 16,
     image: "/prod7.jpg",
     collection: "mediterranean-heritage",
     description:
@@ -117,7 +117,7 @@ export const products: Product[] = [
   {
     id: "sun-and-moon-tile",
     name: "Sun & Moon Ceramic Tile",
-    price: 10,
+    price: 18,
     image: "/prod8.jpg",
     collection: "sacred-mystical",
     description:
@@ -126,7 +126,7 @@ export const products: Product[] = [
   {
     id: "mycology-sign",
     name: "Mycology Engraved Sign",
-    price: 10,
+    price: 26,
     image: "/prod9.jpg",
     collection: "botanical-natural-history",
     description:
@@ -135,7 +135,7 @@ export const products: Product[] = [
   {
     id: "virgin-mary-blue-tile",
     name: "Madonna Blue & White Tile",
-    price: 10,
+    price: 32,
     image: "/prod10.jpg",
     collection: "sacred-mystical",
     description:
@@ -144,7 +144,7 @@ export const products: Product[] = [
   {
     id: "amalfi-ape-truck-tile",
     name: "Amalfi Coast Ape Truck Tile",
-    price: 10,
+    price: 20,
     image: "/prod11.jpg",
     collection: "mediterranean-heritage",
     description:
@@ -153,7 +153,7 @@ export const products: Product[] = [
   {
     id: "virgin-mary-sunset-tile",
     name: "Madonna at Sunset Tile",
-    price: 10,
+    price: 30,
     image: "/prod14.jpg",
     collection: "sacred-mystical",
     description:
@@ -162,7 +162,7 @@ export const products: Product[] = [
   {
     id: "lemon-botanical-tile",
     name: "Lemon Botanical Tile",
-    price: 10,
+    price: 15,
     image: "/prod15.jpg",
     collection: "mediterranean-heritage",
     description:

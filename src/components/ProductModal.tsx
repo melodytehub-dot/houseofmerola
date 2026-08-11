@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect } from "react";
-import { Product } from "@/lib/products";
+import { useEffect, useRef, useState } from "react";
+import { getCollectionBySlug, type Product } from "@/lib/products";
 
 interface ProductModalProps {
   product: Product;
@@ -10,85 +10,149 @@ interface ProductModalProps {
 }
 
 export default function ProductModal({ product, onClose }: ProductModalProps) {
+  const [added, setAdded] = useState(false);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const collection = getCollectionBySlug(product.collection);
+
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+    closeRef.current?.focus();
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key === "Tab") {
+        const panel = panelRef.current;
+        if (!panel) return;
+        const focusables = panel.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        const active = document.activeElement;
+        if (e.shiftKey && (active === first || !panel.contains(active))) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && (active === last || !panel.contains(active))) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
-    window.addEventListener("keydown", handleEsc);
+    window.addEventListener("keydown", handleKey);
     return () => {
       document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleEsc);
+      window.removeEventListener("keydown", handleKey);
     };
   }, [onClose]);
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8"
       onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={product.name}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-navy/70 backdrop-blur-sm" />
+      <div className="absolute inset-0 animate-fade-in bg-navy-deep/85 backdrop-blur-sm" />
 
-      {/* Modal */}
+      {/* Panel */}
       <div
-        className="relative bg-cream-light rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden shadow-2xl animate-fadeIn"
+        ref={panelRef}
+        className="relative grid max-h-[92svh] w-full max-w-4xl animate-fade-up overflow-y-auto bg-cream-light shadow-2xl shadow-navy-deep/60 md:grid-cols-2"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close button */}
+        {/* Close */}
         <button
+          ref={closeRef}
+          type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-cream/90 hover:bg-cream text-navy transition-colors"
           aria-label="Close"
+          className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center border border-cream-dark/50 bg-cream/90 text-navy transition-all duration-300 hover:bg-navy hover:text-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ochre"
         >
           <svg
-            width="18"
-            height="18"
+            width="16"
+            height="16"
             viewBox="0 0 18 18"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="1.5"
           >
             <path d="M1 1L17 17M17 1L1 17" />
           </svg>
         </button>
 
-        <div className="flex flex-col md:flex-row">
-          {/* Image */}
-          <div className="relative w-full md:w-1/2 aspect-square bg-cream-dark/30">
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover"
-            />
+        {/* Image */}
+        <div className="relative aspect-square bg-cream-dark/40 md:aspect-auto md:min-h-[560px]">
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover"
+          />
+          <div className="absolute bottom-0 left-0 flex items-center gap-2 bg-navy/70 px-4 py-2 backdrop-blur-sm">
+            <span className="text-[9px] uppercase tracking-[0.25em] text-ochre-light">
+              Hand-painted &bull; One of a kind
+            </span>
           </div>
+        </div>
 
-          {/* Details */}
-          <div className="w-full md:w-1/2 p-8 md:p-10 flex flex-col justify-center">
-            <p className="text-dusty-blue text-xs tracking-[0.3em] uppercase font-medium mb-3">
-              {product.collection
-                .replace(/-/g, " ")
-                .replace(/\b\w/g, (l) => l.toUpperCase())}
+        {/* Details */}
+        <div className="flex flex-col justify-center p-8 md:p-12">
+          {collection && (
+            <p className="text-[10px] uppercase tracking-[0.35em] text-oxblood">
+              {collection.name}
             </p>
-            <h2 className="font-serif text-3xl md:text-4xl font-semibold text-navy leading-tight mb-4">
-              {product.name}
-            </h2>
-            <p className="text-navy/70 text-sm leading-relaxed mb-6 font-light">
-              {product.description}
+          )}
+          <h2 className="mt-3 font-serif text-3xl font-semibold leading-tight text-navy md:text-4xl">
+            {product.name}
+          </h2>
+          <div className="mt-4 h-px w-12 bg-ochre/60" />
+          <p className="mt-5 text-sm font-light leading-relaxed text-navy/70">
+            {product.description}
+          </p>
+
+          <p className="mt-6 font-serif text-3xl font-semibold text-ochre-dark">
+            &pound;{product.price.toFixed(2)}
+          </p>
+
+          <button
+            type="button"
+            onClick={() => setAdded(true)}
+            className={`mt-8 w-full px-8 py-4 text-[11px] font-medium uppercase tracking-[0.3em] transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ochre ${
+              added
+                ? "bg-oxblood text-cream"
+                : "bg-navy text-cream hover:bg-navy-light"
+            }`}
+          >
+            {added ? "Added to your collection" : "Add to Cart"}
+          </button>
+
+          {added && (
+            <p className="mt-4 animate-fade-up text-center text-xs leading-relaxed text-navy/60">
+              This is a preview — orders are taken via{" "}
+              <a
+                href="mailto:hello@houseofmerola.com"
+                className="text-oxblood underline underline-offset-2"
+              >
+                hello@houseofmerola.com
+              </a>
+              . Use code{" "}
+              <span className="font-semibold tracking-[0.15em] text-oxblood">
+                MEROLA10
+              </span>{" "}
+              for 10% off your first order.
             </p>
-            <div className="flex items-center gap-4 mb-8">
-              <span className="font-serif text-3xl font-semibold text-ochre">
-                &pound;{product.price.toFixed(2)}
-              </span>
-            </div>
-            <button className="w-full py-4 bg-navy hover:bg-navy-light text-cream text-sm font-medium tracking-widest uppercase rounded-lg transition-colors duration-300">
-              Add to Cart
-            </button>
-            <p className="text-center text-navy/40 text-xs mt-4 tracking-wider">
-              Free shipping on orders over &pound;50
-            </p>
+          )}
+
+          <div className="mt-6 flex flex-col gap-1.5 border-t border-cream-dark/50 pt-5 text-[11px] font-light tracking-wide text-navy/50">
+            <p>Handmade in small batches — dispatch in 3&ndash;5 days.</p>
+            <p>Free UK delivery on orders over &pound;50.</p>
           </div>
         </div>
       </div>

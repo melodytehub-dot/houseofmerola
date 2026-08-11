@@ -1,138 +1,133 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import { collections } from "@/lib/products";
+import NewsletterForm from "./NewsletterForm";
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setEmail("");
-    }
-  };
-
   return (
-    <footer className="bg-navy text-cream">
-      {/* Newsletter Section */}
+    <footer className="grain relative overflow-hidden bg-navy text-cream">
+      {/* Newsletter strip */}
       <div className="border-b border-cream/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="max-w-xl mx-auto text-center">
-            <h3 className="font-serif text-3xl sm:text-4xl font-semibold tracking-wide text-cream mb-3">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 py-14 lg:flex-row lg:items-center lg:justify-between lg:px-10">
+          <div className="max-w-md">
+            <h3 className="font-serif text-3xl font-medium text-cream">
               Join the House
             </h3>
-            <p className="text-cream/60 text-sm tracking-wider mb-8 font-light">
-              Subscribe for early access to new collections, exclusive offers,
-              and a 10% discount on your first order.
+            <p className="mt-2 text-sm font-light leading-relaxed text-cream/60">
+              10% off your first piece, early access to new collections, and
+              stories from the studio.
             </p>
-            {subscribed ? (
-              <div className="bg-cream/10 rounded-lg p-6">
-                <p className="text-ochre font-serif text-2xl mb-2">
-                  Benvenuto!
-                </p>
-                <p className="text-cream/70 text-sm">
-                  Use code{" "}
-                  <span className="text-ochre font-semibold tracking-wider">
-                    MEROLA10
-                  </span>{" "}
-                  at checkout for 10% off.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Your email address"
-                  required
-                  className="flex-1 px-5 py-3.5 bg-cream/10 border border-cream/20 rounded-lg text-cream placeholder-cream/40 text-sm tracking-wide focus:outline-none focus:border-ochre/60 transition-colors"
-                />
-                <button
-                  type="submit"
-                  className="px-8 py-3.5 bg-oxblood hover:bg-oxblood-light text-cream text-sm font-medium tracking-widest uppercase rounded-lg transition-colors duration-300"
-                >
-                  Subscribe
-                </button>
-              </form>
-            )}
+          </div>
+          <div className="w-full max-w-md">
+            <NewsletterForm />
           </div>
         </div>
       </div>
 
-      {/* Footer Links */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+      {/* Link columns */}
+      <div className="mx-auto w-full max-w-7xl px-6 py-16 lg:px-10">
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-12">
           {/* Brand */}
-          <div>
-            <h4 className="font-serif text-xl font-semibold tracking-wider uppercase text-cream mb-1">
+          <div className="col-span-2 md:col-span-5">
+            <p className="font-serif text-xl font-semibold uppercase leading-none tracking-[0.16em]">
               House of Merola
-            </h4>
-            <p className="text-[10px] font-sans font-medium tracking-[0.35em] text-dusty-blue uppercase mb-4">
+            </p>
+            <p className="mt-2 text-[9px] font-medium uppercase tracking-[0.42em] text-ochre-light">
               Arte &bull; Casa &bull; Mediterraneo
             </p>
-            <p className="text-cream/50 text-sm leading-relaxed">
-              Mediterranean soul. Botanical beauty. Sacred tradition. Timeless
-              curiosities.
+            <p className="mt-6 max-w-sm text-sm font-light leading-relaxed text-cream/55">
+              Hand-painted tiles, engraved botanicals and sacred art — crafted
+              in the spirit of the Mediterranean, with love and patience.
             </p>
-          </div>
-
-          {/* Collections */}
-          <div>
-            <h5 className="text-xs font-medium tracking-[0.25em] uppercase text-cream/40 mb-5">
-              Collections
-            </h5>
-            <div className="flex flex-col gap-3">
-              {collections.map((col) => (
-                <Link
-                  key={col.slug}
-                  href={`/shop/${col.slug}`}
-                  className="text-sm text-cream/70 hover:text-ochre transition-colors tracking-wide"
+            <div className="mt-6 flex gap-6">
+              {["Instagram", "Etsy", "Pinterest"].map((social) => (
+                <a
+                  key={social}
+                  href="#"
+                  className="text-[10px] uppercase tracking-[0.25em] text-cream/50 transition-colors duration-300 hover:text-ochre-light"
                 >
-                  {col.name}
-                </Link>
+                  {social}
+                </a>
               ))}
             </div>
           </div>
 
-          {/* Links */}
-          <div>
-            <h5 className="text-xs font-medium tracking-[0.25em] uppercase text-cream/40 mb-5">
+          {/* Collections */}
+          <div className="md:col-span-3">
+            <h4 className="text-[10px] font-medium uppercase tracking-[0.3em] text-cream/40">
+              Collections
+            </h4>
+            <div className="mt-5 flex flex-col gap-3">
+              {collections.map((collection) => (
+                <Link
+                  key={collection.slug}
+                  href={`/shop/${collection.slug}`}
+                  className="w-fit text-sm font-light text-cream/70 transition-colors duration-300 hover:text-ochre-light"
+                >
+                  {collection.name}
+                </Link>
+              ))}
+              <Link
+                href="/shop"
+                className="w-fit text-sm font-light text-ochre-light transition-colors duration-300 hover:text-ochre"
+              >
+                All pieces
+              </Link>
+            </div>
+          </div>
+
+          {/* Explore */}
+          <div className="md:col-span-2">
+            <h4 className="text-[10px] font-medium uppercase tracking-[0.3em] text-cream/40">
               Explore
-            </h5>
-            <div className="flex flex-col gap-3">
+            </h4>
+            <div className="mt-5 flex flex-col gap-3">
               <Link
                 href="/"
-                className="text-sm text-cream/70 hover:text-ochre transition-colors tracking-wide"
+                className="w-fit text-sm font-light text-cream/70 transition-colors duration-300 hover:text-ochre-light"
               >
                 Home
               </Link>
               <Link
-                href="/shop/mediterranean-heritage"
-                className="text-sm text-cream/70 hover:text-ochre transition-colors tracking-wide"
+                href="/about"
+                className="w-fit text-sm font-light text-cream/70 transition-colors duration-300 hover:text-ochre-light"
               >
-                Shop All
+                About the House
               </Link>
               <Link
-                href="/about"
-                className="text-sm text-cream/70 hover:text-ochre transition-colors tracking-wide"
+                href="/#newsletter"
+                className="w-fit text-sm font-light text-cream/70 transition-colors duration-300 hover:text-ochre-light"
               >
-                About Us
+                Newsletter
               </Link>
+            </div>
+          </div>
+
+          {/* Contact */}
+          <div className="md:col-span-2">
+            <h4 className="text-[10px] font-medium uppercase tracking-[0.3em] text-cream/40">
+              Contact
+            </h4>
+            <div className="mt-5 flex flex-col gap-3 text-sm font-light text-cream/70">
+              <a
+                href="mailto:hello@houseofmerola.com"
+                className="w-fit transition-colors duration-300 hover:text-ochre-light"
+              >
+                hello@houseofmerola.com
+              </a>
+              <p className="text-cream/45">Studio — Sicily, Italy</p>
             </div>
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="mt-12 pt-8 border-t border-cream/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-cream/30 text-xs tracking-wider">
-            &copy; {new Date().getFullYear()} House of Merola. All rights reserved.
+        {/* Bottom bar */}
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-cream/10 pt-8 sm:flex-row">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-cream/35">
+            &copy; {new Date().getFullYear()} House of Merola. All rights
+            reserved.
           </p>
-          <p className="text-cream/20 text-xs tracking-wider font-light italic font-serif">
+          <p className="font-serif text-sm italic text-cream/40">
             Handcrafted with love, from the Mediterranean.
           </p>
         </div>

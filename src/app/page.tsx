@@ -6,244 +6,289 @@ import { useState } from "react";
 import { collections, products } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
 import ProductModal from "@/components/ProductModal";
+import NewsletterForm from "@/components/NewsletterForm";
+import Reveal from "@/components/Reveal";
 import type { Product } from "@/lib/products";
+
+const marqueePhrase = [
+  "Arte",
+  "Casa",
+  "Mediterraneo",
+  "Hand-painted tiles",
+  "Botanical art",
+  "Sacred tradition",
+];
 
 export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
 
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setEmail("");
-    }
-  };
-
-  // Featured products - pick a curated selection
   const featured = [
-    products.find((p) => p.id === "mediterranean-ape-truck")!,
-    products.find((p) => p.id === "snakeology-sign")!,
-    products.find((p) => p.id === "virgin-mary-blue-tile")!,
-    products.find((p) => p.id === "phases-of-the-moon")!,
-  ];
+    products.find((p) => p.id === "mediterranean-ape-truck"),
+    products.find((p) => p.id === "snakeology-sign"),
+    products.find((p) => p.id === "virgin-mary-blue-tile"),
+    products.find((p) => p.id === "phases-of-the-moon"),
+  ].filter((p): p is Product => Boolean(p));
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative w-full h-[70vh] sm:h-[80vh] lg:h-[90vh] overflow-hidden">
+      {/* ================= HERO ================= */}
+      <section className="relative h-[92svh] min-h-[560px] w-full overflow-hidden">
         <Image
           src="/hero.jpg"
-          alt="House of Merola"
+          alt="House of Merola — Mediterranean art and ceramics"
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          className="animate-kenburns object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy/30 via-transparent to-navy/50" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-          <div className="mb-4">
-            <svg
-              width="40"
-              height="40"
-              viewBox="0 0 24 24"
-              fill="none"
-              className="text-ochre/80 mx-auto mb-4"
-            >
-              <path
-                d="M12 2L15 8.5L22 9.5L17 14.5L18.5 22L12 18.5L5.5 22L7 14.5L2 9.5L9 8.5L12 2Z"
-                fill="currentColor"
-                opacity="0.8"
-              />
-            </svg>
-          </div>
-          <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold text-cream tracking-[0.12em] uppercase mb-4 drop-shadow-lg">
-            House of Merola
-          </h1>
-          <div className="w-24 h-px bg-ochre/60 mb-6" />
-          <p className="text-cream/80 text-xs sm:text-sm font-medium tracking-[0.4em] uppercase mb-10 font-sans">
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/75 via-navy-deep/15 to-navy-deep/35" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+          <p
+            className="animate-fade-up text-[10px] font-medium uppercase tracking-[0.5em] text-cream/85 sm:text-xs"
+            style={{ animationDelay: "150ms" }}
+          >
             Arte &bull; Casa &bull; Mediterraneo
           </p>
-          <p className="font-serif text-xl sm:text-2xl text-cream/90 italic font-light max-w-2xl mb-10 drop-shadow-md">
-            Mediterranean soul. Botanical beauty.
-            <br />
-            Sacred tradition. Timeless curiosities.
-          </p>
-          <Link
-            href="/shop/mediterranean-heritage"
-            className="inline-block px-10 py-4 bg-oxblood hover:bg-oxblood-light text-cream text-xs sm:text-sm font-medium tracking-[0.3em] uppercase rounded-sm transition-all duration-500 hover:shadow-lg hover:shadow-oxblood/30"
+          <h1
+            className="animate-fade-up mt-6 font-serif text-[clamp(2.75rem,9vw,7rem)] font-semibold uppercase leading-[1.02] tracking-[0.1em] text-cream drop-shadow-lg"
+            style={{ animationDelay: "300ms" }}
           >
-            Shop the Collection
-          </Link>
-        </div>
-        {/* Decorative bottom border */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-ochre/40 to-transparent" />
-      </section>
-
-      {/* Brand Statement */}
-      <section className="py-20 sm:py-28 px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-4 mb-8">
-            <div className="w-16 h-px bg-ochre/40" />
-            <span className="text-ochre text-lg">&#10043;</span>
-            <div className="w-16 h-px bg-ochre/40" />
+            House of
+            <br className="hidden sm:block" /> Merola
+          </h1>
+          <div
+            className="animate-fade-up mt-8 flex items-center gap-4"
+            style={{ animationDelay: "450ms" }}
+          >
+            <span className="h-px w-16 bg-ochre/70" />
+            <span className="text-lg text-ochre-light">&#10043;</span>
+            <span className="h-px w-16 bg-ochre/70" />
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-navy leading-tight mb-8">
-            Where Mediterranean Tradition
-            <br />
-            Meets Artisan Craft
-          </h2>
-          <p className="text-navy/60 text-base sm:text-lg leading-relaxed font-light max-w-2xl mx-auto">
-            Every piece in our collection is a love letter to the Mediterranean —
-            hand-painted tiles that capture the warmth of Sicilian sunshine,
-            engraved wood that tells stories of ancient botanical wisdom, and
-            sacred art that carries centuries of devotion.
+          <p
+            className="animate-fade-up mt-8 max-w-2xl font-serif text-lg font-light italic leading-relaxed text-cream/90 drop-shadow-md sm:text-2xl"
+            style={{ animationDelay: "600ms" }}
+          >
+            Hand-painted tiles, engraved botanicals &amp; sacred art — crafted
+            in the spirit of the Mediterranean.
           </p>
-        </div>
-      </section>
-
-      {/* Collections Grid */}
-      <section className="px-4 pb-20 sm:pb-28">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14">
-            <p className="text-dusty-blue text-xs tracking-[0.35em] uppercase font-medium mb-3">
-              Our World
-            </p>
-            <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-navy">
-              Explore the Collections
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {collections.map((col) => (
-              <Link
-                key={col.slug}
-                href={`/shop/${col.slug}`}
-                className="group relative aspect-[3/4] overflow-hidden rounded-lg"
-              >
-                <Image
-                  src={col.bannerImage}
-                  alt={col.name}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent" />
-                <div className="absolute inset-0 flex flex-col justify-end p-6">
-                  <h3 className="font-serif text-xl sm:text-2xl font-semibold text-cream leading-tight mb-2">
-                    {col.name}
-                  </h3>
-                  <p className="text-cream/60 text-xs tracking-wider font-light line-clamp-2">
-                    {col.tagline}
-                  </p>
-                  <div className="mt-4 flex items-center gap-2 text-ochre text-xs tracking-widest uppercase font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <span>Explore</span>
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M5 12H19M19 12L12 5M19 12L12 19" />
-                    </svg>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Products */}
-      <section className="px-4 pb-20 sm:pb-28 bg-cream-dark/20">
-        <div className="max-w-7xl mx-auto py-20 sm:py-28">
-          <div className="text-center mb-14">
-            <p className="text-dusty-blue text-xs tracking-[0.35em] uppercase font-medium mb-3">
-              Handpicked
-            </p>
-            <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-navy mb-4">
-              Featured Pieces
-            </h2>
-            <p className="text-navy/50 text-sm font-light max-w-lg mx-auto">
-              A curated selection of our most beloved works — each one
-              handcrafted with love and Mediterranean soul.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {featured.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onClick={setSelectedProduct}
-              />
-            ))}
-          </div>
-          <div className="text-center mt-12">
+          <div
+            className="animate-fade-up mt-12 flex flex-col items-center gap-4 sm:flex-row"
+            style={{ animationDelay: "750ms" }}
+          >
             <Link
-              href="/shop/mediterranean-heritage"
-              className="inline-block px-8 py-3.5 border-2 border-navy text-navy hover:bg-navy hover:text-cream text-xs tracking-[0.25em] uppercase font-medium rounded-sm transition-all duration-500"
+              href="/shop"
+              className="bg-oxblood px-10 py-4 text-[11px] font-medium uppercase tracking-[0.3em] text-cream transition-all duration-500 hover:bg-oxblood-dark hover:tracking-[0.34em]"
             >
-              View All Collections
+              Explore the Collections
+            </Link>
+            <Link
+              href="/about"
+              className="border border-cream/50 px-10 py-4 text-[11px] font-medium uppercase tracking-[0.3em] text-cream transition-all duration-500 hover:bg-cream hover:text-navy"
+            >
+              Our Story
             </Link>
           </div>
         </div>
+
+        {/* Scroll cue */}
+        <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2">
+          <span className="text-[9px] uppercase tracking-[0.35em] text-cream/60">
+            Scroll
+          </span>
+          <span className="h-10 w-px animate-pulse bg-gradient-to-b from-cream/70 to-transparent" />
+        </div>
       </section>
 
-      {/* Newsletter CTA */}
-      <section className="px-4 py-20 sm:py-28">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="bg-navy rounded-2xl p-10 sm:p-14">
-            <p className="text-ochre text-xs tracking-[0.35em] uppercase font-medium mb-4">
-              Stay Connected
-            </p>
-            <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-cream mb-4">
-              Join the House
-            </h2>
-            <p className="text-cream/50 text-sm font-light mb-8 max-w-md mx-auto">
-              Be the first to discover new collections, exclusive offers, and
-              receive a 10% welcome discount.
-            </p>
-            {subscribed ? (
-              <div className="bg-cream/10 rounded-lg p-6">
-                <p className="text-ochre font-serif text-2xl mb-2">
-                  Benvenuto!
-                </p>
-                <p className="text-cream/70 text-sm">
-                  Use code{" "}
-                  <span className="text-ochre font-semibold tracking-wider">
-                    MEROLA10
-                  </span>{" "}
-                  at checkout for 10% off.
-                </p>
-              </div>
-            ) : (
-              <form
-                onSubmit={handleSubscribe}
-                className="flex flex-col sm:flex-row gap-3"
-              >
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Your email address"
-                  required
-                  className="flex-1 px-5 py-3.5 bg-cream/10 border border-cream/20 rounded-lg text-cream placeholder-cream/40 text-sm tracking-wide focus:outline-none focus:border-ochre/60 transition-colors"
-                />
-                <button
-                  type="submit"
-                  className="px-8 py-3.5 bg-oxblood hover:bg-oxblood-light text-cream text-sm font-medium tracking-widest uppercase rounded-lg transition-colors duration-300"
+      {/* ================= MARQUEE ================= */}
+      <div className="overflow-hidden border-y border-ochre/30 bg-oxblood py-3.5">
+        <div className="animate-marquee flex w-max items-center">
+          {[0, 1].map((copy) => (
+            <div key={copy} className="flex items-center" aria-hidden={copy === 1}>
+              {marqueePhrase.map((word) => (
+                <span
+                  key={`${copy}-${word}`}
+                  className="flex items-center text-[10px] font-medium uppercase tracking-[0.4em] text-cream/85"
                 >
-                  Subscribe
-                </button>
-              </form>
-            )}
+                  <span className="px-6">{word}</span>
+                  <span className="text-ochre-light">&#10043;</span>
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ================= BRAND STATEMENT ================= */}
+      <section className="px-6 py-24 sm:py-32 lg:px-10">
+        <Reveal className="mx-auto max-w-3xl text-center">
+          <p className="text-[10px] font-medium uppercase tracking-[0.4em] text-dusty-blue">
+            La Casa delle Meraviglie
+          </p>
+          <h2 className="mt-5 font-serif text-4xl font-medium leading-[1.15] text-navy sm:text-5xl md:text-6xl">
+            A love letter to the{" "}
+            <em className="font-light italic text-oxblood">Mediterranean</em>,
+            painted in clay &amp; gold
+          </h2>
+          <p className="mx-auto mt-8 max-w-2xl text-[15px] font-light leading-relaxed text-navy/65">
+            House of Merola gathers hand-painted tiles, engraved botanicals and
+            sacred art from the workshops of the Mediterranean. Each piece is
+            made slowly, by hand, with the colours of old Sicilian tiles — deep
+            navy, oxblood, ochre and warm cream — so that the sea, the sun and
+            centuries of craft live on in your home.
+          </p>
+          <div className="mt-10 flex items-center justify-center gap-4">
+            <span className="h-px w-14 bg-ochre/50" />
+            <span className="text-ochre">&#10043;</span>
+            <span className="h-px w-14 bg-ochre/50" />
+          </div>
+        </Reveal>
+      </section>
+
+      {/* ================= FEATURED PIECES ================= */}
+      <section className="border-y border-cream-dark/40 bg-cream-dark/15 px-6 py-24 sm:py-28 lg:px-10">
+        <div className="mx-auto w-full max-w-7xl">
+          <Reveal className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p className="text-[10px] font-medium uppercase tracking-[0.4em] text-dusty-blue">
+                Handpicked
+              </p>
+              <h2 className="mt-4 font-serif text-4xl font-medium text-navy sm:text-5xl">
+                Featured Pieces
+              </h2>
+            </div>
+            <Link
+              href="/shop"
+              className="group flex items-center gap-3 border-b border-navy/30 pb-1 text-[11px] font-medium uppercase tracking-[0.3em] text-navy transition-colors duration-300 hover:border-oxblood hover:text-oxblood"
+            >
+              View all pieces
+              <span className="transition-transform duration-300 group-hover:translate-x-1">
+                &rarr;
+              </span>
+            </Link>
+          </Reveal>
+
+          <div className="mt-14 grid grid-cols-2 gap-x-5 gap-y-12 lg:grid-cols-4">
+            {featured.map((product, index) => (
+              <Reveal key={product.id} delay={index * 90}>
+                <ProductCard product={product} onClick={setSelectedProduct} />
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Product Modal */}
+      {/* ================= COLLECTION DIVIDERS ================= */}
+      <section>
+        {collections.map((collection, index) => (
+          <Link
+            key={collection.slug}
+            href={`/shop/${collection.slug}`}
+            className="group relative block h-[70vh] min-h-[480px] w-full overflow-hidden border-b border-cream-dark/40"
+          >
+            <Image
+              src={collection.bannerImage}
+              alt={collection.name}
+              fill
+              sizes="100vw"
+              className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/80 via-navy-deep/25 to-navy-deep/40 transition-opacity duration-700 group-hover:opacity-90" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+              <p className="text-[10px] font-medium uppercase tracking-[0.45em] text-ochre-light">
+                Collezione 0{index + 1}
+              </p>
+              <h3 className="mt-5 font-serif text-4xl font-semibold uppercase leading-tight tracking-[0.08em] text-cream sm:text-5xl md:text-6xl">
+                {collection.name}
+              </h3>
+              <div className="mt-6 flex items-center gap-4">
+                <span className="h-px w-12 bg-ochre/60 transition-all duration-500 group-hover:w-20" />
+                <span className="text-ochre-light">&#10043;</span>
+                <span className="h-px w-12 bg-ochre/60 transition-all duration-500 group-hover:w-20" />
+              </div>
+              <p className="mt-6 max-w-xl font-serif text-lg font-light italic text-cream/85 sm:text-xl">
+                {collection.tagline}
+              </p>
+              <span className="mt-8 flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.35em] text-cream/90 transition-colors duration-300 group-hover:text-ochre-light">
+                Explore the collection
+                <span className="transition-transform duration-300 group-hover:translate-x-1.5">
+                  &rarr;
+                </span>
+              </span>
+            </div>
+          </Link>
+        ))}
+      </section>
+
+      {/* ================= VALUES ================= */}
+      <section className="grain relative overflow-hidden bg-navy py-24 text-cream sm:py-28">
+        <div className="mx-auto w-full max-w-7xl px-6 lg:px-10">
+          <Reveal className="mx-auto max-w-2xl text-center">
+            <p className="text-[10px] font-medium uppercase tracking-[0.4em] text-ochre-light">
+              Il Mestiere
+            </p>
+            <h2 className="mt-4 font-serif text-4xl font-medium sm:text-5xl">
+              Made slowly, by hand
+            </h2>
+          </Reveal>
+          <div className="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-3">
+            {[
+              {
+                title: "Hand-painted",
+                body: "Every tile is painted stroke by stroke, in the time-honoured traditions of Sicilian ceramic art.",
+              },
+              {
+                title: "Small batches",
+                body: "We craft in limited runs, so each piece carries the character only time and care can give.",
+              },
+              {
+                title: "Made to be lived with",
+                body: "More than decor — objects with soul, made to become part of your everyday life.",
+              },
+            ].map((value, index) => (
+              <Reveal key={value.title} delay={index * 100} className="text-center">
+                <p className="font-serif text-5xl font-light text-ochre/50">
+                  0{index + 1}
+                </p>
+                <div className="mx-auto mt-5 h-px w-10 bg-ochre/40" />
+                <h3 className="mt-5 font-serif text-2xl font-medium">
+                  {value.title}
+                </h3>
+                <p className="mx-auto mt-3 max-w-xs text-sm font-light leading-relaxed text-cream/60">
+                  {value.body}
+                </p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= NEWSLETTER ================= */}
+      <section
+        id="newsletter"
+        className="scroll-mt-24 px-6 py-24 sm:py-32 lg:px-10"
+      >
+        <Reveal className="grain relative mx-auto w-full max-w-3xl overflow-hidden bg-navy px-6 py-16 text-center sm:px-14 sm:py-20">
+          <p className="text-[10px] font-medium uppercase tracking-[0.45em] text-ochre-light">
+            Stay Connected
+          </p>
+          <h2 className="mt-4 font-serif text-4xl font-medium text-cream sm:text-5xl">
+            Join the House
+          </h2>
+          <p className="mx-auto mt-5 max-w-md text-sm font-light leading-relaxed text-cream/65">
+            Become part of our world — receive{" "}
+            <span className="text-ochre-light">10% off your first piece</span>,
+            early access to new collections and stories from the studio.
+          </p>
+          <div className="mx-auto mt-10 max-w-md">
+            <NewsletterForm />
+          </div>
+          <p className="mt-5 text-[9px] uppercase tracking-[0.25em] text-cream/35">
+            No spam, only the Mediterranean — unsubscribe anytime
+          </p>
+        </Reveal>
+      </section>
+
+      {/* Product modal */}
       {selectedProduct && (
         <ProductModal
           product={selectedProduct}

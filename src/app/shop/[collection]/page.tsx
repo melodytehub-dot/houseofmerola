@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState, use } from "react";
+import Link from "next/link";
+import { use, useState } from "react";
 import {
   collections,
   getCollectionBySlug,
@@ -9,8 +10,8 @@ import {
 } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
 import ProductModal from "@/components/ProductModal";
+import Reveal from "@/components/Reveal";
 import type { Product } from "@/lib/products";
-import Link from "next/link";
 
 export default function CollectionPage({
   params,
@@ -24,26 +25,32 @@ export default function CollectionPage({
 
   if (!collection) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center">
+      <div className="flex min-h-[60vh] items-center justify-center px-6">
         <div className="text-center">
-          <h1 className="font-serif text-4xl text-navy mb-4">
-            Collection Not Found
+          <p className="text-[10px] font-medium uppercase tracking-[0.4em] text-dusty-blue">
+            Collezione non trovata
+          </p>
+          <h1 className="mt-4 font-serif text-4xl font-medium text-navy">
+            Collection not found
           </h1>
           <Link
-            href="/"
-            className="text-ochre hover:text-ochre-light text-sm tracking-widest uppercase"
+            href="/shop"
+            className="mt-8 inline-block border-b border-oxblood/50 pb-1 text-[11px] uppercase tracking-[0.3em] text-oxblood transition-colors hover:border-oxblood-dark hover:text-oxblood-dark"
           >
-            Return Home
+            Return to the shop
           </Link>
         </div>
       </div>
     );
   }
 
+  const collectionIndex = collections.findIndex((c) => c.slug === slug);
+  const otherCollections = collections.filter((c) => c.slug !== slug);
+
   return (
     <>
-      {/* Collection Banner */}
-      <section className="relative w-full h-[50vh] sm:h-[60vh] overflow-hidden">
+      {/* Banner */}
+      <section className="relative h-[52vh] min-h-[400px] w-full overflow-hidden">
         <Image
           src={collection.bannerImage}
           alt={collection.name}
@@ -52,46 +59,44 @@ export default function CollectionPage({
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy/40 via-navy/20 to-navy/70" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-          <p className="text-ochre/80 text-xs tracking-[0.4em] uppercase font-medium mb-4 font-sans">
-            Collection
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/80 via-navy-deep/25 to-navy-deep/40" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+          <p className="text-[10px] font-medium uppercase tracking-[0.45em] text-ochre-light">
+            Collezione 0{collectionIndex + 1}
           </p>
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-semibold text-cream tracking-[0.08em] uppercase mb-4 drop-shadow-lg">
+          <h1 className="mt-5 font-serif text-4xl font-semibold uppercase leading-tight tracking-[0.08em] text-cream sm:text-5xl md:text-6xl">
             {collection.name}
           </h1>
-          <div className="w-20 h-px bg-ochre/50 mb-6" />
-          <p className="font-serif text-lg sm:text-xl text-cream/80 italic font-light max-w-xl drop-shadow-md">
+          <div className="mt-6 flex items-center gap-4">
+            <span className="h-px w-12 bg-ochre/60" />
+            <span className="text-ochre-light">&#10043;</span>
+            <span className="h-px w-12 bg-ochre/60" />
+          </div>
+          <p className="mt-6 max-w-xl font-serif text-lg font-light italic text-cream/85 sm:text-xl">
             {collection.tagline}
           </p>
         </div>
       </section>
 
-      {/* Collection Description */}
-      <section className="py-16 px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-navy/60 text-base leading-relaxed font-light">
+      {/* Intro + switcher */}
+      <section className="border-b border-cream-dark/40 px-6 py-14">
+        <div className="mx-auto w-full max-w-7xl">
+          <p className="mx-auto max-w-2xl text-center text-sm font-light leading-relaxed text-navy/65">
             {collection.description}
           </p>
-        </div>
-      </section>
-
-      {/* Other Collections */}
-      <section className="px-4 pb-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
             {collections.map((col) => {
-              const isActive = col.slug === slug;
+              const active = col.slug === slug;
               return (
                 <Link
                   key={col.slug}
                   href={`/shop/${col.slug}`}
-                  className={
-                    "px-5 py-2.5 rounded-full text-xs tracking-widest uppercase font-medium transition-all duration-300 " +
-                    (isActive
-                      ? "bg-navy text-cream"
-                      : "bg-cream-dark/50 text-navy/60 hover:bg-cream-dark hover:text-navy")
-                  }
+                  aria-current={active ? "page" : undefined}
+                  className={`relative pb-1 text-[10px] font-medium uppercase tracking-[0.28em] transition-colors duration-300 ${
+                    active
+                      ? "text-oxblood after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-ochre"
+                      : "text-dusty-blue hover:text-navy"
+                  }`}
                 >
                   {col.name}
                 </Link>
@@ -101,29 +106,80 @@ export default function CollectionPage({
         </div>
       </section>
 
-      {/* Products Grid */}
-      <section className="px-4 pb-20 sm:pb-28">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
-            {collectionProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onClick={setSelectedProduct}
-              />
+      {/* Products grid */}
+      <section className="px-6 py-16 sm:py-20 lg:px-10">
+        <div className="mx-auto w-full max-w-7xl">
+          <p className="text-[10px] uppercase tracking-[0.35em] text-dusty-blue">
+            {collectionProducts.length}{" "}
+            {collectionProducts.length === 1 ? "piece" : "pieces"} in this
+            collection
+          </p>
+          <div className="mt-8 grid grid-cols-2 gap-x-5 gap-y-12 lg:grid-cols-3 xl:grid-cols-4">
+            {collectionProducts.map((product, index) => (
+              <Reveal key={product.id} delay={(index % 4) * 80}>
+                <ProductCard
+                  product={product}
+                  onClick={setSelectedProduct}
+                />
+              </Reveal>
             ))}
           </div>
           {collectionProducts.length === 0 && (
-            <div className="text-center py-20">
-              <p className="text-navy/40 font-serif text-2xl">
-                More pieces coming soon...
+            <div className="py-24 text-center">
+              <p className="font-serif text-3xl font-light italic text-navy/50">
+                New pieces are on the easel — check back soon.
               </p>
             </div>
           )}
         </div>
       </section>
 
-      {/* Product Modal */}
+      {/* Continue exploring */}
+      {otherCollections.length > 0 && (
+        <section className="border-t border-cream-dark/40 bg-cream-dark/15 px-6 py-20 lg:px-10">
+          <div className="mx-auto w-full max-w-7xl">
+            <div className="flex items-end justify-between gap-6">
+              <h2 className="font-serif text-3xl font-medium text-navy sm:text-4xl">
+                Continue exploring
+              </h2>
+              <Link
+                href="/shop"
+                className="hidden text-[10px] font-medium uppercase tracking-[0.3em] text-dusty-blue transition-colors hover:text-oxblood sm:block"
+              >
+                All collections &rarr;
+              </Link>
+            </div>
+            <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {otherCollections.map((col) => (
+                <Link
+                  key={col.slug}
+                  href={`/shop/${col.slug}`}
+                  className="group relative block h-60 overflow-hidden border border-cream-dark/60"
+                >
+                  <Image
+                    src={col.bannerImage}
+                    alt={col.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/75 via-navy-deep/15 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">
+                    <span className="font-serif text-2xl font-medium text-cream">
+                      {col.name}
+                    </span>
+                    <span className="text-ochre-light transition-transform duration-300 group-hover:translate-x-1">
+                      &rarr;
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Product modal */}
       {selectedProduct && (
         <ProductModal
           product={selectedProduct}

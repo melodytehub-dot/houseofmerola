@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -8,6 +8,7 @@ const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -19,18 +20,25 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "House of Merola | Arte, Casa, Mediterraneo",
+  title: {
+    default: "House of Merola — Arte • Casa • Mediterraneo",
+    template: "%s — House of Merola",
+  },
   description:
-    "Mediterranean soul. Botanical beauty. Sacred tradition. Timeless curiosities. Handcrafted Mediterranean art, tiles, and decorative objects.",
+    "Hand-painted tiles, engraved botanicals and sacred art — crafted in the spirit of the Mediterranean. Arte, casa, Mediterraneo.",
   keywords: [
     "Mediterranean art",
-    "Italian tiles",
-    "hand-painted ceramics",
-    "Sicilian art",
-    "decorative tiles",
-    "botanical art",
+    "hand-painted ceramic tiles",
+    "Sicilian tiles",
+    "botanical wall art",
     "sacred art",
+    "Italian home decor",
+    "House of Merola",
   ],
+};
+
+export const viewport: Viewport = {
+  themeColor: "#16294d",
 };
 
 export default function RootLayout({
@@ -41,9 +49,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${montserrat.variable} h-full antialiased`}
+      className={`${cormorant.variable} ${montserrat.variable}`}
     >
-      <body className="min-h-full flex flex-col font-sans bg-cream-light text-navy">
+      <body className="flex min-h-svh flex-col bg-cream-light font-sans text-navy antialiased">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
