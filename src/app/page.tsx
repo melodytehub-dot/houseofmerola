@@ -128,7 +128,7 @@ export default function HomePage() {
                 sizes="(min-width: 768px) 50vw, 100vw"
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/60 to-navy-deep/25" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/75 to-navy-deep/45" />
               <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
                 <p className="eyebrow text-ochre-soft">{collection.tagline}</p>
                 <h3 className="mt-2 font-serif text-2xl text-cream sm:text-3xl">

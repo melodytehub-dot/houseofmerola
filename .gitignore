@@ -44,6 +44,10 @@ next-env.d.ts
 AGENTS.md
 CLAUDE.md
 
+# stray local dev servers
+server.js
+server-simple.js
+
 # source screenshots
 public/screenshot*
 server.log

@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Stray local dev servers (not part of the app)
+    "server.js",
+    "server-simple.js",
   ]),
 ]);
 
