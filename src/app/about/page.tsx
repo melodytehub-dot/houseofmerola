@@ -1,180 +1,142 @@
-import Image from "next/image";
-import Link from "next/link";
-import Reveal from "@/components/Reveal";
-
-export const metadata = {
-  title: "About the House",
-  description:
-    "The story of House of Merola — hand-painted tiles, engraved botanicals and sacred art, crafted in the spirit of the Mediterranean.",
-};
+import Link from 'next/link'
+import Image from 'next/image'
 
 export default function AboutPage() {
   return (
-    <>
-      {/* Hero band */}
-      <section className="relative h-[52vh] min-h-[400px] w-full overflow-hidden">
-        <Image
-          src="/collection2.jpg"
-          alt="House of Merola — about the house"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/85 to-navy-deep/90" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-          <p className="text-[10px] font-medium uppercase tracking-[0.45em] text-ochre-light">
-            Our Story
-          </p>
-          <h1 className="mt-5 font-serif text-4xl font-semibold uppercase tracking-[0.08em] text-cream sm:text-5xl md:text-6xl">
-            About the House
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative h-[70vh] grain overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/more details.jpg"
+            alt="Our Story"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-navy/50" />
+        </div>
+        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-cream px-6">
+          <h1 className="font-serif text-5xl md:text-7xl mb-6">
+            Our story is rooted in the Mediterranean.
           </h1>
-          <div className="mt-6 flex items-center gap-4">
-            <span className="h-px w-12 bg-ochre/60" />
-            <span className="text-ochre-light">&#10043;</span>
-            <span className="h-px w-12 bg-ochre/60" />
+          <div className="flex items-center gap-4">
+            <span className="h-px w-12 bg-ochre" />
+            <span className="text-ochre">✦</span>
+            <span className="h-px w-12 bg-ochre" />
           </div>
-          <p className="mt-6 max-w-xl font-serif text-lg font-light italic text-cream/85 sm:text-xl">
-            A Mediterranean soul, rooted in tradition
-          </p>
         </div>
       </section>
 
-      {/* Story split */}
-      <section className="px-6 py-24 sm:py-32 lg:px-10">
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-14 md:grid-cols-2 md:gap-20">
-          <Reveal>
-            <p className="text-[10px] font-medium uppercase tracking-[0.4em] text-dusty-blue">
-              Born from the sun
+      {/* Story Content */}
+      <section className="py-20 px-6 lg:px-12 bg-cream">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-16">
+            <p className="text-lg leading-relaxed text-navy/80 mb-6">
+              House of Merola was born from a love for the Mediterranean—its colors, its traditions, its way of life. Each piece we offer carries the soul of the artisans and the spirit of the sun and sea.
             </p>
-            <h2 className="mt-4 font-serif text-4xl font-medium leading-[1.15] text-navy sm:text-5xl">
-              A house built on
-              <br />
-              <em className="font-light italic text-oxblood">ceramic &amp;
-              craft</em>
-            </h2>
-            <div className="mt-8 space-y-5 text-[15px] font-light leading-relaxed text-navy/65">
-              <p>
-                House of Merola began with a love of the Mediterranean — its
-                sun-drenched coasts, its ancient markets, and the patience of
-                its artisans. What started as a few hand-painted tiles gathered
-                on travels became a home for the objects that carry the sea
-                with them.
-              </p>
-              <p>
-                Every piece we offer is made by hand: tiles painted stroke by
-                stroke in the tradition of Sicilian ceramics, botanicals
-                engraved into wood, sacred imagery glazed in blues and gold.
-                They are not made quickly, and they are not meant to be — like
-                the pigments on an old tile, their beauty is in the layering.
-              </p>
-            </div>
-            <div className="mt-10 flex items-center gap-4">
-              <span className="h-px w-14 bg-ochre/50" />
-              <span className="text-ochre">&#10043;</span>
-            </div>
-          </Reveal>
-          <Reveal delay={120}>
-            <div className="group relative overflow-hidden border border-cream-dark/60 shadow-[0_2px_8px_rgba(22,41,77,0.06),0_24px_48px_-24px_rgba(22,41,77,0.35)]">
-              <div className="aspect-[4/5]">
-                <Image
-                  src="/prod7.jpg"
-                  alt="Hand-painted pomegranate tile"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
-                />
-              </div>
-              <div className="absolute bottom-0 left-0 bg-navy/75 px-4 py-2 backdrop-blur-sm">
-                <span className="text-[9px] uppercase tracking-[0.25em] text-ochre-light">
-                  Hand-painted tile &mdash; the colours of the house
-                </span>
-              </div>
-            </div>
-          </Reveal>
+            <p className="text-lg leading-relaxed text-navy/80">
+              Every object we create is a tribute to hand-made traditions that have been passed down through centuries. We believe in taking time, in honoring heritage behind every piece.
+            </p>
+          </div>
+
+          <div className="my-16">
+            <Link
+              href="/shop"
+              className="inline-flex items-center gap-2 bg-navy text-cream px-8 py-4 hover:bg-navy-deep transition-all duration-300 uppercase text-sm tracking-wide"
+            >
+              <span>Discover Our Collection</span>
+              <span>→</span>
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Values */}
-      <section className="border-y border-cream-dark/40 bg-cream-dark/15 px-6 py-24 sm:py-28 lg:px-10">
-        <div className="mx-auto w-full max-w-6xl">
-          <Reveal className="text-center">
-            <p className="text-[10px] font-medium uppercase tracking-[0.4em] text-dusty-blue">
-              Our Philosophy
-            </p>
-            <h2 className="mt-4 font-serif text-4xl font-medium text-navy sm:text-5xl">
-              What we believe in
+      {/* Mission Section */}
+      <section className="py-20 px-6 lg:px-12 bg-cream-light">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-ochre tracking-widest uppercase text-sm mb-3">Our Mission</p>
+            <h2 className="font-serif text-4xl md:text-5xl text-navy">
+              Bringing timeless beauty into everyday living.
             </h2>
-          </Reveal>
-          <div className="mt-16 grid grid-cols-1 gap-12 sm:grid-cols-3">
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-16">
             {[
               {
-                title: "Made by hand",
-                body: "Meticulous attention to detail and deep respect for traditional Mediterranean techniques in every single piece.",
+                icon: '✦',
+                title: 'AUTHENTICITY',
+                description: 'We celebrate traditional craftsmanship as we honor the heritage behind every piece.'
               },
               {
-                title: "Rooted in tradition",
-                body: "Our designs draw from centuries of ceramic art, botanical illustration and sacred devotional imagery.",
+                icon: '✋',
+                title: 'HAND-CRAFTED',
+                description: 'From materials to finishing, we are committed to lasting quality you can feel.'
               },
               {
-                title: "Timeless beauty",
-                body: "Objects that transcend trends — lasting pieces that bring warmth and character to any space.",
+                icon: '🌿',
+                title: 'BEAUTY',
+                description: 'Inspired by the Mediterranean landscape, our designs bring warmth, elegance, and soul beyond home.'
               },
-            ].map((value, index) => (
-              <Reveal key={value.title} delay={index * 100} className="text-center">
-                <span className="font-serif text-5xl font-light text-ochre/60">
-                  0{index + 1}
-                </span>
-                <div className="mx-auto mt-5 h-px w-10 bg-ochre/50" />
-                <h3 className="mt-5 font-serif text-2xl font-medium text-navy">
-                  {value.title}
-                </h3>
-                <p className="mx-auto mt-3 max-w-xs text-sm font-light leading-relaxed text-navy/60">
-                  {value.body}
-                </p>
-              </Reveal>
+              {
+                icon: '♥',
+                title: 'SUSTAINABILITY',
+                description: 'We value mindful production and lasting design that stand the test of time and trend.'
+              }
+            ].map((value, i) => (
+              <div key={i} className="text-center">
+                <div className="text-5xl text-ochre mb-4">{value.icon}</div>
+                <h3 className="font-serif text-xl text-navy mb-3">{value.title}</h3>
+                <p className="text-sm text-navy/70 leading-relaxed">{value.description}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Quote band */}
-      <section className="grain relative overflow-hidden bg-navy px-6 py-28 text-center sm:py-36">
-        <Reveal className="mx-auto max-w-3xl">
-          <span className="font-serif text-6xl text-ochre/60">&ldquo;</span>
-          <blockquote className="font-serif text-3xl font-light italic leading-snug text-cream sm:text-4xl md:text-5xl">
-            Every tile is a small piece of the Mediterranean — sun, sea and
-            centuries of craft, glazed and set in clay.
-          </blockquote>
-          <div className="mt-8 flex items-center justify-center gap-4">
-            <span className="h-px w-14 bg-ochre/40" />
-            <span className="text-ochre">&#10043;</span>
-            <span className="h-px w-14 bg-ochre/40" />
+      {/* Artisans Section */}
+      <section className="py-20 px-6 lg:px-12 bg-cream">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="relative h-[500px]">
+              <Image
+                src="/hero.jpg"
+                alt="Made by Artisans"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div>
+              <p className="text-ochre tracking-widest uppercase text-sm mb-4">Made by Artisans</p>
+              <h2 className="font-serif text-4xl md:text-5xl text-navy mb-6">
+                Honoring traditions, supporting artisans.
+              </h2>
+              <p className="text-lg leading-relaxed text-navy/80 mb-6">
+                We partner with skilled artisans across the Mediterranean who keep centuries-old techniques alive. By choosing their work, you support their craft and bring beauty into your home—you're supporting their craft, their communities, and their future.
+              </p>
+              <Link
+                href="/contact"
+                className="inline-block bg-ochre text-navy px-8 py-3 hover:bg-ochre-light transition-all duration-300 uppercase text-sm font-medium"
+              >
+                Meet the Artisans
+              </Link>
+            </div>
           </div>
-          <p className="mt-6 text-[10px] font-medium uppercase tracking-[0.4em] text-cream/50">
-            House of Merola
-          </p>
-        </Reveal>
+        </div>
       </section>
 
-      {/* CTA */}
-      <section className="px-6 py-24 text-center sm:py-28">
-        <Reveal>
-          <h2 className="font-serif text-4xl font-medium text-navy sm:text-5xl">
-            Discover our world
+      {/* Quote Section */}
+      <section className="relative py-24 px-6 lg:px-12 grain">
+        <div className="absolute inset-0 bg-navy" />
+        <div className="relative z-10 max-w-4xl mx-auto text-center text-cream">
+          <div className="mb-6 text-6xl font-serif text-ochre">"</div>
+          <h2 className="font-serif text-3xl md:text-4xl mb-6 leading-relaxed">
+            The Mediterranean is not a place, it's a feeling — of sun, of home, of timeless beauty.
           </h2>
-          <p className="mx-auto mt-5 max-w-md text-sm font-light leading-relaxed text-navy/60">
-            Explore the collections and find the piece that brings a little
-            Mediterranean sun into your home.
-          </p>
-          <Link
-            href="/shop"
-            className="mt-9 inline-block bg-oxblood px-10 py-4 text-[11px] font-medium uppercase tracking-[0.3em] text-cream transition-all duration-500 hover:bg-oxblood-dark"
-          >
-            Browse the Shop
-          </Link>
-        </Reveal>
+          <p className="text-ochre tracking-widest uppercase text-sm">— House of Merola</p>
+        </div>
       </section>
-    </>
-  );
+    </div>
+  )
 }
