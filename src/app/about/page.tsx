@@ -1,94 +1,157 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import Image from "next/image";
+import Link from "next/link";
+import Newsletter from "@/components/Newsletter";
 
-const values = [
-  {
-    title: 'Authenticity',
-    description: 'We honor traditional craftsmanship and the layered beauty of handmade work.',
-  },
-  {
-    title: 'Quality',
-    description: 'From materials to finishing, every piece is chosen for longevity and presence.',
-  },
-  {
-    title: 'Beauty',
-    description: 'We favor warm color, ornamental detail, and a Mediterranean sense of calm.',
-  },
-  {
-    title: 'Sustainability',
-    description: 'We value thoughtful production and objects that are meant to be kept, not replaced.',
-  },
-]
+export const metadata = {
+  title: "Our Story",
+  description:
+    "The story of House of Merola — hand-painted ceramic tiles and gold-engraved study boards, inspired by Sicilian majolica.",
+};
 
 export default function AboutPage() {
   return (
-    <div>
-      <section className="grain relative overflow-hidden">
-        <div className="absolute inset-0">
-          <Image src="/more details.jpg" alt="About House of Merola" fill priority className="object-cover object-center" />
-          <div className="absolute inset-0 bg-gradient-to-r from-cream/76 via-cream/40 to-navy/10" />
+    <>
+      {/* Header */}
+      <section className="border-b border-navy/10 bg-cream">
+        <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:py-24">
+          <p className="eyebrow text-ochre">Our story</p>
+          <h1 className="mt-4 font-serif text-4xl leading-tight text-navy sm:text-6xl">
+            Made in the spirit
+            <br />
+            <em className="font-light italic text-ochre">of old Sicilian majolica</em>
+          </h1>
+          <p className="mx-auto mt-6 max-w-xl leading-relaxed text-navy/70">
+            House of Merola began with a shelf of lemon-painted tiles and a
+            belief that a wall can carry a little sunshine.
+          </p>
         </div>
-        <div className="relative mx-auto grid min-h-[74vh] max-w-7xl items-center px-4 py-14 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
-          <div className="max-w-xl">
-            <p className="mb-4 text-sm tracking-[0.28em] text-gold uppercase">About us</p>
-            <h1 className="font-serif text-5xl leading-tight text-navy md:text-7xl">
-              Our story is rooted in the Mediterranean.
-            </h1>
-            <div className="mt-6 h-px w-16 bg-gold" />
-            <p className="mt-6 text-base leading-7 text-navy/80">
-              House of Merola was born from a love for sea light, ceramic tradition, and the
-              layered beauty of objects made by hand.
+      </section>
+
+      {/* Story blocks */}
+      <section className="mx-auto max-w-7xl space-y-20 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div className="relative order-2 mx-auto w-full max-w-md lg:order-1 lg:max-w-none">
+            <div
+              className="absolute -inset-3 rounded-2xl border border-ochre/40"
+              aria-hidden="true"
+            />
+            <div className="relative overflow-hidden rounded-xl border border-navy/15">
+              <Image
+                src="/images/prod-madonna-sicilia.jpg"
+                alt="Madonna di Sicilia tile"
+                width={900}
+                height={900}
+                className="h-auto w-full"
+              />
+            </div>
+          </div>
+          <div className="order-1 lg:order-2">
+            <div className="section-rule">
+              <span className="eyebrow text-navy">The beginning</span>
+            </div>
+            <h2 className="mt-4 font-serif text-3xl text-navy sm:text-4xl">
+              A love letter to the Mediterranean
+            </h2>
+            <p className="mt-5 leading-relaxed text-navy/70">
+              Everything starts with the coast — cobalt blue against white
+              plaster, lemons hanging over garden walls, saints watching from
+              tiled corners. We wanted to bring that feeling home, one tile and
+              one study board at a time.
             </p>
+            <p className="mt-4 leading-relaxed text-navy/70">
+              Our tiles are hand-painted in the tradition of Sicilian majolica,
+              with borders of scrollwork and blossom that echo old chapel
+              floors. Our study boards draw on the naturalists’ cabinets of the
+              nineteenth century — herbals, herpetology, mycology — painted and
+              laser-engraved in antique gold on dark wood.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <div className="section-rule">
+              <span className="eyebrow text-navy">By hand</span>
+            </div>
+            <h2 className="mt-4 font-serif text-3xl text-navy sm:text-4xl">
+              No two pieces are identical
+            </h2>
+            <p className="mt-5 leading-relaxed text-navy/70">
+              Small-batch by design. Each tile is painted individually, each
+              board is engraved line by line, so the glaze catches the light a
+              little differently every time. The subtle variations you’ll see
+              are not imperfections — they’re the signature of the hand that
+              made it.
+            </p>
+            <Link
+              href="/shop"
+              className="mt-8 inline-flex items-center gap-2 rounded-full bg-oxblood px-8 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-cream transition hover:bg-oxblood-deep"
+            >
+              See the pieces
+            </Link>
+          </div>
+          <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+            <div
+              className="absolute -inset-3 rounded-2xl border border-ochre/40"
+              aria-hidden="true"
+            />
+            <div className="relative overflow-hidden rounded-xl border border-navy/15">
+              <Image
+                src="/images/prod-herbolologia.jpg"
+                alt="Herbolologia Medica study board"
+                width={900}
+                height={1125}
+                className="h-auto w-full"
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-8 lg:grid-cols-4">
-            {values.map((value) => (
-              <div key={value.title} className="soft-card p-6 text-center">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-gold/20 text-2xl text-gold">
-                  ✣
-                </div>
-                <h2 className="font-serif text-2xl text-navy">{value.title}</h2>
-                <p className="mt-3 text-sm leading-6 text-navy/75">{value.description}</p>
+      {/* Values */}
+      <section className="bg-navy py-16 text-cream lg:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <div className="section-rule justify-center text-ochre-soft">
+              <span className="eyebrow text-ochre-soft">What we hold dear</span>
+            </div>
+            <h2 className="mt-4 font-serif text-3xl sm:text-4xl">
+              Arte · Casa · Mediterraneo
+            </h2>
+          </div>
+          <div className="grid gap-8 text-center sm:grid-cols-3">
+            {[
+              {
+                icon: "🎨",
+                title: "Handmade",
+                body: "Every tile is painted and every board engraved by hand, in small batches.",
+              },
+              {
+                icon: "🫒",
+                title: "Mediterranean",
+                body: "Cobalt, lemon and ochre — the pigments of an old Sicilian tile.",
+              },
+              {
+                icon: "🤲",
+                title: "Made to be kept",
+                body: "Pieces built to be passed down, not thrown away — heirlooms in waiting.",
+              },
+            ].map((value) => (
+              <div key={value.title} className="rounded-xl border border-cream/10 bg-cream/5 p-8">
+                <span className="text-3xl">{value.icon}</span>
+                <h3 className="brand-wordmark mt-4 text-base text-ochre-soft">
+                  {value.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-cream/75">
+                  {value.body}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="grid lg:grid-cols-2">
-        <div className="relative min-h-[420px]">
-          <Image src="/prod7.jpg" alt="Artisan work" fill className="object-cover" />
-        </div>
-        <div className="bg-cream-soft px-6 py-14 sm:px-8 lg:px-12">
-          <p className="mb-3 text-sm tracking-[0.28em] text-gold uppercase">Made by artisans</p>
-          <h2 className="font-serif text-4xl text-navy md:text-5xl">Honoring traditions. Supporting artisans.</h2>
-          <div className="mt-6 h-px w-16 bg-gold" />
-          <p className="mt-6 max-w-xl text-base leading-8 text-navy/80">
-            We partner with makers who keep centuries-old techniques alive. The result is a
-            collection that feels personal, textured and quietly timeless.
-          </p>
-          <Link
-            href="/contact"
-            className="mt-8 inline-flex bg-rust px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-cream transition-colors hover:bg-rust-deep"
-          >
-            Meet the artisans
-          </Link>
-        </div>
-      </section>
-
-      <section className="grain bg-navy px-4 py-16 text-cream sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl text-center">
-          <div className="text-6xl text-gold">“</div>
-          <h2 className="mt-4 font-serif text-4xl leading-tight md:text-5xl">
-            The Mediterranean is not a place, it is a feeling.
-          </h2>
-          <p className="mt-6 text-sm tracking-[0.3em] text-gold uppercase">House of Merola</p>
-        </div>
-      </section>
-    </div>
-  )
+      <Newsletter />
+    </>
+  );
 }

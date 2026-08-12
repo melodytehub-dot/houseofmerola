@@ -2,13 +2,12 @@ export interface Product {
   id: string;
   slug: string;
   name: string;
-  price: number;
+  price: number; // GBP
   image: string;
-  category: string;
-  collection: string;
+  collection: string; // collection slug
   materials: string[];
+  tagline: string;
   description: string;
-  shortDescription: string;
   featured?: boolean;
 }
 
@@ -18,267 +17,192 @@ export interface Collection {
   tagline: string;
   description: string;
   bannerImage: string;
-  accent: "navy" | "terracotta" | "ochre";
 }
 
 export const collections: Collection[] = [
   {
-    slug: "sacred-art",
-    name: "Sacred Art",
-    tagline: "Devotional tiles and icon studies",
+    slug: "mediterranean-tiles",
+    name: "Mediterranean Tiles",
+    tagline: "Hand-painted majolica for sun-washed walls",
     description:
-      "Portraits and devotional pieces shaped by old Mediterranean iconography, soft dusk light, and ornate ceramic borders.",
-    bannerImage: "/prod1.jpg",
-    accent: "navy",
+      "Bright, hand-painted ceramic tiles in the spirit of Sicilian majolica — Madonnas, lemons, Ape trucks and pomegranates, each framed in cobalt and gold.",
+    bannerImage: "/images/collection-mediterranean.jpg",
   },
   {
-    slug: "botanical-studies",
-    name: "Botanical Studies",
-    tagline: "Natural history rendered by hand",
+    slug: "botanical-natural-history",
+    name: "Botanical & Natural History",
+    tagline: "Antique study boards, engraved in gold",
     description:
-      "Antique naturalist boards and hand-finished studies that feel like they were lifted from an old Sicilian cabinet of curiosities.",
-    bannerImage: "/prod2.jpg",
-    accent: "ochre",
-  },
-  {
-    slug: "celestial-motifs",
-    name: "Celestial Motifs",
-    tagline: "Moon phases and night-sky symbols",
-    description:
-      "Lunar imagery, starlight, and dusky rose palettes for walls that want a little mystery.",
-    bannerImage: "/prod5.jpg",
-    accent: "terracotta",
-  },
-  {
-    slug: "coastal-motifs",
-    name: "Coastal Motifs",
-    tagline: "Travelling tiles and seaside scenes",
-    description:
-      "Aperitivo coastlines, village streets, and olive-bright views collected into ceramic keepsakes.",
-    bannerImage: "/prod11.jpg",
-    accent: "navy",
-  },
-  {
-    slug: "fruit-flora",
-    name: "Fruit & Flora",
-    tagline: "Lemons, pomegranates and blooming branches",
-    description:
-      "Sun-washed still lifes built from citrus, blossoms, and painterly frames that bring warmth into any room.",
-    bannerImage: "/prod15.jpg",
-    accent: "ochre",
+      "Scholarly wall boards, painted and laser-engraved in antique gold — herbal medicine, snakes, frogs, fungi and the phases of the moon.",
+    bannerImage: "/images/collection-botanical.jpg",
   },
 ];
 
 export const products: Product[] = [
+  // ── Mediterranean Tiles ─────────────────────────────────────────────
   {
     id: "madonna-di-sicilia-tile",
     slug: "madonna-di-sicilia-tile",
     name: "Madonna di Sicilia Tile",
-    price: 46,
-    image: "/prod1.jpg",
-    category: "Sacred Art",
-    collection: "sacred-art",
-    materials: ["Ceramic"],
+    price: 15,
+    image: "/images/prod-madonna-sicilia.jpg",
+    collection: "mediterranean-tiles",
+    materials: ["Hand-painted ceramic tile"],
+    tagline: "Our Lady of Sicily, painted in cobalt and gold",
     description:
-      "A devotional ceramic tile with soft blue robes, lemon branches, and a haloed composition that feels lifted from a sunlit Sicilian chapel.",
-    shortDescription: "A serene devotional tile with rich blue glazing and lemon blossom accents.",
-    featured: true,
-  },
-  {
-    id: "herbolologia-medica",
-    slug: "herbolologia-medica",
-    name: "Herbolologia Medica",
-    price: 42,
-    image: "/prod2.jpg",
-    category: "Botanical Studies",
-    collection: "botanical-studies",
-    materials: ["Print", "Wood"],
-    description:
-      "An antique-style herbal study board celebrating medicinal plants, rendered in oxidized gold lettering and timeworn botanical detail.",
-    shortDescription: "A dark, scholarly herb study with old-world typography.",
-    featured: true,
-  },
-  {
-    id: "snakeology-study",
-    slug: "snakeology-study",
-    name: "Snakeology Study",
-    price: 44,
-    image: "/prod3.jpg",
-    category: "Botanical Studies",
-    collection: "botanical-studies",
-    materials: ["Print", "Wood"],
-    description:
-      "A natural-history study board devoted to snakes, with ornate border work and illustrated anatomy in a museum-poster style.",
-    shortDescription: "A dark botanical board with ornate scientific detail.",
-    featured: true,
-  },
-  {
-    id: "frogology-study",
-    slug: "frogology-study",
-    name: "Frogology Study",
-    price: 44,
-    image: "/prod4.jpg",
-    category: "Botanical Studies",
-    collection: "botanical-studies",
-    materials: ["Print", "Wood"],
-    description:
-      "A companion naturalist board filled with frogs, habitats, and delicate border florals, made to feel like a collector's plate for the wall.",
-    shortDescription: "A museum-style frog board with a softly aged finish.",
-    featured: false,
-  },
-  {
-    id: "phases-of-the-moon",
-    slug: "phases-of-the-moon",
-    name: "Phases of the Moon",
-    price: 52,
-    image: "/prod5.jpg",
-    category: "Celestial Motifs",
-    collection: "celestial-motifs",
-    materials: ["Print", "Wood"],
-    description:
-      "A moon-phase plaque in dusky coral and midnight ink, framed by moth wings, stars, and baroque botanical scrollwork.",
-    shortDescription: "A celestial plaque with a vintage moon chart mood.",
+      "A serene Madonna in prayer, hand-painted in the tradition of Sicilian majolica. Cobalt and gold scrollwork frames a star-scattered mantle and a gilded halo, with sprigs of lemon blossom gathered at her feet and a coastal village glowing behind her.",
     featured: true,
   },
   {
     id: "amalfi-ape-truck",
     slug: "amalfi-ape-truck",
     name: "Amalfi Ape Truck",
-    price: 58,
-    image: "/prod6.jpg",
-    category: "Coastal Motifs",
-    collection: "coastal-motifs",
-    materials: ["Ceramic"],
+    price: 14,
+    image: "/images/prod-ape-truck.jpg",
+    collection: "mediterranean-tiles",
+    materials: ["Hand-painted ceramic tile"],
+    tagline: "The little three-wheeler, loaded with lemons",
     description:
-      "A joyful ceramic tile featuring an iconic Italian Ape truck full of lemons against a sea-bright Amalfi backdrop.",
-    shortDescription: "A coastal travel tile with sunshine and lemon cargo.",
+      "The iconic three-wheeled ‘Ape’ of the Amalfi coast, piled high with lemons and white blossom. Painted in cobalt, gold and leaf green, framed by ornate majolica scrollwork.",
     featured: true,
   },
   {
     id: "melograno-vase",
     slug: "melograno-vase",
     name: "Melograno Vase",
-    price: 72,
-    image: "/prod7.jpg",
-    category: "Fruit & Flora",
-    collection: "fruit-flora",
-    materials: ["Ceramic"],
+    price: 15,
+    image: "/images/prod-melograno.jpg",
+    collection: "mediterranean-tiles",
+    materials: ["Hand-painted ceramic tile"],
+    tagline: "The pomegranate — fruit of abundance",
     description:
-      "A pomegranate vase rendered in rich reds, cobalt scrollwork, and decorative flourishes that echo hand-painted Italian ceramics.",
-    shortDescription: "A generous vase motif with ripe pomegranates and blue scrolls.",
-    featured: true,
+      "A two-handled urn overflowing with ripe pomegranates, painted in deep cobalt, crimson and ochre with sliced fruit resting at its base — the old symbol of abundance at the heart of Mediterranean homes.",
   },
   {
     id: "rosato-moon-tile",
     slug: "rosato-moon-tile",
     name: "Rosato Moon Tile",
-    price: 48,
-    image: "/prod8.jpg",
-    category: "Celestial Motifs",
-    collection: "celestial-motifs",
-    materials: ["Ceramic"],
+    price: 13,
+    image: "/images/prod-rosato-moon.jpg",
+    collection: "mediterranean-tiles",
+    materials: ["Hand-painted ceramic tile"],
+    tagline: "A dreaming sun cradled in a crescent moon",
     description:
-      "A rosy celestial tile where the sun and moon meet in a soft night-sky palette, ideal for a gallery wall with a romantic edge.",
-    shortDescription: "A pink-and-indigo moon tile with a dreamy constellation feel.",
-    featured: false,
-  },
-  {
-    id: "mycology-study",
-    slug: "mycology-study",
-    name: "Mycology Study",
-    price: 46,
-    image: "/prod9.jpg",
-    category: "Botanical Studies",
-    collection: "botanical-studies",
-    materials: ["Print", "Wood"],
-    description:
-      "A dark mycology board with luminous mushroom studies, root systems, and handwritten labels inspired by antique scientific sketches.",
-    shortDescription: "A mushroom study board with a moody collector's look.",
-    featured: false,
+      "A personified sun sleeping inside a crescent moon, floating among stars, clouds and white lilies in dusty navy, lavender and warm peach — a romantic piece for a gallery wall.",
+    featured: true,
   },
   {
     id: "madonna-blue-tile",
     slug: "madonna-blue-tile",
     name: "Madonna Blue Tile",
-    price: 46,
-    image: "/prod10.jpg",
-    category: "Sacred Art",
-    collection: "sacred-art",
-    materials: ["Ceramic"],
+    price: 14,
+    image: "/images/prod-madonna-blue.jpg",
+    collection: "mediterranean-tiles",
+    materials: ["Hand-painted ceramic tile"],
+    tagline: "The Virgin in prayer beneath cobalt canopy",
     description:
-      "A classic blue-and-white Madonna tile framed by citrus leaves and fine scroll borders, designed for a bright sacred corner.",
-    shortDescription: "A blue Madonna tile with crisp floral borders.",
-    featured: false,
+      "The Virgin Mary in prayer, her rosary in hand, framed by an arched canopy of cobalt scrollwork and ringed with bright lemons, green leaves and blue blossoms.",
   },
   {
-    id: "amalfi-coast-ape-tile",
-    slug: "amalfi-coast-ape-tile",
-    name: "Amalfi Coast Ape Tile",
-    price: 62,
-    image: "/prod11.jpg",
-    category: "Coastal Motifs",
-    collection: "coastal-motifs",
-    materials: ["Ceramic"],
+    id: "limone-tile",
+    slug: "limone-tile",
+    name: "Limone Tile",
+    price: 12,
+    image: "/images/prod-lemon.jpg",
+    collection: "mediterranean-tiles",
+    materials: ["Hand-painted ceramic tile"],
+    tagline: "Three sun-washed lemons, framed in gold",
     description:
-      "A travel-inspired tile with a lemon-laden Ape truck, coastal village skyline, and ornate border work that feels both playful and collected.",
-    shortDescription: "A coastal tile with a vintage truck and panoramic village scene.",
-    featured: false,
+      "Three ripe, glossy lemons among dark leaves and delicate white citrus blossom, enclosed by a border of cobalt and golden-yellow flourish scrollwork.",
+    featured: true,
+  },
+  {
+    id: "la-dolce-vita-tile",
+    slug: "la-dolce-vita-tile",
+    name: "La Dolce Vita Tile",
+    price: 15,
+    image: "/images/prod-dolce-vita.jpg",
+    collection: "mediterranean-tiles",
+    materials: ["Hand-painted ceramic tile"],
+    tagline: "A vintage Ape truck before the colours of Amalfi",
+    description:
+      "‘La Dolce Vita’ — a vintage lemon-laden Ape truck parked before the cliffside village of Amalfi, bordered with lemons and blue scrollwork. Playful, nostalgic, unmistakably Italian.",
   },
   {
     id: "sunset-madonna-tile",
     slug: "sunset-madonna-tile",
     name: "Sunset Madonna Tile",
-    price: 48,
-    image: "/prod14.jpg",
-    category: "Sacred Art",
-    collection: "sacred-art",
-    materials: ["Ceramic"],
+    price: 15,
+    image: "/images/prod-sunset-madonna.jpg",
+    collection: "mediterranean-tiles",
+    materials: ["Hand-painted ceramic tile"],
+    tagline: "A painterly Madonna at golden hour",
     description:
-      "A warm-toned Madonna tile with dusky sunset light, weathered patina, and a painterly, heirloom-style finish.",
-    shortDescription: "A sunset devotional piece with an aged, painterly surface.",
-    featured: false,
+      "A Madonna with rosary painted in warm, painterly light, framed by Portuguese-style cobalt-and-gold ceramic tiles with a coastal village glowing under a golden sunset.",
   },
+
+  // ── Botanical & Natural History ─────────────────────────────────────
   {
-    id: "lemon-botanical-tile",
-    slug: "lemon-botanical-tile",
-    name: "Lemon Botanical Tile",
-    price: 38,
-    image: "/prod15.jpg",
-    category: "Fruit & Flora",
-    collection: "fruit-flora",
-    materials: ["Ceramic"],
+    id: "herbolologia-medica",
+    slug: "herbolologia-medica",
+    name: "Herbolologia Medica",
+    price: 18,
+    image: "/images/prod-herbolologia.jpg",
+    collection: "botanical-natural-history",
+    materials: ["Painted & laser-engraved wood panel"],
+    tagline: "The study of medicinal plants, engraved in gold",
     description:
-      "A bright lemon branch tile with glossy fruit, blue ornamentation, and fresh white blossoms framed in a timeless Mediterranean border.",
-    shortDescription: "A radiant citrus tile with blue scrollwork.",
+      "An apothecary’s chart of healing plants, engraved in antique gold on charcoal wood — herb portraits, pestle and mortar, and the old Sicilian remedy: ‘Let food be thy medicine.’",
     featured: true,
   },
   {
-    id: "coastal-market-tile",
-    slug: "coastal-market-tile",
-    name: "Coastal Market Tile",
-    price: 56,
-    image: "/prod6.jpg",
-    category: "Coastal Motifs",
-    collection: "coastal-motifs",
-    materials: ["Ceramic"],
+    id: "snakeology",
+    slug: "snakeology",
+    name: "Snakeology",
+    price: 18,
+    image: "/images/prod-snakeology.jpg",
+    collection: "botanical-natural-history",
+    materials: ["Painted & laser-engraved wood panel"],
+    tagline: "A naturalist’s study of snakes",
     description:
-      "A second-edition seaside tile that captures the same nostalgic Mediterranean road-trip mood in a different composition.",
-    shortDescription: "A travel tile that feels like a sunlit market postcard.",
-    featured: false,
+      "Anatomy, life cycle and species plates — ball python and rattlesnake — engraved in gold on black wood beneath a sun and moon, with the motto: ‘To understand a snake is to honour life.’",
   },
   {
-    id: "sacred-coast-tile",
-    slug: "sacred-coast-tile",
-    name: "Sacred Coast Tile",
-    price: 54,
-    image: "/prod1.jpg",
-    category: "Sacred Art",
-    collection: "sacred-art",
-    materials: ["Ceramic"],
+    id: "phases-of-the-moon",
+    slug: "phases-of-the-moon",
+    name: "Phases of the Moon",
+    price: 16,
+    image: "/images/prod-phases-moon.jpg",
+    collection: "botanical-natural-history",
+    materials: ["Painted & laser-engraved wood panel"],
+    tagline: "Eight phases, engraved in gold on black",
     description:
-      "An alternate devotional edition with luminous blues, coastal light, and iconography designed for a more intimate wall arrangement.",
-    shortDescription: "A devotional tile with coastal light and ornate framing.",
-    featured: false,
+      "All eight phases of the moon engraved in gold on deep black, with a great moth below and a bat above, set within gothic filigree — esoteric and quietly beautiful.",
+    featured: true,
+  },
+  {
+    id: "frogology",
+    slug: "frogology",
+    name: "Frogology",
+    price: 18,
+    image: "/images/prod-frogology.jpg",
+    collection: "botanical-natural-history",
+    materials: ["Painted & laser-engraved wood panel"],
+    tagline: "A forest-green study of frogs",
+    description:
+      "Anatomy, life cycle, habitat and diet engraved in shimmering gold on deep forest green, surrounded by eight frog species within a leafy botanical border.",
+  },
+  {
+    id: "mycology",
+    slug: "mycology",
+    name: "Mycology",
+    price: 18,
+    image: "/images/prod-mycology.jpg",
+    collection: "botanical-natural-history",
+    materials: ["Painted & laser-engraved wood panel"],
+    tagline: "The study of fungi, from amanita to chanterelle",
+    description:
+      "Anatomy of a mushroom and species plates — fly agaric, chanterelle, porcini, morel and more — engraved in gold on black wood, the crown of the natural history cabinet.",
   },
 ];
 
@@ -293,3 +217,7 @@ export function getProductsByCollection(slug: string): Product[] {
 export function getProductBySlug(slug: string): Product | undefined {
   return products.find((product) => product.slug === slug);
 }
+
+export const DISCOUNT_CODES: Record<string, number> = {
+  MEROLA10: 10,
+};
