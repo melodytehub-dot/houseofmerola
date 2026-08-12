@@ -4,6 +4,11 @@ import { collections, products } from '@/lib/products'
 
 const featured = products.filter((product) => product.featured).slice(0, 5)
 
+const collectionImageBySlug: Record<string, string> = {
+  'sacred-art': '/collection1.jpg',
+  'botanical-studies': '/collection2.jpg',
+}
+
 function SectionTitle({
   eyebrow,
   title,
@@ -23,30 +28,30 @@ function SectionTitle({
 export default function HomePage() {
   return (
     <div className="overflow-hidden">
-      <section className="grain relative overflow-hidden bg-[linear-gradient(90deg,#f6f0e5_0%,#f4e8d8_40%,#ede0cf_100%)]">
-        <div className="absolute inset-0">
-          <Image
-            src="/hero.jpg"
-            alt="Mediterranean home decor"
-            fill
-            priority
-            className="object-cover object-center opacity-90"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-cream/80 via-cream/35 to-navy/10" />
-        </div>
+      <section className="overflow-hidden bg-[linear-gradient(180deg,#fbf4ea_0%,#f4e8d8_100%)]">
+        <div className="mx-auto max-w-[1535px] px-4 pb-12 pt-6 sm:px-6 lg:px-8 lg:pt-10">
+          <div className="relative overflow-hidden rounded-[1.25rem] border border-navy/10 bg-cream shadow-[0_20px_80px_rgba(18,48,87,0.18)]">
+            <div className="relative aspect-[1535/834] w-full">
+              <Image
+                src="/hero.jpg"
+                alt="House of Merola hero artwork"
+                fill
+                priority
+                quality={100}
+                sizes="(min-width: 1700px) 1535px, 100vw"
+                className="object-cover object-center"
+              />
+            </div>
+            <div className="pointer-events-none absolute inset-0 ring-1 ring-black/5" />
+          </div>
 
-        <div className="relative mx-auto grid min-h-[78vh] max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
-          <div className="max-w-xl">
-            <p className="mb-5 text-sm tracking-[0.3em] text-gold uppercase">Mediterranean living</p>
-            <h1 className="max-w-lg font-serif text-5xl leading-[0.95] text-navy md:text-7xl">
-              Timeless home objects shaped by light, sea and tradition.
-            </h1>
-            <div className="mt-8 h-px w-16 bg-gold" />
-            <p className="mt-6 max-w-md text-base leading-7 text-navy/80 md:text-lg">
-              Curated ceramics, devotional tiles and decorative pieces inspired by the art and
-              soul of the Mediterranean.
+          <div className="mx-auto mt-8 flex max-w-3xl flex-col items-center text-center">
+            <p className="text-sm tracking-[0.28em] text-gold uppercase">Arte • Casa • Mediterraneo</p>
+            <p className="mt-4 text-base leading-7 text-navy/80 md:text-lg">
+              Curated ceramics, devotional tiles and decorative pieces inspired by the Mediterranean
+              soul.
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-7 flex flex-wrap justify-center gap-4">
               <Link
                 href="/shop"
                 className="bg-navy px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-cream transition-colors hover:bg-navy-deep"
@@ -55,22 +60,10 @@ export default function HomePage() {
               </Link>
               <Link
                 href="/about"
-                className="border border-navy/15 bg-cream/70 px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-navy transition-colors hover:bg-cream-soft"
+                className="border border-navy/15 bg-cream-soft px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-navy transition-colors hover:bg-cream"
               >
                 Our Story
               </Link>
-            </div>
-          </div>
-
-          <div className="relative hidden min-h-[560px] lg:block">
-            <div className="absolute right-8 top-8 h-[430px] w-[260px] overflow-hidden rounded-[1.5rem] border border-navy/10 bg-cream-soft shadow-[0_16px_60px_rgba(18,48,87,0.2)]">
-              <Image src="/prod10.jpg" alt="Decorative tile" fill className="object-cover" />
-            </div>
-            <div className="absolute left-10 top-24 h-[340px] w-[230px] overflow-hidden rounded-[1.5rem] border border-navy/10 bg-cream-soft shadow-[0_18px_50px_rgba(18,48,87,0.16)]">
-              <Image src="/prod7.jpg" alt="Ceramic vase" fill className="object-cover" />
-            </div>
-            <div className="absolute bottom-6 left-28 h-[220px] w-[220px] overflow-hidden rounded-[1.5rem] border border-navy/10 bg-cream-soft shadow-[0_18px_50px_rgba(18,48,87,0.16)]">
-              <Image src="/prod15.jpg" alt="Lemon tile" fill className="object-cover" />
             </div>
           </div>
         </div>
@@ -80,18 +73,20 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl">
           <SectionTitle eyebrow="Explore our collections" title="Rooted in tradition. Made for today." />
 
-          <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
+          <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {collections.map((collection) => (
               <Link
                 key={collection.slug}
                 href="/shop"
                 className="group overflow-hidden border border-navy/8 bg-white/40 transition-transform duration-300 hover:-translate-y-1"
               >
-                <div className="relative aspect-[4/5] overflow-hidden">
+                <div className="relative aspect-[16/10] overflow-hidden">
                   <Image
-                    src={collection.bannerImage}
+                    src={collectionImageBySlug[collection.slug] ?? collection.bannerImage}
                     alt={collection.name}
                     fill
+                    quality={95}
+                    sizes="(min-width: 1280px) 20vw, (min-width: 768px) 45vw, 100vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy/70 via-navy/18 to-transparent" />
