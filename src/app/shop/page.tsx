@@ -57,7 +57,7 @@ export default function ShopPage() {
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.06]"
                   />
-                  <div className="absolute inset-0 bg-navy-deep/55 transition-opacity duration-500 group-hover:bg-navy-deep/45" />
+                  <div className="absolute inset-0 bg-navy-deep/70 transition-opacity duration-500 group-hover:bg-navy-deep/60" />
                   <span className="absolute bottom-5 left-5 flex translate-y-2 items-center gap-2 bg-navy/80 px-4 py-2 text-[9px] uppercase tracking-[0.3em] text-cream opacity-0 backdrop-blur-sm transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
                     View collection &rarr;
                   </span>

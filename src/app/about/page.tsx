@@ -21,7 +21,7 @@ export default function AboutPage() {
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/75 to-navy-deep/85" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/85 to-navy-deep/90" />
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
           <p className="text-[10px] font-medium uppercase tracking-[0.45em] text-ochre-light">
             Our Story
@@ -75,14 +75,14 @@ export default function AboutPage() {
             </div>
           </Reveal>
           <Reveal delay={120}>
-            <div className="relative overflow-hidden border border-cream-dark/60">
+            <div className="group relative overflow-hidden border border-cream-dark/60 shadow-[0_2px_8px_rgba(22,41,77,0.06),0_24px_48px_-24px_rgba(22,41,77,0.35)]">
               <div className="aspect-[4/5]">
                 <Image
                   src="/prod7.jpg"
                   alt="Hand-painted pomegranate tile"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover"
+                  className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
                 />
               </div>
               <div className="absolute bottom-0 left-0 bg-navy/75 px-4 py-2 backdrop-blur-sm">

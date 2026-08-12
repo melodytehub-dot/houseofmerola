@@ -23,7 +23,9 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 6rem;
+  /* Sticky header (announcement strip + main bar) sits ~7.25rem tall */
+  scroll-padding-top: 7.5rem;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -49,14 +51,15 @@ h6 {
 }
 
 ::-webkit-scrollbar {
-  width: 9px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
   background: var(--color-cream-light);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--color-navy-light);
-  border-radius: 0;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-navy);
@@ -161,6 +164,13 @@ h6 {
 /* Page-level transition (remounts on route change via template.tsx) */
 .animate-page-enter {
   animation: fade-in 0.45s ease-out both;
+}
+
+/* ---------- Global focus ring (fallback for links etc.) ---------- */
+
+:where(a, button, input, textarea, select, summary, [role="button"]):focus-visible {
+  outline: 2px solid var(--color-ochre);
+  outline-offset: 3px;
 }
 
 /* ---------- Premium micro-interactions ---------- */

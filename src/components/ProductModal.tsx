@@ -95,7 +95,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/35 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/45 via-transparent to-transparent" />
           <div className="absolute bottom-0 left-0 flex items-center gap-2 bg-navy/80 px-4 py-2.5 backdrop-blur-sm">
             <span className="h-1.5 w-1.5 animate-pulse-dot bg-ochre-light" />
             <span className="text-[9px] uppercase tracking-[0.25em] text-ochre-light">

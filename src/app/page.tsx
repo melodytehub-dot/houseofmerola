@@ -41,7 +41,7 @@ export default function Home() {
           sizes="100vw"
           className="animate-kenburns object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/75 to-navy-deep/80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/85 to-navy-deep/90" />
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
           <p
             className="animate-fade-up text-[10px] font-medium uppercase tracking-[0.5em] text-cream/85 sm:text-xs"
@@ -50,11 +50,11 @@ export default function Home() {
             Art &bull; Home &bull; Mediterranean
           </p>
           <h1
-            className="animate-fade-up mt-6 font-serif text-[clamp(2.75rem,9vw,7rem)] font-semibold uppercase leading-[1.02] tracking-[0.1em] text-cream drop-shadow-lg"
+            className="animate-fade-up mt-6 font-serif text-[clamp(2.5rem,8vw,7rem)] font-semibold uppercase leading-[1.05] tracking-[0.1em] text-cream drop-shadow-lg"
             style={{ animationDelay: "300ms" }}
           >
             House of
-            <br className="hidden sm:block" /> Merola
+            <br /> Merola
           </h1>
           <div
             className="animate-fade-up mt-8 flex items-center gap-4"
@@ -192,7 +192,7 @@ export default function Home() {
               sizes="100vw"
               className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/75 to-navy-deep/85" />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/85 to-navy-deep/90" />
             <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
               <p className="text-[10px] font-medium uppercase tracking-[0.45em] text-ochre-light">
                 Collection 0{index + 1}
@@ -265,7 +265,7 @@ export default function Home() {
       {/* ================= NEWSLETTER ================= */}
       <section
         id="newsletter"
-        className="scroll-mt-24 px-6 py-24 sm:py-32 lg:px-10"
+        className="scroll-mt-32 px-6 py-24 sm:py-32 lg:px-10"
       >
         <Reveal className="grain relative mx-auto w-full max-w-3xl overflow-hidden bg-navy px-6 py-16 text-center sm:px-14 sm:py-20">
           <p className="text-[10px] font-medium uppercase tracking-[0.45em] text-ochre-light">

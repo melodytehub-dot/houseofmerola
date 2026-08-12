@@ -79,7 +79,23 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-cream-dark/50 bg-cream-light/90 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-cream-dark/50 bg-cream-light/95 backdrop-blur-md">
+        {/* Announcement strip */}
+        <div className="border-b border-cream-dark/40 bg-navy">
+          <p className="mx-auto flex max-w-7xl items-center justify-center gap-2 px-4 py-2.5 text-center text-[9px] font-medium uppercase leading-relaxed tracking-[0.24em] text-cream/80">
+            <span className="text-ochre-light">&#10043;</span>
+            <span className="sm:hidden">Get 10% off your first piece</span>
+            <span className="hidden sm:inline">
+              Free delivery over &pound;50 &nbsp;&bull;&nbsp; 10% off your
+              first piece &nbsp;&bull;&nbsp; code{" "}
+              <span className="font-semibold tracking-[0.3em] text-ochre-light">
+                MEROLA10
+              </span>
+            </span>
+            <span className="hidden text-ochre-light sm:inline">&#10043;</span>
+          </p>
+        </div>
+
         <nav className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10">
           {/* Logo lockup */}
           <Link
@@ -106,7 +122,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav */}
-          <div className="hidden items-center gap-6 lg:gap-9 md:flex">
+          <div className="hidden items-center gap-5 lg:gap-9 md:flex">
             <Link href="/" onClick={closeMenus} className={navLinkClasses}>
               Home
             </Link>

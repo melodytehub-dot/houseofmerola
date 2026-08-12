@@ -59,7 +59,7 @@ export default function CollectionPage({
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/75 to-navy-deep/85" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/85 to-navy-deep/90" />
         <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
           <p className="text-[10px] font-medium uppercase tracking-[0.45em] text-ochre-light">
             Collection 0{collectionIndex + 1}
@@ -163,7 +163,7 @@ export default function CollectionPage({
                     sizes="(max-width: 640px) 100vw, 33vw"
                     className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/60 to-navy-deep/20" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/70 to-navy-deep/40" />
                   <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">
                     <span className="font-serif text-2xl font-medium text-cream">
                       {col.name}

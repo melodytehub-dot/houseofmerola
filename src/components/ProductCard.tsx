@@ -15,20 +15,20 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
     <button
       type="button"
       onClick={() => onClick(product)}
-      className="group w-full cursor-pointer text-left"
+      className="group w-full cursor-pointer text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ochre"
       aria-label={`View ${product.name}`}
     >
       {/* Matted frame */}
-      <div className="lift relative overflow-hidden border border-cream-dark/50 bg-cream-light p-1.5 transition-colors duration-500 group-hover:border-ochre/60">
+      <div className="lift relative overflow-hidden border border-cream-dark/50 bg-cream-light p-1.5 shadow-[0_1px_3px_rgba(22,41,77,0.05),0_12px_32px_-20px_rgba(22,41,77,0.25)] transition-colors duration-500 group-hover:border-ochre/60 group-hover:shadow-[0_2px_6px_rgba(22,41,77,0.06),0_30px_55px_-24px_rgba(22,41,77,0.4)]">
         <div className="relative aspect-[4/5] overflow-hidden bg-cream-dark/30">
           <Image
             src={product.image}
             alt={product.name}
             fill
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
             className="object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.07]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/55 via-navy-deep/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/65 via-navy-deep/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
           <div className="absolute inset-0 border border-cream/25 transition-colors duration-500 group-hover:border-ochre/30" />
 
           {/* Hover reveal */}
@@ -51,7 +51,7 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
             {collection ? collection.name : "The House"}
           </p>
         </div>
-        <h3 className="mt-2.5 font-serif text-xl font-semibold leading-snug text-navy transition-colors duration-300 group-hover:text-oxblood">
+        <h3 className="mt-2.5 font-serif text-lg font-semibold leading-snug text-navy transition-colors duration-300 group-hover:text-oxblood sm:text-xl">
           {product.name}
         </h3>
         <p className="mt-2 font-serif text-lg font-medium text-ochre-dark">

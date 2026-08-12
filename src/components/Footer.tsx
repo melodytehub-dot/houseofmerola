@@ -50,7 +50,7 @@ export default function Footer() {
           </div>
 
           {/* Collections */}
-          <div className="md:col-span-3">
+          <div className="col-span-2 md:col-span-3">
             <h4 className="text-[10px] font-medium uppercase tracking-[0.3em] text-cream/40">
               Collections
             </h4>
@@ -74,7 +74,7 @@ export default function Footer() {
           </div>
 
           {/* Explore */}
-          <div className="md:col-span-2">
+          <div className="col-span-2 md:col-span-2">
             <h4 className="text-[10px] font-medium uppercase tracking-[0.3em] text-cream/40">
               Explore
             </h4>
@@ -107,7 +107,7 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div className="md:col-span-2">
+          <div className="col-span-2 md:col-span-2">
             <h4 className="text-[10px] font-medium uppercase tracking-[0.3em] text-cream/40">
               Contact
             </h4>
