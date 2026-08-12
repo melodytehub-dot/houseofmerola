@@ -51,13 +51,15 @@ export default function ProductCard({ product }: { product: Product }) {
         <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-steel">
           {product.tagline}
         </p>
-        <div className="mt-auto flex items-center justify-between pt-4">
-          <span className="font-medium text-navy">{formatGBP(product.price)}</span>
+        <div className="mt-auto flex flex-col gap-3 pt-4 sm:flex-row sm:items-center sm:justify-between">
+          <span className="text-center font-medium text-navy sm:text-left">
+            {formatGBP(product.price)}
+          </span>
           <button
             type="button"
             onClick={handleAdd}
             aria-label={`Add ${product.name} to cart`}
-            className="rounded-full border border-navy/20 px-4 py-2 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-navy opacity-90 transition hover:border-oxblood hover:bg-oxblood hover:text-cream sm:opacity-0 sm:group-hover:opacity-100"
+            className="w-full rounded-full border border-navy/20 bg-cream px-4 py-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-navy transition hover:border-oxblood hover:bg-oxblood hover:text-cream sm:w-auto sm:bg-transparent sm:py-2 sm:opacity-0 sm:group-hover:opacity-100"
           >
             Add to cart
           </button>

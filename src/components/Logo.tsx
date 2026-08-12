@@ -14,7 +14,7 @@ export default function Logo({ className = "" }: { className?: string }) {
         width={360}
         height={289}
         priority
-        className="h-auto w-full max-w-[11rem] mix-blend-multiply sm:max-w-[13rem]"
+        className="h-auto w-full max-w-[8.5rem] mix-blend-multiply sm:max-w-[10.5rem]"
       />
     </Link>
   );

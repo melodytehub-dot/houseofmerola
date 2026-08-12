@@ -88,7 +88,7 @@ export default function Header() {
             </svg>
           </button>
 
-          {/* Logo */}
+          {/* Logo — perfectly centered on mobile, left on desktop */}
           <div className="flex flex-1 justify-center lg:flex-none lg:justify-start">
             <Logo />
           </div>
@@ -161,8 +161,8 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* Cart */}
-          <div className="flex flex-1 items-center justify-end gap-2 lg:flex-none">
+          {/* Cart — fixed width on mobile so the logo sits dead-centre */}
+          <div className="flex w-10 items-center justify-end gap-2 lg:w-auto lg:flex-1">
             <button
               type="button"
               onClick={openCart}
