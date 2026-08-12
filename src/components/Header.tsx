@@ -1,145 +1,138 @@
 'use client'
 
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
+const navItems = [
+  { href: '/', label: 'Home' },
+  { href: '/shop', label: 'Shop' },
+  { href: '/about', label: 'About Us' },
+  { href: '/contact', label: 'Contact' },
+]
+
+function Icon({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-transparent text-navy transition-colors hover:border-navy/10 hover:bg-cream-soft">
+      {children}
+    </span>
+  )
+}
+
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const pathname = usePathname()
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <>
-      {/* Top announcement bar */}
-      <div className="bg-navy text-cream text-center py-2 px-4 text-sm">
-        <div className="flex items-center justify-center gap-2">
-          <span className="text-ochre">✦</span>
-          <span>FREE SHIPPING ON ORDERS OVER €100</span>
-          <span className="text-ochre">✦</span>
+    <header className="sticky top-0 z-50">
+      <div className="bg-navy py-2 text-center text-[11px] tracking-[0.28em] text-cream">
+        <div className="flex items-center justify-center gap-4">
+          <span className="text-gold">✦</span>
+          <span>FREE SHIPPING ON ORDERS OVER €150</span>
+          <span className="text-gold">✦</span>
         </div>
       </div>
 
-      {/* Main header */}
-      <header className="bg-cream sticky top-0 z-50 border-b border-navy/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* Left nav */}
-            <nav className="hidden md:flex items-center gap-8">
-              <Link 
-                href="/" 
-                className="text-navy hover:text-ochre transition-colors text-sm uppercase tracking-wide"
-              >
-                Home
-              </Link>
-              <Link 
-                href="/shop" 
-                className="text-navy hover:text-ochre transition-colors text-sm uppercase tracking-wide"
-              >
-                Shop
-              </Link>
-              <Link 
-                href="/about" 
-                className="text-navy hover:text-ochre transition-colors text-sm uppercase tracking-wide"
-              >
-                About Us
-              </Link>
-              <Link 
-                href="/contact" 
-                className="text-navy hover:text-ochre transition-colors text-sm uppercase tracking-wide"
-              >
-                Contact
-              </Link>
-            </nav>
+      <div className="bg-[linear-gradient(180deg,#fcf6ed_0%,#f7ecdd_100%)] nav-shadow">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          <button
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-navy/10 text-navy md:hidden"
+            onClick={() => setIsOpen((value) => !value)}
+            aria-label="Toggle navigation"
+          >
+            <span className="text-xl leading-none">{isOpen ? '✕' : '☰'}</span>
+          </button>
 
-            {/* Logo center */}
-            <Link href="/" className="flex flex-col items-center">
-              <div className="relative w-12 h-12 mb-1">
-                <Image 
-                  src="/houseofmerolalogo(1).png" 
-                  alt="House of Merola" 
+          <nav className="hidden items-center gap-8 md:flex">
+            {navItems.slice(0, 2).map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`text-sm font-medium uppercase tracking-[0.16em] transition-colors hover:text-rust ${
+                  pathname === item.href ? 'text-rust' : 'text-navy'
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <Link href="/" className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
+            <div className="flex flex-col items-center text-center">
+              <div className="relative mb-1 h-12 w-12 md:h-14 md:w-14">
+                <Image
+                  src="/houseofmerolalogo(1).png"
+                  alt="House of Merola"
                   fill
                   className="object-contain"
+                  priority
                 />
               </div>
-              <div className="text-center">
-                <div className="font-serif text-2xl tracking-wider text-navy">HOUSE OF MEROLA</div>
-                <div className="text-xs tracking-[0.2em] text-navy/70">ARTE • CASA • MEDITERRANEO</div>
+              <div className="font-serif text-[28px] tracking-[0.08em] text-navy md:text-[34px]">
+                HOUSE OF MEROLA
               </div>
-            </Link>
-
-            {/* Right icons */}
-            <div className="hidden md:flex items-center gap-6">
-              <button className="text-navy hover:text-ochre transition-colors">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </button>
-              <button className="text-navy hover:text-ochre transition-colors">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              </button>
-              <button className="text-navy hover:text-ochre transition-colors relative">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                <span className="absolute -top-2 -right-2 bg-terracotta text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  0
-                </span>
-              </button>
+              <div className="mt-1 text-[10px] tracking-[0.42em] text-rust md:text-[11px]">
+                ARTE • CASA • MEDITERRANEO
+              </div>
             </div>
+          </Link>
 
-            {/* Mobile menu button */}
-            <button 
-              className="md:hidden text-navy"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {isMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
+          <nav className="hidden items-center gap-8 md:flex">
+            {navItems.slice(2).map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`text-sm font-medium uppercase tracking-[0.16em] transition-colors hover:text-rust ${
+                  pathname === item.href ? 'text-rust' : 'text-navy'
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+
+            <div className="flex items-center gap-2">
+              <Icon>
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="11" cy="11" r="7" strokeWidth="1.8" />
+                  <path d="M20 20l-3.5-3.5" strokeWidth="1.8" strokeLinecap="round" />
+                </svg>
+              </Icon>
+              <Icon>
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="12" cy="8" r="3.25" strokeWidth="1.8" />
+                  <path d="M5.5 20c1.6-3.8 5-5.5 6.5-5.5S17 16.2 18.5 20" strokeWidth="1.8" strokeLinecap="round" />
+                </svg>
+              </Icon>
+              <Icon>
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M6.5 8.5h11l-1.2 10.5H7.7L6.5 8.5Z" strokeWidth="1.8" strokeLinejoin="round" />
+                  <path d="M9 8.5a3 3 0 0 1 6 0" strokeWidth="1.8" strokeLinecap="round" />
+                </svg>
+              </Icon>
+            </div>
+          </nav>
         </div>
 
-        {/* Mobile menu */}
-        {isMenuOpen && (
-          <div className="md:hidden border-t border-navy/10 bg-cream">
-            <nav className="flex flex-col py-4">
-              <Link 
-                href="/" 
-                className="px-6 py-3 text-navy hover:bg-navy/5 text-sm uppercase tracking-wide"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Home
-              </Link>
-              <Link 
-                href="/shop" 
-                className="px-6 py-3 text-navy hover:bg-navy/5 text-sm uppercase tracking-wide"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Shop
-              </Link>
-              <Link 
-                href="/about" 
-                className="px-6 py-3 text-navy hover:bg-navy/5 text-sm uppercase tracking-wide"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                About Us
-              </Link>
-              <Link 
-                href="/contact" 
-                className="px-6 py-3 text-navy hover:bg-navy/5 text-sm uppercase tracking-wide"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Contact
-              </Link>
-            </nav>
+        {isOpen ? (
+          <div className="border-t border-navy/10 bg-cream-soft md:hidden">
+            <div className="mx-auto flex max-w-7xl flex-col px-4 py-4 sm:px-6">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className={`border-b border-navy/5 py-3 text-sm font-medium uppercase tracking-[0.16em] ${
+                    pathname === item.href ? 'text-rust' : 'text-navy'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
           </div>
-        )}
-      </header>
-    </>
+        ) : null}
+      </div>
+    </header>
   )
 }

@@ -1,79 +1,107 @@
-import Link from "next/link"
-import Image from "next/image"
-import { products, collections } from "@/lib/products"
+import Image from 'next/image'
+import Link from 'next/link'
+import { collections, products } from '@/lib/products'
 
-export default async function Home() {
-  const featured = products.slice(0, 5)
+const featured = products.filter((product) => product.featured).slice(0, 5)
 
+function SectionTitle({
+  eyebrow,
+  title,
+}: {
+  eyebrow: string
+  title: string
+}) {
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-[90vh] grain overflow-hidden">
+    <div className="text-center">
+      <p className="mb-2 text-sm tracking-[0.28em] text-gold uppercase">{eyebrow}</p>
+      <h2 className="font-serif text-4xl leading-tight text-navy md:text-5xl">{title}</h2>
+      <div className="section-rule mt-4 text-gold">✣</div>
+    </div>
+  )
+}
+
+export default function HomePage() {
+  return (
+    <div className="overflow-hidden">
+      <section className="grain relative overflow-hidden bg-[linear-gradient(90deg,#f6f0e5_0%,#f4e8d8_40%,#ede0cf_100%)]">
         <div className="absolute inset-0">
           <Image
             src="/hero.jpg"
-            alt="Mediterranean living"
+            alt="Mediterranean home decor"
             fill
-            className="object-cover animate-kenburns"
             priority
+            className="object-cover object-center opacity-90"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-cream/80 via-cream/35 to-navy/10" />
         </div>
 
-        <div className="relative z-10 flex flex-col items-start justify-center h-full max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="max-w-2xl">
-            <h1 className="font-serif text-5xl md:text-7xl mb-6 leading-tight text-cream animate-fade-up">
-              Mediterranean living, timeless by nature.
+        <div className="relative mx-auto grid min-h-[78vh] max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
+          <div className="max-w-xl">
+            <p className="mb-5 text-sm tracking-[0.3em] text-gold uppercase">Mediterranean living</p>
+            <h1 className="max-w-lg font-serif text-5xl leading-[0.95] text-navy md:text-7xl">
+              Timeless home objects shaped by light, sea and tradition.
             </h1>
-            <p className="text-lg md:text-xl mb-8 leading-relaxed text-cream/90 animate-fade-up" style={{ animationDelay: "0.15s" }}>
-              Curated pieces inspired by the art, culture and soul of the Mediterranean. 
-              Every object is a story, and every detail is hand-made.
+            <div className="mt-8 h-px w-16 bg-gold" />
+            <p className="mt-6 max-w-md text-base leading-7 text-navy/80 md:text-lg">
+              Curated ceramics, devotional tiles and decorative pieces inspired by the art and
+              soul of the Mediterranean.
             </p>
-            <Link
-              href="/shop"
-              className="inline-block bg-navy hover:bg-navy-deep text-cream px-10 py-4 font-medium tracking-wide transition-all duration-300 uppercase text-sm animate-fade-up"
-              style={{ animationDelay: "0.3s" }}
-            >
-              Shop the Collection
-            </Link>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link
+                href="/shop"
+                className="bg-navy px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-cream transition-colors hover:bg-navy-deep"
+              >
+                Shop the Collection
+              </Link>
+              <Link
+                href="/about"
+                className="border border-navy/15 bg-cream/70 px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-navy transition-colors hover:bg-cream-soft"
+              >
+                Our Story
+              </Link>
+            </div>
+          </div>
+
+          <div className="relative hidden min-h-[560px] lg:block">
+            <div className="absolute right-8 top-8 h-[430px] w-[260px] overflow-hidden rounded-[1.5rem] border border-navy/10 bg-cream-soft shadow-[0_16px_60px_rgba(18,48,87,0.2)]">
+              <Image src="/prod10.jpg" alt="Decorative tile" fill className="object-cover" />
+            </div>
+            <div className="absolute left-10 top-24 h-[340px] w-[230px] overflow-hidden rounded-[1.5rem] border border-navy/10 bg-cream-soft shadow-[0_18px_50px_rgba(18,48,87,0.16)]">
+              <Image src="/prod7.jpg" alt="Ceramic vase" fill className="object-cover" />
+            </div>
+            <div className="absolute bottom-6 left-28 h-[220px] w-[220px] overflow-hidden rounded-[1.5rem] border border-navy/10 bg-cream-soft shadow-[0_18px_50px_rgba(18,48,87,0.16)]">
+              <Image src="/prod15.jpg" alt="Lemon tile" fill className="object-cover" />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Collections Section */}
-      <section className="py-20 px-6 lg:px-12 bg-cream">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-ochre tracking-widest uppercase text-sm mb-3">Explore Our Collections</p>
-            <h2 className="font-serif text-4xl md:text-5xl text-navy mb-4">
-              Rooted in tradition. Made for today.
-            </h2>
-          </div>
+      <section className="bg-cream-soft px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <SectionTitle eyebrow="Explore our collections" title="Rooted in tradition. Made for today." />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {collections.map((collection, i) => (
+          <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
+            {collections.map((collection) => (
               <Link
                 key={collection.slug}
-                href={`/shop/${collection.slug}`}
-                className="group relative overflow-hidden bg-cream-dark hover:shadow-xl transition-all duration-500 animate-fade-slide-up"
-                style={{ animationDelay: `${i * 0.1}s` }}
+                href="/shop"
+                className="group overflow-hidden border border-navy/8 bg-white/40 transition-transform duration-300 hover:-translate-y-1"
               >
-                <div className="aspect-[3/4] relative overflow-hidden">
+                <div className="relative aspect-[4/5] overflow-hidden">
                   <Image
                     src={collection.bannerImage}
                     alt={collection.name}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-transparent opacity-80" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy/70 via-navy/18 to-transparent" />
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-cream">
-                  <h3 className="font-serif text-2xl mb-2">{collection.name}</h3>
-                  <p className="text-sm text-cream/80 mb-3">{collection.tagline}</p>
-                  <div className="flex items-center gap-2 text-ochre text-sm uppercase tracking-wide">
-                    <span>Shop {collection.name.split(' ')[0]}</span>
-                    <span>→</span>
-                  </div>
+                <div className="p-5">
+                  <h3 className="font-serif text-2xl text-navy">{collection.name}</h3>
+                  <p className="mt-2 text-sm leading-6 text-navy/75">{collection.tagline}</p>
+                  <p className="mt-4 text-sm font-medium uppercase tracking-[0.16em] text-rust">
+                    Shop {collection.name}
+                  </p>
                 </div>
               </Link>
             ))}
@@ -81,23 +109,18 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="py-20 px-6 lg:px-12 bg-cream-light">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-ochre tracking-widest uppercase text-sm mb-3">Featured Pieces</p>
-            <h2 className="font-serif text-4xl md:text-5xl text-navy">Handpicked for you</h2>
-          </div>
+      <section className="bg-[linear-gradient(180deg,#fbf4ea_0%,#f5ebde_100%)] px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <SectionTitle eyebrow="Featured pieces" title="Handpicked for you" />
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {featured.map((product, i) => (
+          <div className="product-grid mt-12">
+            {featured.map((product) => (
               <Link
-                key={product.id}
-                href="/shop"
-                className="group bg-cream border border-navy/10 overflow-hidden hover:shadow-xl transition-all duration-500 animate-fade-slide-up"
-                style={{ animationDelay: `${i * 0.1}s` }}
+                key={product.slug}
+                href={`/shop/${product.slug}`}
+                className="group overflow-hidden border border-navy/10 bg-cream-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(18,48,87,0.12)]"
               >
-                <div className="aspect-square relative overflow-hidden bg-cream-dark">
+                <div className="relative aspect-square overflow-hidden">
                   <Image
                     src={product.image}
                     alt={product.name}
@@ -106,17 +129,22 @@ export default async function Home() {
                   />
                 </div>
                 <div className="p-4">
-                  <h3 className="font-serif text-base text-navy mb-1 line-clamp-2">{product.name}</h3>
-                  <p className="text-navy font-medium">€{product.price}</p>
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h3 className="font-serif text-xl text-navy">{product.name}</h3>
+                      <p className="mt-1 text-sm text-navy/65">{product.shortDescription}</p>
+                    </div>
+                    <span className="shrink-0 text-sm font-medium text-navy">€{product.price}</span>
+                  </div>
                 </div>
               </Link>
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          <div className="mt-10 text-center">
             <Link
               href="/shop"
-              className="inline-block border-2 border-navy text-navy px-10 py-3 font-medium hover:bg-navy hover:text-cream transition-all duration-300 uppercase text-sm"
+              className="inline-flex bg-rust px-9 py-4 text-sm font-medium uppercase tracking-[0.18em] text-cream transition-colors hover:bg-rust-deep"
             >
               View All Products
             </Link>
@@ -124,30 +152,27 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Story Section */}
-      <section className="relative py-24 px-6 lg:px-12 grain">
-        <div className="absolute inset-0">
-          <Image
-            src="/more details.jpg"
-            alt="Our Story"
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-navy/60" />
-        </div>
-
-        <div className="relative z-10 max-w-4xl mx-auto text-center text-cream">
-          <div className="mb-6 text-6xl font-serif text-ochre">"</div>
-          <h2 className="font-serif text-3xl md:text-4xl mb-6 leading-relaxed">
-            The Mediterranean is not a place, it's a feeling — of sun, of home, of timeless beauty.
+      <section className="grid lg:grid-cols-[0.95fr_1.05fr]">
+        <div className="grain bg-navy px-6 py-16 text-cream sm:px-8 lg:px-12">
+          <p className="mb-3 text-sm tracking-[0.3em] text-gold uppercase">Our story</p>
+          <h2 className="max-w-md font-serif text-4xl leading-tight md:text-5xl">
+            Inspired by the past, made for today.
           </h2>
-          <p className="text-ochre tracking-widest uppercase text-sm">— House of Merola</p>
+          <div className="mt-6 h-px w-16 bg-gold" />
+          <p className="mt-6 max-w-lg text-base leading-7 text-cream/82">
+            House of Merola began with a love for the Mediterranean and the idea that everyday
+            objects can carry memory, craft and warmth.
+          </p>
           <Link
             href="/about"
-            className="mt-10 inline-block bg-ochre hover:bg-ochre-light text-navy px-10 py-4 font-medium tracking-wide transition-all duration-300 uppercase text-sm"
+            className="mt-8 inline-flex bg-gold px-8 py-4 text-sm font-medium uppercase tracking-[0.18em] text-navy transition-colors hover:bg-gold-soft"
           >
             Discover Our Story
           </Link>
+        </div>
+
+        <div className="relative min-h-[360px] lg:min-h-[440px]">
+          <Image src="/more details.jpg" alt="House story" fill className="object-cover" />
         </div>
       </section>
     </div>
