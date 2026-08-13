@@ -14,25 +14,29 @@ export default function HomePage() {
       <section className="grain relative overflow-hidden">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 pb-16 pt-12 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:pb-24 lg:pt-20">
           {/* Text column */}
-          <div className="animate-fade-up">
-            <h1 className="font-serif text-[2.6rem] font-bold leading-[1.05] text-navy sm:text-6xl lg:text-[4.2rem]">
-              Mediterranean <em className="text-ochre">soul.</em>
-              <br />
-              Botanical beauty.
-              <br />
-              Sacred tradition.
+          <div>
+            <h1 className="font-serif text-[2.6rem] font-bold italic leading-[1.08] text-navy sm:text-6xl lg:text-[4.2rem]">
+              <span className="block animate-fade-up">
+                Mediterranean <em className="text-ochre">soul.</em>
+              </span>
+              <span className="block animate-fade-up delay-1">
+                Botanical beauty.
+              </span>
+              <span className="block animate-fade-up delay-2">
+                Sacred tradition.
+              </span>
             </h1>
 
-            <p className="mt-6 max-w-md text-[0.95rem] leading-relaxed text-navy/70">
+            <p className="mt-6 max-w-md animate-fade-up delay-3 text-[0.95rem] leading-relaxed text-navy/70">
               Hand-painted ceramic tiles and gold-engraved study boards, crafted
               in the spirit of old Sicilian majolica, each piece carrying the
               cobalt, lemon and ochre of a sun-washed coast.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
+            <div className="mt-8 flex animate-fade-up delay-4 flex-wrap items-center justify-center gap-3 sm:justify-start sm:gap-4">
               <Link
                 href="/shop"
-                className="group flex items-center gap-2 rounded-full bg-oxblood px-8 py-4 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-cream shadow-[0_14px_30px_rgb(107_15_26/0.35)] transition hover:bg-oxblood-deep"
+                className="group flex items-center gap-2 rounded-full bg-oxblood px-6 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-cream shadow-[0_14px_30px_rgb(107_15_26/0.35)] transition hover:bg-oxblood-deep sm:px-8 sm:py-4"
               >
                 Shop the collection
                 <svg
@@ -51,26 +55,10 @@ export default function HomePage() {
               </Link>
               <Link
                 href="/about"
-                className="rounded-full border border-navy/25 px-8 py-4 text-[0.72rem] font-medium uppercase tracking-[0.22em] text-navy transition hover:border-ochre hover:text-ochre"
+                className="rounded-full border border-navy/25 px-6 py-3 text-[0.7rem] font-medium uppercase tracking-[0.2em] text-navy transition hover:border-ochre hover:text-ochre sm:px-8 sm:py-4"
               >
                 Our story
               </Link>
-            </div>
-
-            <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-navy/10 pt-6">
-              {[
-                "Hand-painted tiles",
-                "Laser-engraved wood",
-                "From our Sicilian studio",
-              ].map((item) => (
-                <p
-                  key={item}
-                  className="flex items-center gap-2 text-[0.68rem] uppercase tracking-[0.18em] text-steel"
-                >
-                  <span className="text-ochre">✦</span>
-                  {item}
-                </p>
-              ))}
             </div>
           </div>
 
@@ -87,11 +75,51 @@ export default function HomePage() {
                 width={1717}
                 height={916}
                 priority
-                className="h-auto w-full"
+                className="h-auto w-full animate-slow-zoom"
               />
             </div>
+            {/* Rotating badge */}
+            <div
+              aria-hidden="true"
+              className="absolute -right-5 -top-5 z-10 hidden h-24 w-24 sm:block lg:h-28 lg:w-28"
+            >
+              <svg
+                viewBox="0 0 100 100"
+                className="h-full w-full animate-spin-slow drop-shadow-[0_6px_16px_rgb(14_42_77/0.3)]"
+              >
+                <defs>
+                  <path
+                    id="merola-badge-circle"
+                    d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"
+                  />
+                </defs>
+                <circle cx="50" cy="50" r="49" className="fill-cream-soft" />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="49"
+                  fill="none"
+                  className="stroke-ochre/55"
+                  strokeWidth="1"
+                />
+                <text
+                  className="fill-navy"
+                  fontSize="9"
+                  letterSpacing="2.5"
+                  textLength="239"
+                  lengthAdjust="spacingAndGlyphs"
+                >
+                  <textPath href="#merola-badge-circle">
+                    HAND-PAINTED IN SICILY · HOUSE OF MEROLA ·
+                  </textPath>
+                </text>
+              </svg>
+              <span className="absolute inset-0 flex items-center justify-center font-serif text-2xl italic text-ochre">
+                M
+              </span>
+            </div>
             {/* Floating accent tile */}
-            <div className="absolute -bottom-8 -left-6 hidden w-40 rotate-[-6deg] overflow-hidden rounded-lg border-4 border-cream-soft shadow-[0_18px_40px_rgb(14_42_77/0.3)] sm:block lg:w-48">
+            <div className="absolute -bottom-8 -left-6 hidden w-40 rotate-[-6deg] animate-float-tilt overflow-hidden rounded-lg border-4 border-cream-soft shadow-[0_18px_40px_rgb(14_42_77/0.3)] sm:block lg:w-48">
               <Image
                 src="/images/prod-lemon.jpg"
                 alt="Limone tile"
@@ -129,7 +157,7 @@ export default function HomePage() {
                 sizes="(min-width: 768px) 50vw, 100vw"
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/85 to-navy-deep/60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/90 to-navy-deep/70" />
               <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
                 <p className="eyebrow text-ochre-soft">{collection.tagline}</p>
                 <h3 className="mt-2 font-serif text-2xl text-cream sm:text-3xl">

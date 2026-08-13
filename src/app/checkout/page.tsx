@@ -119,11 +119,13 @@ export default function CheckoutPage() {
                 </label>
                 <input
                   id="co-name"
+                  name="name"
+                  autoComplete="name"
                   type="text"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   className="w-full rounded-lg border border-navy/15 bg-cream-soft px-4 py-3 text-sm text-navy focus:border-ochre focus:outline-none"
-                  placeholder="Maria Rossi"
+                  placeholder="Your full name"
                 />
               </div>
               <div>
@@ -135,11 +137,13 @@ export default function CheckoutPage() {
                 </label>
                 <input
                   id="co-email"
+                  name="email"
+                  autoComplete="email"
                   type="email"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   className="w-full rounded-lg border border-navy/15 bg-cream-soft px-4 py-3 text-sm text-navy focus:border-ochre focus:outline-none"
-                  placeholder="maria@example.com"
+                  placeholder="you@example.com"
                 />
               </div>
             </div>
@@ -152,6 +156,8 @@ export default function CheckoutPage() {
               </label>
               <input
                 id="co-address"
+                name="address"
+                autoComplete="street-address"
                 type="text"
                 value={form.address}
                 onChange={(e) => setForm({ ...form, address: e.target.value })}
@@ -169,11 +175,13 @@ export default function CheckoutPage() {
                 </label>
                 <input
                   id="co-city"
+                  name="city"
+                  autoComplete="address-level2"
                   type="text"
                   value={form.city}
                   onChange={(e) => setForm({ ...form, city: e.target.value })}
                   className="w-full rounded-lg border border-navy/15 bg-cream-soft px-4 py-3 text-sm text-navy focus:border-ochre focus:outline-none"
-                  placeholder="Palermo"
+                  placeholder="Your city"
                 />
               </div>
               <div>
@@ -185,11 +193,13 @@ export default function CheckoutPage() {
                 </label>
                 <input
                   id="co-postcode"
+                  name="postcode"
+                  autoComplete="postal-code"
                   type="text"
                   value={form.postcode}
                   onChange={(e) => setForm({ ...form, postcode: e.target.value })}
                   className="w-full rounded-lg border border-navy/15 bg-cream-soft px-4 py-3 text-sm text-navy focus:border-ochre focus:outline-none"
-                  placeholder="SW1A 1AA"
+                  placeholder="e.g. SW1A 1AA"
                 />
               </div>
             </div>
@@ -260,10 +270,7 @@ export default function CheckoutPage() {
               </button>
               <p className="mt-3 flex items-center justify-center gap-1.5 text-center text-xs leading-relaxed text-steel">
                 <LockIcon className="h-3.5 w-3.5 shrink-0" />
-                <span>
-                  Secure checkout: your details are encrypted, and payment is
-                  confirmed by email before dispatch.
-                </span>
+                <span>Secure checkout</span>
               </p>
             </div>
           </Reveal>

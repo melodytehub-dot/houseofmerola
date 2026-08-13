@@ -146,8 +146,9 @@ export default async function ProductPage({ params }: PageProps) {
                 <span className="font-serif text-base italic text-navy">
                   A note on handmade:
                 </span>{" "}
-                because every piece is made by hand, subtle variations in glaze                  and engraving are part of the charm: your tile is genuinely
-                  one of one.
+                because every piece is made by hand, subtle variations in glaze
+                and engraving are part of the charm: your tile is genuinely one
+                of one.
               </p>
             </div>
           </Reveal>

@@ -61,14 +61,14 @@ export default function Newsletter() {
   return (
     <section className="grain relative overflow-hidden bg-navy text-cream">
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.09]"
+        className="pointer-events-none absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage: "url(/images/collection-botanical.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy-deep/60 via-navy-deep/50 to-navy-deep/75" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy-deep/75 via-navy-deep/65 to-navy-deep/85" />
       <Reveal className="relative mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 sm:py-20">
         <p className="eyebrow mb-4 text-ochre-soft">✦ Join the House ✦</p>
         <h2 className="font-serif text-3xl leading-tight text-cream sm:text-4xl">

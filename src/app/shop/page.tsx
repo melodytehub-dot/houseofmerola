@@ -43,9 +43,9 @@ export default function ShopPage() {
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-30"
+            className="object-cover opacity-25"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-navy-deep/85 via-navy-deep/80 to-navy-deep/95" />
+          <div className="absolute inset-0 bg-gradient-to-b from-navy-deep/90 via-navy-deep/85 to-navy-deep/95" />
         </div>
         <Reveal className="relative mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 lg:py-28">
           <p className="eyebrow text-ochre-soft">The House Collection</p>

@@ -39,15 +39,6 @@ export default function ProductCard({ product }: { product: Product }) {
           </span>
         )}
         <WishlistButton product={product} />
-        {/* Quick-add cart button, always visible */}
-        <button
-          type="button"
-          onClick={handleAdd}
-          aria-label={`Add ${product.name} to cart`}
-          className="absolute bottom-3 right-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-navy text-cream shadow-[0_10px_24px_rgb(14_42_77/0.35)] transition hover:scale-105 hover:bg-oxblood active:scale-95"
-        >
-          <BagIcon className="h-[18px] w-[18px]" />
-        </button>
       </div>
 
       {/* Body */}
@@ -63,10 +54,18 @@ export default function ProductCard({ product }: { product: Product }) {
         <p className="mt-1 hidden text-xs leading-relaxed text-steel sm:block sm:line-clamp-2">
           {product.tagline}
         </p>
-        <div className="mt-auto flex items-center pt-2 sm:pt-4">
+        <div className="mt-auto flex items-center justify-between gap-2 pt-2 sm:pt-4">
           <span className="text-sm font-semibold text-navy sm:text-base">
             {formatGBP(product.price)}
           </span>
+          <button
+            type="button"
+            onClick={handleAdd}
+            aria-label={`Add ${product.name} to cart`}
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-navy text-cream shadow-[0_8px_18px_rgb(14_42_77/0.25)] transition hover:scale-105 hover:bg-oxblood active:scale-95"
+          >
+            <BagIcon className="h-4 w-4" />
+          </button>
         </div>
       </div>
     </Link>

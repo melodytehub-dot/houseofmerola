@@ -47,7 +47,7 @@ export default async function CollectionPage({ params }: PageProps) {
             sizes="100vw"
             className="animate-kenburns object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/85 to-navy-deep/65" />
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/90 to-navy-deep/75" />
         </div>
         <Reveal className="relative mx-auto max-w-4xl px-4 pb-20 pt-24 text-center sm:px-6 lg:pb-28 lg:pt-32">
           <p className="eyebrow text-ochre-soft">House of Merola</p>

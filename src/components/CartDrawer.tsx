@@ -226,7 +226,7 @@ export default function CartDrawer() {
                         setCodeError(false);
                       }}
                       onKeyDown={(e) => e.key === "Enter" && handleApplyCode()}
-                      placeholder="Discount code (try MEROLA10)"
+                      placeholder="Discount code"
                       aria-label="Discount code"
                       className="min-w-0 flex-1 rounded-full border border-navy/15 bg-cream-soft px-4 py-2.5 text-sm text-navy placeholder:text-steel/60 focus:border-ochre focus:outline-none"
                     />
@@ -240,7 +240,7 @@ export default function CartDrawer() {
                   </div>
                   {codeError && (
                     <p className="mt-1.5 pl-4 text-xs text-oxblood">
-                      That code isn’t valid. Try MEROLA10.
+                      That code isn’t valid. Please check and try again.
                     </p>
                   )}
                 </div>
