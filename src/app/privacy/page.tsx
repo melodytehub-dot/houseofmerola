@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Reveal from "@/components/Reveal";
 
 export const metadata = {
   title: "Privacy Policy",
@@ -8,12 +9,15 @@ export const metadata = {
 export default function PrivacyPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:py-20">
-      <p className="eyebrow text-ochre">Legal</p>
-      <h1 className="mt-3 font-serif text-4xl text-navy sm:text-5xl">
-        Privacy Policy
-      </h1>
-      <p className="mt-3 text-sm text-steel">Last updated: August 2026</p>
+      <Reveal>
+        <p className="eyebrow text-ochre">Legal</p>
+        <h1 className="mt-3 font-serif text-4xl text-navy sm:text-5xl">
+          Privacy Policy
+        </h1>
+        <p className="mt-3 text-sm text-steel">Last updated: August 2026</p>
+      </Reveal>
 
+      <Reveal delay={120}>
       <div className="mt-10 space-y-8 leading-relaxed text-navy/75">
         <div>
           <h2 className="mb-3 font-serif text-2xl text-navy">
@@ -81,6 +85,7 @@ export default function PrivacyPage() {
           .
         </p>
       </div>
+      </Reveal>
     </div>
   );
 }

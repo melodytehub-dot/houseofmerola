@@ -1,6 +1,8 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import Reveal from "@/components/Reveal";
+import { OliveIcon } from "./icons";
 
 const SUB_KEY = "houseofmerola-subscribed";
 
@@ -59,27 +61,31 @@ export default function Newsletter() {
   return (
     <section className="grain relative overflow-hidden bg-navy text-cream">
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.14]"
+        className="pointer-events-none absolute inset-0 opacity-[0.09]"
         style={{
           backgroundImage: "url(/images/collection-botanical.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       />
-      <div className="relative mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 sm:py-20">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy-deep/60 via-navy-deep/50 to-navy-deep/75" />
+      <Reveal className="relative mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 sm:py-20">
         <p className="eyebrow mb-4 text-ochre-soft">✦ Join the House ✦</p>
         <h2 className="font-serif text-3xl leading-tight text-cream sm:text-4xl">
           Welcome into the House of Merola
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-cream/75">
-          New collections, studio notes and early access — and a{" "}
+          New collections, studio notes and early access, plus a{" "}
           <span className="text-ochre-soft">10% welcome code</span> on your
           first order.
         </p>
 
         {isSubscribed ? (
           <div className="mx-auto mt-8 max-w-md rounded-xl border border-ochre/50 bg-navy-deep/60 px-6 py-6 backdrop-blur-sm">
-            <p className="text-lg">Benvenuti! 🫒</p>
+            <p className="flex items-center justify-center gap-2 text-lg">
+              <OliveIcon className="h-5 w-5 text-ochre-soft" />
+              Benvenuti!
+            </p>
             <p className="mt-2 text-sm text-cream/80">
               You’re on the list. Use this code at checkout:
             </p>
@@ -113,9 +119,9 @@ export default function Newsletter() {
         )}
 
         <p className="mt-6 text-[0.68rem] tracking-wide text-cream/50">
-          No spam — only beautiful things. Unsubscribe anytime.
+          No spam. Only beautiful things. Unsubscribe anytime.
         </p>
-      </div>
+      </Reveal>
     </section>
   );
 }

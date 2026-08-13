@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProductCard from "@/components/ProductCard";
+import Reveal from "@/components/Reveal";
 import {
   collections,
   getCollectionBySlug,
@@ -46,9 +47,9 @@ export default async function CollectionPage({ params }: PageProps) {
             sizes="100vw"
             className="animate-kenburns object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/80 to-navy-deep/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/85 to-navy-deep/65" />
         </div>
-        <div className="relative mx-auto max-w-4xl px-4 pb-20 pt-24 text-center sm:px-6 lg:pb-28 lg:pt-32">
+        <Reveal className="relative mx-auto max-w-4xl px-4 pb-20 pt-24 text-center sm:px-6 lg:pb-28 lg:pt-32">
           <p className="eyebrow text-ochre-soft">House of Merola</p>
           <h1 className="mt-4 font-serif text-4xl leading-tight text-cream sm:text-5xl lg:text-6xl">
             {collection.name}
@@ -73,7 +74,7 @@ export default async function CollectionPage({ params }: PageProps) {
               Commission a piece
             </Link>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* Grid */}
@@ -90,8 +91,10 @@ export default async function CollectionPage({ params }: PageProps) {
           </Link>
         </div>
         <div className="product-grid">
-          {items.map((product) => (
-            <ProductCard key={product.slug} product={product} />
+          {items.map((product, index) => (
+            <Reveal key={product.slug} className="h-full" delay={Math.min(index, 5) * 70}>
+              <ProductCard product={product} />
+            </Reveal>
           ))}
         </div>
       </section>

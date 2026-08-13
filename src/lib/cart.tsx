@@ -222,7 +222,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
-/* Drawer open state — kept local to the provider. */
+/* Drawer open state, kept local to the provider. */
 let isOpen = false;
 const openListeners = new Set<() => void>();
 

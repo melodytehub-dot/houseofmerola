@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import Newsletter from "@/components/Newsletter";
+import Reveal from "@/components/Reveal";
 import { collections, products } from "@/lib/products";
 
 const featured = products.filter((p) => p.featured).slice(0, 6);
@@ -24,7 +25,7 @@ export default function HomePage() {
 
             <p className="mt-6 max-w-md text-[0.95rem] leading-relaxed text-navy/70">
               Hand-painted ceramic tiles and gold-engraved study boards, crafted
-              in the spirit of old Sicilian majolica — each piece carrying the
+              in the spirit of old Sicilian majolica, each piece carrying the
               cobalt, lemon and ochre of a sun-washed coast.
             </p>
 
@@ -82,7 +83,7 @@ export default function HomePage() {
             <div className="relative overflow-hidden rounded-xl border border-navy/15 shadow-[0_35px_70px_rgb(14_42_77/0.28)]">
               <Image
                 src="/images/hero.jpg"
-                alt="House of Merola — Mediterranean artwork with lemons, tiles and the Amalfi coast"
+                alt="House of Merola, Mediterranean artwork with lemons, tiles and the Amalfi coast"
                 width={1717}
                 height={916}
                 priority
@@ -105,21 +106,21 @@ export default function HomePage() {
 
       {/* ── Collections ────────────────────────────────────────── */}
       <section id="collections" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <div className="mb-10 text-center">
+        <Reveal className="mb-10 text-center">
           <div className="section-rule justify-center">
             <span className="eyebrow text-navy">The Collections</span>
           </div>
           <h2 className="mt-4 font-serif text-3xl text-navy sm:text-4xl lg:text-5xl">
             Two houses, one spirit
           </h2>
-        </div>
+        </Reveal>
 
         <div className="grid gap-6 md:grid-cols-2">
-          {collections.map((collection) => (
+          {collections.map((collection, index) => (
+            <Reveal key={collection.slug} className="h-full" delay={index * 120}>
             <Link
-              key={collection.slug}
               href={`/collections/${collection.slug}`}
-              className="group relative aspect-[16/10] overflow-hidden rounded-xl border border-navy/10"
+              className="group relative block aspect-[16/10] overflow-hidden rounded-xl border border-navy/10"
             >
               <Image
                 src={collection.bannerImage}
@@ -128,7 +129,7 @@ export default function HomePage() {
                 sizes="(min-width: 768px) 50vw, 100vw"
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/75 to-navy-deep/45" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/85 to-navy-deep/60" />
               <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
                 <p className="eyebrow text-ochre-soft">{collection.tagline}</p>
                 <h3 className="mt-2 font-serif text-2xl text-cream sm:text-3xl">
@@ -151,6 +152,7 @@ export default function HomePage() {
                 </span>
               </div>
             </Link>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -158,7 +160,7 @@ export default function HomePage() {
       {/* ── Featured pieces ─────────────────────────────────────── */}
       <section className="bg-cream/50 py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+          <Reveal className="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
             <div>
               <div className="section-rule">
                 <span className="eyebrow text-navy">From the studio</span>
@@ -186,11 +188,13 @@ export default function HomePage() {
                 <path d="M5 12h14M13 6l6 6-6 6" />
               </svg>
             </Link>
-          </div>
+          </Reveal>
 
           <div className="product-grid">
-            {featured.map((product) => (
-              <ProductCard key={product.slug} product={product} />
+            {featured.map((product, index) => (
+              <Reveal key={product.slug} className="h-full" delay={Math.min(index, 5) * 70}>
+                <ProductCard product={product} />
+              </Reveal>
             ))}
           </div>
         </div>
@@ -198,7 +202,7 @@ export default function HomePage() {
 
       {/* ── Story teaser ────────────────────────────────────────── */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <Reveal className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="relative order-2 mx-auto w-full max-w-md lg:order-1 lg:max-w-none">
             <div className="absolute -inset-3 rounded-2xl border border-ochre/40" aria-hidden="true" />
             <div className="relative overflow-hidden rounded-xl border border-navy/15">
@@ -220,7 +224,7 @@ export default function HomePage() {
               <em className="text-ochre"> a little Sicilian light</em>
             </h2>
             <p className="mt-5 max-w-lg leading-relaxed text-navy/70">
-              House of Merola is a love letter to the Mediterranean — to
+              House of Merola is a love letter to the Mediterranean: to
               lemon groves, cobalt majolica, and the old naturalists’ cabinets.
               Each tile is hand-painted; each study board is drawn, painted and
               laser-engraved by hand, so no two pieces leave the studio
@@ -250,7 +254,7 @@ export default function HomePage() {
               Read the full story
             </Link>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* ── Newsletter ──────────────────────────────────────────── */}

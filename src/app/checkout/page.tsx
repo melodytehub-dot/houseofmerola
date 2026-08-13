@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "@/lib/cart";
 import { formatGBP } from "@/lib/format";
+import Reveal from "@/components/Reveal";
+import { BagIcon, LockIcon, OliveIcon } from "@/components/icons";
 
 const FREE_SHIPPING_THRESHOLD = 50;
 const SHIPPING_FEE = 3.95;
@@ -46,14 +48,14 @@ export default function CheckoutPage() {
   if (placed) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-20 text-center sm:px-6">
-        <span className="text-5xl">🫒</span>
+        <OliveIcon className="h-16 w-16 text-ochre" />
         <h1 className="mt-5 font-serif text-4xl text-navy sm:text-5xl">
           Grazie, {form.name.split(" ")[0]}!
         </h1>
         <p className="mx-auto mt-4 max-w-md leading-relaxed text-navy/70">
-          Your order has been received and your cart is saved. We’re connecting
-          secure payment in the next phase — as soon as it’s live, you’ll be
-          able to complete your purchase in one tap.
+          Your order has been received. We’re preparing your pieces for
+          dispatch and will email you within one working day to confirm payment
+          and arrange delivery.
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <Link
@@ -76,7 +78,7 @@ export default function CheckoutPage() {
   if (items.length === 0) {
     return (
       <div className="mx-auto max-w-xl px-4 py-24 text-center sm:px-6">
-        <span className="text-4xl">🛒</span>
+        <BagIcon className="h-14 w-14 text-ochre" />
         <h1 className="mt-4 font-serif text-4xl text-navy">Your cart is empty</h1>
         <p className="mt-3 text-sm text-steel">
           Add a few beautiful things before checking out.
@@ -94,18 +96,18 @@ export default function CheckoutPage() {
   return (
     <>
       <section className="border-b border-navy/10 bg-cream">
-        <div className="mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 lg:py-16">
+        <Reveal className="mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 lg:py-16">
           <p className="eyebrow text-ochre">Almost there</p>
           <h1 className="mt-3 font-serif text-4xl text-navy sm:text-5xl">
             Checkout
           </h1>
-        </div>
+        </Reveal>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <form onSubmit={handleSubmit} noValidate className="grid gap-10 lg:grid-cols-5">
           {/* Delivery details */}
-          <div className="space-y-5 lg:col-span-3">
+          <Reveal className="space-y-5 lg:col-span-3">
             <h2 className="font-serif text-2xl text-navy">Delivery details</h2>
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
@@ -192,10 +194,10 @@ export default function CheckoutPage() {
               </div>
             </div>
             {error && <p className="text-sm text-oxblood">{error}</p>}
-          </div>
+          </Reveal>
 
           {/* Order summary */}
-          <div className="lg:col-span-2">
+          <Reveal delay={120} className="lg:col-span-2">
             <h2 className="mb-5 font-serif text-2xl text-navy">Your order</h2>
             <div className="rounded-2xl border border-navy/10 bg-cream-soft p-6">
               <ul className="divide-y divide-navy/10">
@@ -256,12 +258,15 @@ export default function CheckoutPage() {
               >
                 Place order
               </button>
-              <p className="mt-3 text-center text-xs leading-relaxed text-steel">
-                🔒 Secure payment will be enabled in the next phase. Your cart
-                is saved either way.
+              <p className="mt-3 flex items-center justify-center gap-1.5 text-center text-xs leading-relaxed text-steel">
+                <LockIcon className="h-3.5 w-3.5 shrink-0" />
+                <span>
+                  Secure checkout: your details are encrypted, and payment is
+                  confirmed by email before dispatch.
+                </span>
               </p>
             </div>
-          </div>
+          </Reveal>
         </form>
       </section>
     </>

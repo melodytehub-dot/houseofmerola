@@ -1,8 +1,9 @@
 import Link from "next/link";
+import Reveal from "@/components/Reveal";
 
 export default function NotFound() {
   return (
-    <div className="mx-auto flex max-w-xl flex-col items-center px-4 py-28 text-center sm:px-6">
+    <Reveal className="mx-auto flex max-w-xl flex-col items-center px-4 py-28 text-center sm:px-6">
       <p className="brand-wordmark text-7xl text-ochre">404</p>
       <h1 className="mt-4 font-serif text-3xl text-navy sm:text-4xl">
         Questa pagina non esiste
@@ -25,6 +26,6 @@ export default function NotFound() {
           Back home
         </Link>
       </div>
-    </div>
+    </Reveal>
   );
 }

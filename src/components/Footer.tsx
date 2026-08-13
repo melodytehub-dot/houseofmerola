@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Reveal from "@/components/Reveal";
 import { collections } from "@/lib/products";
 
 export default function Footer() {
@@ -6,7 +7,7 @@ export default function Footer() {
 
   return (
     <footer className="grain bg-navy-deep text-cream">
-      <div className="mx-auto max-w-7xl px-4 pb-10 pt-16 sm:px-6 lg:px-8">
+      <Reveal className="mx-auto max-w-7xl px-4 pb-10 pt-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-12">
           {/* Brand */}
           <div className="md:col-span-5">
@@ -16,7 +17,7 @@ export default function Footer() {
             </p>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-cream/70">
               Hand-painted ceramic tiles and gold-engraved study boards, crafted
-              in the spirit of old Sicilian majolica — for walls that carry a
+              in the spirit of old Sicilian majolica, for walls that carry a
               little sunshine.
             </p>
             <div className="mt-6 flex gap-3">
@@ -126,7 +127,7 @@ export default function Footer() {
             </Link>
           </div>
         </div>
-      </div>
+      </Reveal>
     </footer>
   );
 }

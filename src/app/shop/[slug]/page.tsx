@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import AddToCart from "./AddToCart";
 import ProductCard from "@/components/ProductCard";
+import Reveal from "@/components/Reveal";
+import WishlistButton from "@/components/WishlistButton";
 import { formatGBP } from "@/lib/format";
 import {
   getCollectionBySlug,
@@ -74,7 +76,7 @@ export default async function ProductPage({ params }: PageProps) {
 
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Image */}
-          <div className="relative">
+          <Reveal className="relative">
             <div
               className="absolute -inset-3 rounded-2xl border border-ochre/40"
               aria-hidden="true"
@@ -89,10 +91,10 @@ export default async function ProductPage({ params }: PageProps) {
                 className="h-auto w-full"
               />
             </div>
-          </div>
+          </Reveal>
 
           {/* Details */}
-          <div>
+          <Reveal delay={150}>
             {collection && (
               <Link
                 href={`/collections/${collection.slug}`}
@@ -135,33 +137,38 @@ export default async function ProductPage({ params }: PageProps) {
 
             <AddToCart product={product} />
 
+            <div className="mt-4">
+              <WishlistButton product={product} variant="inline" className="w-full" />
+            </div>
+
             <div className="mt-8 rounded-xl border border-navy/10 bg-cream-soft p-5">
               <p className="text-sm leading-relaxed text-navy/75">
                 <span className="font-serif text-base italic text-navy">
                   A note on handmade:
                 </span>{" "}
-                because every piece is made by hand, subtle variations in glaze
-                and engraving are part of the charm — your tile is genuinely one
-                of one.
+                because every piece is made by hand, subtle variations in glaze                  and engraving are part of the charm: your tile is genuinely
+                  one of one.
               </p>
             </div>
-          </div>
+          </Reveal>
         </div>
 
         {/* Related */}
         {related.length > 0 && (
           <section className="mt-20">
-            <div className="mb-8">
+            <Reveal className="mb-8">
               <div className="section-rule">
                 <span className="eyebrow text-navy">You may also like</span>
               </div>
               <h2 className="mt-3 font-serif text-3xl text-navy">
                 From the same collection
               </h2>
-            </div>
+            </Reveal>
             <div className="product-grid">
-              {related.map((product) => (
-                <ProductCard key={product.slug} product={product} />
+              {related.map((product, index) => (
+                <Reveal key={product.slug} className="h-full" delay={Math.min(index, 3) * 70}>
+                  <ProductCard product={product} />
+                </Reveal>
               ))}
             </div>
           </section>

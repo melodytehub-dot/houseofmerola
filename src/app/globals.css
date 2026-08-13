@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* House of Merola brand palette — aged pigments of a Sicilian tile */
+  /* House of Merola brand palette, aged pigments of a Sicilian tile */
   --color-navy: #0e2a4d;
   --color-navy-deep: #081b33;
   --color-oxblood: #6b0f1a;
@@ -22,12 +22,12 @@
 }
 
 html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 6.5rem;
+  scroll-padding-top: 5rem;
   -webkit-tap-highlight-color: transparent;
 }
 
 body {
+  overflow-x: clip;
   background:
     radial-gradient(1200px 600px at 50% -10%, rgb(255 255 255 / 0.65), transparent 60%),
     linear-gradient(180deg, #faf4e8 0%, #f3e6d2 55%, #efdfc6 100%);
@@ -211,6 +211,20 @@ h6 {
   }
 }
 
+/* Scroll-triggered reveal, GPU-friendly opacity/transform transition */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -220,5 +234,10 @@ h6 {
   .animate-kenburns,
   .animate-draw-in {
     animation: none !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

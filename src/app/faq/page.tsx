@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Reveal from "@/components/Reveal";
 
 const faqs = [
   {
     question: "Are the pieces really handmade?",
     answer:
-      "Yes — every tile is hand-painted and every study board is drawn, painted and laser-engraved by hand in small batches. Subtle variations in glaze and line are part of the charm: no two pieces are identical.",
+      "Yes, every tile is hand-painted and every study board is drawn, painted and laser-engraved by hand in small batches. Subtle variations in glaze and line are part of the charm: no two pieces are identical.",
   },
   {
     question: "How long does delivery take?",
@@ -42,16 +43,16 @@ export default function FaqPage() {
   return (
     <>
       <section className="border-b border-navy/10 bg-cream">
-        <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:py-24">
+        <Reveal className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:py-24">
           <p className="eyebrow text-ochre">Questions</p>
           <h1 className="mt-4 font-serif text-4xl text-navy sm:text-6xl">
             Frequently asked
           </h1>
-        </div>
+        </Reveal>
       </section>
 
       <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:py-20">
-        <div className="divide-y divide-navy/10 rounded-2xl border border-navy/10 bg-cream-soft">
+        <Reveal className="divide-y divide-navy/10 rounded-2xl border border-navy/10 bg-cream-soft">
           {faqs.map((faq, index) => {
             const isOpen = open === index;
             return (
@@ -86,14 +87,14 @@ export default function FaqPage() {
                   </span>
                 </button>
                 {isOpen && (
-                  <p className="px-6 pb-6 text-sm leading-relaxed text-navy/75">
+                  <p className="animate-fade-in px-6 pb-6 text-sm leading-relaxed text-navy/75">
                     {faq.answer}
                   </p>
                 )}
               </div>
             );
           })}
-        </div>
+        </Reveal>
 
         <div className="mt-12 text-center">
           <p className="font-serif text-2xl italic text-navy">

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Reveal from "@/components/Reveal";
+import { MailIcon, OliveIcon } from "@/components/icons";
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -24,46 +26,38 @@ export default function ContactPage() {
   return (
     <>
       <section className="border-b border-navy/10 bg-cream">
-        <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:py-24">
+        <Reveal className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:py-24">
           <p className="eyebrow text-ochre">Contact</p>
           <h1 className="mt-4 font-serif text-4xl text-navy sm:text-6xl">
             Let’s talk
           </h1>
           <p className="mx-auto mt-5 max-w-lg leading-relaxed text-navy/70">
-            Commissions, wholesale, press or just a hello — we read every
+            Commissions, wholesale, press or just a hello. We read every
             message and answer within two working days.
           </p>
-        </div>
+        </Reveal>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-5">
           {/* Info */}
-          <div className="space-y-8 lg:col-span-2">
+          <Reveal className="space-y-8 lg:col-span-2">
             <div>
               <h2 className="font-serif text-2xl text-navy">The studio</h2>
               <p className="mt-3 text-sm leading-relaxed text-navy/70">
-                House of Merola is a small studio — tiles painted, boards
+                House of Merola is a small studio: tiles painted, boards
                 engraved, and parcels wrapped by hand.
               </p>
             </div>
             <div className="space-y-4 text-sm">
               <p className="flex items-center gap-3 text-navy/80">
-                <span className="text-ochre">✉</span>
+                <MailIcon className="h-4 w-4 text-ochre" />
                 <a
                   href="mailto:hello@houseofmerola.com"
                   className="transition hover:text-ochre"
                 >
                   hello@houseofmerola.com
                 </a>
-              </p>
-              <p className="flex items-center gap-3 text-navy/80">
-                <span className="text-ochre">✦</span> Commissions · Wholesale ·
-                Press
-              </p>
-              <p className="flex items-center gap-3 text-navy/80">
-                <span className="text-ochre">🌊</span> Shipped from the
-                Mediterranean
               </p>
             </div>
             <div className="rounded-xl border border-navy/10 bg-cream-soft p-6">
@@ -72,16 +66,16 @@ export default function ContactPage() {
               </p>
               <p className="mt-2 text-sm leading-relaxed text-steel">
                 Bespoke tiles and personalised study boards are our favourite
-                commissions — share your idea and we’ll paint the first sketch.
+                commissions; share your idea and we’ll paint the first sketch.
               </p>
             </div>
-          </div>
+          </Reveal>
 
           {/* Form */}
-          <div className="lg:col-span-3">
+          <Reveal delay={120} className="lg:col-span-3">
             {sent ? (
               <div className="flex h-full min-h-80 flex-col items-center justify-center rounded-2xl border border-ochre/40 bg-cream-soft p-10 text-center">
-                <span className="text-4xl">🫒</span>
+                <OliveIcon className="h-14 w-14 text-ochre" />
                 <h2 className="mt-4 font-serif text-3xl text-navy">
                   Grazie mille!
                 </h2>
@@ -159,7 +153,7 @@ export default function ContactPage() {
                 </button>
               </form>
             )}
-          </div>
+          </Reveal>
         </div>
       </section>
     </>

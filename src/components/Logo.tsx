@@ -5,7 +5,7 @@ export default function Logo({ className = "" }: { className?: string }) {
   return (
     <Link
       href="/"
-      aria-label="House of Merola — home"
+      aria-label="House of Merola home"
       className={`block ${className}`}
     >
       <Image
@@ -14,7 +14,7 @@ export default function Logo({ className = "" }: { className?: string }) {
         width={360}
         height={289}
         priority
-        className="h-auto w-full max-w-[6.5rem] mix-blend-multiply sm:max-w-[8rem]"
+        className="h-12 w-auto mix-blend-multiply"
       />
     </Link>
   );

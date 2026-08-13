@@ -4,7 +4,9 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
+import ScrollToTop from "@/components/ScrollToTop";
 import { CartProvider } from "@/lib/cart";
+import { WishlistProvider } from "@/lib/wishlist";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -23,8 +25,8 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: {
-    default: "House of Merola — Art • Casa • Mediterraneo",
-    template: "%s — House of Merola",
+    default: "House of Merola · Art · Casa · Mediterraneo",
+    template: "%s · House of Merola",
   },
   description:
     "Hand-painted ceramic tiles and gold-engraved botanical study boards, crafted in the spirit of old Sicilian majolica. Mediterranean soul, botanical beauty, sacred tradition.",
@@ -39,7 +41,7 @@ export const metadata: Metadata = {
   ],
   metadataBase: new URL("https://houseofmerola.com"),
   openGraph: {
-    title: "House of Merola — Art • Casa • Mediterraneo",
+    title: "House of Merola · Art · Casa · Mediterraneo",
     description:
       "Hand-painted ceramic tiles and gold-engraved botanical study boards, crafted in the spirit of old Sicilian majolica.",
     siteName: "House of Merola",
@@ -59,11 +61,19 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cormorant.variable} ${montserrat.variable}`}>
       <body className="flex min-h-svh flex-col bg-cream font-sans text-navy antialiased">
+        <noscript>
+          <style>
+            {".reveal{opacity:1!important;transform:none!important}"}
+          </style>
+        </noscript>
         <CartProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <CartDrawer />
+          <WishlistProvider>
+            <ScrollToTop />
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <CartDrawer />
+          </WishlistProvider>
         </CartProvider>
       </body>
     </html>

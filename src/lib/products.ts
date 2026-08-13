@@ -25,7 +25,7 @@ export const collections: Collection[] = [
     name: "Mediterranean Tiles",
     tagline: "Hand-painted majolica for sun-washed walls",
     description:
-      "Bright, hand-painted ceramic tiles in the spirit of Sicilian majolica — Madonnas, lemons, Ape trucks and pomegranates, each framed in cobalt and gold.",
+      "Bright, hand-painted ceramic tiles in the spirit of Sicilian majolica: Madonnas, lemons, Ape trucks and pomegranates, each framed in cobalt and gold.",
     bannerImage: "/images/collection-mediterranean.jpg",
   },
   {
@@ -33,7 +33,7 @@ export const collections: Collection[] = [
     name: "Botanical & Natural History",
     tagline: "Antique study boards, engraved in gold",
     description:
-      "Scholarly wall boards, painted and laser-engraved in antique gold — herbal medicine, snakes, frogs, fungi and the phases of the moon.",
+      "Scholarly wall boards, painted and laser-engraved in antique gold: herbal medicine, snakes, frogs, fungi and the phases of the moon.",
     bannerImage: "/images/collection-botanical.jpg",
   },
 ];
@@ -74,9 +74,9 @@ export const products: Product[] = [
     image: "/images/prod-melograno.jpg",
     collection: "mediterranean-tiles",
     materials: ["Hand-painted ceramic tile"],
-    tagline: "The pomegranate — fruit of abundance",
+    tagline: "The pomegranate, fruit of abundance",
     description:
-      "A two-handled urn overflowing with ripe pomegranates, painted in deep cobalt, crimson and ochre with sliced fruit resting at its base — the old symbol of abundance at the heart of Mediterranean homes.",
+      "A two-handled urn overflowing with ripe pomegranates, painted in deep cobalt, crimson and ochre with sliced fruit resting at its base, the old symbol of abundance at the heart of Mediterranean homes.",
   },
   {
     id: "rosato-moon-tile",
@@ -88,7 +88,7 @@ export const products: Product[] = [
     materials: ["Hand-painted ceramic tile"],
     tagline: "A dreaming sun cradled in a crescent moon",
     description:
-      "A personified sun sleeping inside a crescent moon, floating among stars, clouds and white lilies in dusty navy, lavender and warm peach — a romantic piece for a gallery wall.",
+      "A personified sun sleeping inside a crescent moon, floating among stars, clouds and white lilies in dusty navy, lavender and warm peach. A romantic piece for a gallery wall.",
     featured: true,
   },
   {
@@ -126,7 +126,7 @@ export const products: Product[] = [
     materials: ["Hand-painted ceramic tile"],
     tagline: "A vintage Ape truck before the colours of Amalfi",
     description:
-      "‘La Dolce Vita’ — a vintage lemon-laden Ape truck parked before the cliffside village of Amalfi, bordered with lemons and blue scrollwork. Playful, nostalgic, unmistakably Italian.",
+      "‘La Dolce Vita’: a vintage lemon-laden Ape truck parked before the cliffside village of Amalfi, bordered with lemons and blue scrollwork. Playful, nostalgic, unmistakably Italian.",
   },
   {
     id: "sunset-madonna-tile",
@@ -152,7 +152,7 @@ export const products: Product[] = [
     materials: ["Painted & laser-engraved wood panel"],
     tagline: "The study of medicinal plants, engraved in gold",
     description:
-      "An apothecary’s chart of healing plants, engraved in antique gold on charcoal wood — herb portraits, pestle and mortar, and the old Sicilian remedy: ‘Let food be thy medicine.’",
+      "An apothecary’s chart of healing plants, engraved in antique gold on charcoal wood: herb portraits, pestle and mortar, and the old Sicilian remedy: ‘Let food be thy medicine.’",
     featured: true,
   },
   {
@@ -165,7 +165,7 @@ export const products: Product[] = [
     materials: ["Painted & laser-engraved wood panel"],
     tagline: "A naturalist’s study of snakes",
     description:
-      "Anatomy, life cycle and species plates — ball python and rattlesnake — engraved in gold on black wood beneath a sun and moon, with the motto: ‘To understand a snake is to honour life.’",
+      "Anatomy, life cycle and species plates, ball python and rattlesnake, engraved in gold on black wood beneath a sun and moon, with the motto: ‘To understand a snake is to honour life.’",
   },
   {
     id: "phases-of-the-moon",
@@ -177,7 +177,7 @@ export const products: Product[] = [
     materials: ["Painted & laser-engraved wood panel"],
     tagline: "Eight phases, engraved in gold on black",
     description:
-      "All eight phases of the moon engraved in gold on deep black, with a great moth below and a bat above, set within gothic filigree — esoteric and quietly beautiful.",
+      "All eight phases of the moon engraved in gold on deep black, with a great moth below and a bat above, set within gothic filigree. Esoteric and quietly beautiful.",
     featured: true,
   },
   {
@@ -202,7 +202,7 @@ export const products: Product[] = [
     materials: ["Painted & laser-engraved wood panel"],
     tagline: "The study of fungi, from amanita to chanterelle",
     description:
-      "Anatomy of a mushroom and species plates — fly agaric, chanterelle, porcini, morel and more — engraved in gold on black wood, the crown of the natural history cabinet.",
+      "Anatomy of a mushroom and species plates: fly agaric, chanterelle, porcini, morel and more, engraved in gold on black wood, the crown of the natural history cabinet.",
   },
 ];
 

@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useCart } from "@/lib/cart";
 import { formatGBP } from "@/lib/format";
+import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
+import { OliveIcon } from "./icons";
 
 export default function CartDrawer() {
   const {
@@ -26,10 +28,9 @@ export default function CartDrawer() {
   const [codeError, setCodeError] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    if (isOpen) lockScroll();
+    else unlockScroll();
+    return () => unlockScroll();
   }, [isOpen]);
 
   useEffect(() => {
@@ -64,7 +65,9 @@ export default function CartDrawer() {
       <aside
         role="dialog"
         aria-label="Shopping cart"
+        aria-modal="true"
         aria-hidden={!isOpen}
+        inert={!isOpen}
         className={`fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col bg-cream-soft shadow-2xl transition-transform duration-300 ease-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
@@ -94,7 +97,7 @@ export default function CartDrawer() {
 
         {items.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-5 px-8 text-center">
-            <span className="text-4xl">🫒</span>
+            <OliveIcon className="h-14 w-14 text-ochre" />
             <p className="font-serif text-2xl italic text-navy">
               Your cart is empty
             </p>
@@ -237,7 +240,7 @@ export default function CartDrawer() {
                   </div>
                   {codeError && (
                     <p className="mt-1.5 pl-4 text-xs text-oxblood">
-                      That code isn’t valid — try MEROLA10.
+                      That code isn’t valid. Try MEROLA10.
                     </p>
                   )}
                 </div>

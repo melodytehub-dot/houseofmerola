@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCart } from "@/lib/cart";
 import { getCollectionBySlug, type Product } from "@/lib/products";
 import { formatGBP } from "@/lib/format";
+import WishlistButton from "./WishlistButton";
 
 export default function ProductCard({ product }: { product: Product }) {
   const { addItem, openCart } = useCart();
@@ -20,7 +21,7 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/shop/${product.slug}`}
-      className="group relative flex flex-col overflow-hidden rounded-lg border border-navy/8 bg-cream-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_45px_rgb(14_42_77/0.14)]"
+      className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-navy/8 bg-cream-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_45px_rgb(14_42_77/0.14)]"
     >
       {/* Image */}
       <div className="relative aspect-square overflow-hidden bg-cream-warm">
@@ -36,6 +37,7 @@ export default function ProductCard({ product }: { product: Product }) {
             Featured
           </span>
         )}
+        <WishlistButton product={product} />
       </div>
 
       {/* Body */}
@@ -59,7 +61,7 @@ export default function ProductCard({ product }: { product: Product }) {
             type="button"
             onClick={handleAdd}
             aria-label={`Add ${product.name} to cart`}
-            className="w-full rounded-full border border-navy/20 bg-cream px-4 py-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-navy transition hover:border-oxblood hover:bg-oxblood hover:text-cream sm:w-auto sm:bg-transparent sm:py-2 sm:opacity-0 sm:group-hover:opacity-100"
+            className="w-full rounded-full bg-navy px-4 py-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-cream transition hover:bg-oxblood sm:w-auto sm:px-5"
           >
             Add to cart
           </button>
