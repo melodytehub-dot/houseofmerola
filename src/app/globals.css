@@ -44,6 +44,7 @@ h4,
 h5,
 h6 {
   font-family: var(--font-serif);
+  font-weight: 700;
 }
 
 ::selection {
@@ -70,7 +71,7 @@ h6 {
 
 .brand-wordmark {
   font-family: var(--font-serif);
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.22em;
 }
