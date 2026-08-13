@@ -9,12 +9,12 @@ export default function Logo({ className = "" }: { className?: string }) {
       className={`block ${className}`}
     >
       <Image
-        src="/images/logo.jpg"
+        src="/images/logo.png"
         alt="House of Merola"
-        width={360}
-        height={289}
+        width={684}
+        height={532}
         priority
-        className="h-12 w-auto mix-blend-multiply"
+        className="h-12 w-auto"
       />
     </Link>
   );
