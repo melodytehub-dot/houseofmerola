@@ -3,11 +3,17 @@ import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import Newsletter from "@/components/Newsletter";
 import Reveal from "@/components/Reveal";
-import { collections, products } from "@/lib/products";
+import { getCollections, getProducts, getSettings } from "@/lib/content";
 
-const featured = products.filter((p) => p.featured).slice(0, 6);
-
-export default function HomePage() {
+export default async function HomePage() {
+  const [products, collections, settings] = await Promise.all([
+    getProducts(),
+    getCollections(),
+    getSettings(),
+  ]);
+  const featured = products.filter((p) => p.featured).slice(0, 6);
+  const collectionName = (slug: string) =>
+    collections.find((c) => c.slug === slug)?.name;
   return (
     <>
       {/* ── Editorial hero ─────────────────────────────────────── */}
@@ -15,22 +21,35 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 pb-16 pt-12 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:pb-24 lg:pt-20">
           {/* Text column */}
           <div>
+            <p className="eyebrow mb-4 animate-fade-up text-ochre">{settings.hero.eyebrow}</p>
             <h1 className="font-serif text-[2.6rem] font-bold italic leading-[1.08] text-navy sm:text-6xl lg:text-[4.2rem]">
-              <span className="block animate-fade-up">
-                Mediterranean <em className="text-ochre">soul.</em>
-              </span>
-              <span className="block animate-fade-up delay-1">
-                Botanical beauty.
-              </span>
-              <span className="block animate-fade-up delay-2">
-                Sacred tradition.
-              </span>
+              {settings.hero.lines.map((line, i) => {
+                const accent = settings.hero.accentWord;
+                const idx =
+                  accent && line.includes(accent) ? line.indexOf(accent) : -1;
+                return (
+                  <span
+                    key={i}
+                    className={`block animate-fade-up ${i ? `delay-${i}` : ""}`}
+                  >
+                    {idx >= 0 ? (
+                      <>
+                        {line.slice(0, idx)}
+                        <em className="text-ochre">
+                          {line.slice(idx, idx + accent.length)}
+                        </em>
+                        {line.slice(idx + accent.length)}
+                      </>
+                    ) : (
+                      line
+                    )}
+                  </span>
+                );
+              })}
             </h1>
 
             <p className="mt-6 max-w-md animate-fade-up delay-3 text-[0.95rem] leading-relaxed text-navy/70">
-              Original artwork UV-printed onto ceramic and wood, engraved and
-              finished by hand in our Liverpool studio — each piece carrying the
-              cobalt, lemon and ochre of a sun-washed coast.
+              {settings.hero.subheading}
             </p>
 
             <div className="mt-8 flex animate-fade-up delay-4 flex-wrap items-center justify-center gap-3 sm:justify-start sm:gap-4">
@@ -221,7 +240,10 @@ export default function HomePage() {
           <div className="product-grid">
             {featured.map((product, index) => (
               <Reveal key={product.slug} className="h-full" delay={Math.min(index, 5) * 70}>
-                <ProductCard product={product} />
+                <ProductCard
+                  product={product}
+                  collectionName={collectionName(product.collection)}
+                />
               </Reveal>
             ))}
           </div>
@@ -248,21 +270,20 @@ export default function HomePage() {
               <span className="eyebrow text-navy">Our story</span>
             </div>
             <h2 className="mt-4 font-serif text-3xl leading-tight text-navy sm:text-4xl">
-              Every tile begins with
-              <em className="text-ochre"> a little Sicilian light</em>
+              {settings.aboutIntro.heading}
             </h2>
-            <p className="mt-5 max-w-lg leading-relaxed text-navy/70">
-              House of Merola is a love letter to the Mediterranean: to
-              lemon groves, cobalt majolica, and the old naturalists’ cabinets.
-              Each piece is designed in-house and finished by hand in our
-              Liverpool studio, so no two pieces leave the studio identical.
-            </p>
+            {settings.aboutIntro.body.map((para, i) => (
+              <p
+                key={i}
+                className={`leading-relaxed text-navy/70 ${
+                  i === 0 ? "mt-5 max-w-lg" : "mt-4 max-w-lg"
+                }`}
+              >
+                {para}
+              </p>
+            ))}
             <ul className="mt-6 space-y-3">
-              {[
-                "Original artwork UV-printed onto ceramic",
-                "UV-printed & laser-engraved wood pieces",
-                "Designed & made to order in Liverpool",
-              ].map((point) => (
+              {settings.aboutIntro.points.map((point) => (
                 <li
                   key={point}
                   className="flex items-center gap-3 text-sm text-navy/80"
@@ -285,7 +306,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Newsletter ──────────────────────────────────────────── */}
-      <Newsletter />
+      <Newsletter settings={settings} />
     </>
   );
 }

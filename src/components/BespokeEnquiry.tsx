@@ -1,12 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import {
-  bespokeProducts,
-  getProductBySlug,
-  type Product,
-} from "@/lib/products";
+import { useMemo, useState } from "react";
+import type { Product } from "@/lib/products";
 import { MailIcon, OliveIcon } from "./icons";
 import { formatGBP } from "@/lib/format";
 
@@ -17,8 +13,16 @@ const inputCls =
 const labelCls =
   "mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel";
 
-export default function BespokeEnquiry({ product }: { product?: Product }) {
-  const [pieceSlug, setPieceSlug] = useState(product?.slug ?? bespokeProducts[0]?.slug ?? "");
+export default function BespokeEnquiry({
+  product,
+  products,
+  contactEmail,
+}: {
+  product?: Product;
+  products: Product[];
+  contactEmail: string;
+}) {
+  const [pieceSlug, setPieceSlug] = useState(product?.slug ?? products[0]?.slug ?? "");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [text, setText] = useState("");
@@ -29,7 +33,7 @@ export default function BespokeEnquiry({ product }: { product?: Product }) {
   const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
 
-  const piece = getProductBySlug(pieceSlug) ?? bespokeProducts[0];
+  const piece = product?.slug === pieceSlug ? product : products.find((p) => p.slug === pieceSlug) ?? products[0];
   const materials = piece?.materialOptions ?? [];
   const sizes = piece?.sizeOptions ?? [];
   const personalisation = piece?.personalisation;
@@ -42,11 +46,6 @@ export default function BespokeEnquiry({ product }: { product?: Product }) {
     if (size) p += size.priceDelta;
     return p;
   }, [piece, material, size]);
-
-  useEffect(() => {
-    setMaterialIdx(0);
-    setSizeIdx(0);
-  }, [pieceSlug]);
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -65,7 +64,7 @@ export default function BespokeEnquiry({ product }: { product?: Product }) {
     reader.readAsDataURL(file);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) {
       setError("Please add your name.");
@@ -102,6 +101,7 @@ export default function BespokeEnquiry({ product }: { product?: Product }) {
       .filter((l) => l.length)
       .join("\n");
 
+    // Persist a local backup of the enquiry.
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
       const arr = raw ? JSON.parse(raw) : [];
@@ -119,12 +119,40 @@ export default function BespokeEnquiry({ product }: { product?: Product }) {
       });
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
     } catch {
-      /* storage unavailable — the mail client still opens */
+      /* storage unavailable — the backend still receives the enquiry */
     }
 
-    window.location.href = `mailto:hello@houseofmerola.com?subject=${encodeURIComponent(
-      `Bespoke enquiry — ${piece?.name ?? "made-to-order piece"}`,
-    )}&body=${encodeURIComponent(body)}`;
+    // Send to the studio inbox; fall back to the visitor's mail client.
+    let posted = false;
+    try {
+      const res = await fetch("/api/enquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          kind: "bespoke",
+          name,
+          email,
+          text,
+          notes,
+          productName: piece?.name,
+          material: material?.label,
+          size: size?.label,
+          reference:
+            image && image.dataUrl.length < 1_500_000
+              ? { name: image.name, dataUrl: image.dataUrl }
+              : null,
+        }),
+      });
+      posted = res.ok;
+    } catch {
+      /* ignore — mail fallback below */
+    }
+
+    if (!posted) {
+      window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(
+        `Bespoke enquiry — ${piece?.name ?? "made-to-order piece"}`,
+      )}&body=${encodeURIComponent(body)}`;
+    }
     setSent(true);
   };
 
@@ -134,14 +162,13 @@ export default function BespokeEnquiry({ product }: { product?: Product }) {
         <OliveIcon className="h-14 w-14 text-ochre" />
         <h2 className="mt-4 font-serif text-3xl text-navy">Grazie mille!</h2>
         <p className="mt-3 max-w-sm text-sm leading-relaxed text-steel">
-          Your enquiry has been prepared. Your email app should have opened with
-          everything filled in — just press send, and don’t forget to attach
-          your reference image if you have one.
+          Thank you — your enquiry has been sent to the studio. We’ll reply
+          within two working days with a mock-up and a quote.
         </p>
         <p className="mt-3 max-w-sm text-sm text-steel/80">
           Prefer email? Write to{" "}
-          <a href="mailto:hello@houseofmerola.com" className="text-ochre underline">
-            hello@houseofmerola.com
+          <a href={`mailto:${contactEmail}`} className="text-ochre underline">
+            {contactEmail}
           </a>
           .
         </p>
@@ -172,10 +199,14 @@ export default function BespokeEnquiry({ product }: { product?: Product }) {
           <select
             id="b-piece"
             value={pieceSlug}
-            onChange={(e) => setPieceSlug(e.target.value)}
+            onChange={(e) => {
+              setPieceSlug(e.target.value);
+              setMaterialIdx(0);
+              setSizeIdx(0);
+            }}
             className={inputCls}
           >
-            {bespokeProducts.map((p) => (
+            {products.map((p) => (
               <option key={p.slug} value={p.slug}>
                 {p.name}
               </option>

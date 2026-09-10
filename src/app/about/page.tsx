@@ -3,6 +3,7 @@ import Link from "next/link";
 import Newsletter from "@/components/Newsletter";
 import Reveal from "@/components/Reveal";
 import { BrushIcon, HourglassIcon, LeafIcon } from "@/components/icons";
+import { getSettings } from "@/lib/content";
 
 export const metadata = {
   title: "Our Story",
@@ -10,7 +11,8 @@ export const metadata = {
     "The story of House of Merola: original artwork UV-printed onto ceramic and wood, and laser-engraved pieces, made to order in our Liverpool studio.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const settings = await getSettings();
   return (
     <>
       {/* Header */}
@@ -160,7 +162,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <Newsletter />
+      <Newsletter settings={settings} />
     </>
   );
 }

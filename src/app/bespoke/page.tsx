@@ -1,13 +1,15 @@
 import BespokeEnquiry from "@/components/BespokeEnquiry";
 import ProductCard from "@/components/ProductCard";
 import Reveal from "@/components/Reveal";
-import { bespokeProducts } from "@/lib/products";
+import { getCollections, getProducts, getSettings } from "@/lib/content";
 
 export const metadata = {
   title: "Bespoke & Personalised",
   description:
     "Made-to-order ceramic, wood and laser-engraved pieces, designed in our Liverpool studio. Send a bespoke enquiry and attach a reference image.",
 };
+
+export const dynamic = "force-dynamic";
 
 export default async function BespokePage({
   searchParams,
@@ -16,8 +18,16 @@ export default async function BespokePage({
 }) {
   const { product } = await searchParams;
   const productSlug = Array.isArray(product) ? product[0] : product;
+  const [products, settings, collections] = await Promise.all([
+    getProducts(),
+    getSettings(),
+    getCollections(),
+  ]);
+  const bespoke = products.filter((p) => p.madeToOrder);
+  const bespokeCollectionName =
+    collections.find((c) => c.slug === "bespoke-personalised")?.name;
   const preset = productSlug
-    ? bespokeProducts.find((p) => p.slug === productSlug)
+    ? bespoke.find((p) => p.slug === productSlug)
     : undefined;
 
   return (
@@ -47,7 +57,11 @@ export default async function BespokePage({
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-5 lg:gap-16">
           <Reveal className="lg:col-span-3">
-            <BespokeEnquiry product={preset} />
+            <BespokeEnquiry
+              product={preset}
+              products={bespoke}
+              contactEmail={settings.contactEmail}
+            />
           </Reveal>
 
           <Reveal delay={120} className="space-y-8 lg:col-span-2">
@@ -95,11 +109,11 @@ export default async function BespokePage({
               <p className="mt-2 text-sm leading-relaxed text-steel">
                 Send your idea and any reference images to
                 <a
-                  href="mailto:hello@houseofmerola.com"
+                  href={`mailto:${settings.contactEmail}`}
                   className="text-ochre underline"
                 >
                   {" "}
-                  hello@houseofmerola.com
+                  {settings.contactEmail}
                 </a>{" "}
                 and we’ll take it from there.
               </p>
@@ -124,13 +138,13 @@ export default async function BespokePage({
             </p>
           </Reveal>
           <div className="product-grid">
-            {bespokeProducts.map((product, index) => (
+            {bespoke.map((product, index) => (
               <Reveal
                 key={product.slug}
                 className="h-full"
                 delay={Math.min(index, 3) * 70}
               >
-                <ProductCard product={product} />
+                <ProductCard product={product} collectionName={bespokeCollectionName} />
               </Reveal>
             ))}
           </div>

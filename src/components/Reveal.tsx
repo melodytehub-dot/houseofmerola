@@ -28,6 +28,8 @@ export default function Reveal({
     if (!el) return;
 
     if (typeof IntersectionObserver === "undefined") {
+      // Fallback for no-JS / old browsers — reveal immediately.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setVisible(true);
       return;
     }

@@ -3,6 +3,7 @@
 import { useSyncExternalStore } from "react";
 import Reveal from "@/components/Reveal";
 import { OliveIcon } from "./icons";
+import type { SiteSettings } from "@/lib/site";
 
 const SUB_KEY = "houseofmerola-subscribed";
 
@@ -38,7 +39,7 @@ function markSubscribed() {
   subListeners.forEach((l) => l());
 }
 
-export default function Newsletter() {
+export default function Newsletter({ settings }: { settings: SiteSettings }) {
   const isSubscribed = useSyncExternalStore(
     subscribeSub,
     getSubSnapshot,
@@ -76,8 +77,10 @@ export default function Newsletter() {
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-cream/75">
           New collections, studio notes and early access, plus a{" "}
-          <span className="text-ochre-soft">10% welcome code</span> on your
-          first order.
+          <span className="text-ochre-soft">
+            {settings.commerce.welcomeCodePercent}% welcome code
+          </span>{" "}
+          on your first order.
         </p>
 
         {isSubscribed ? (
@@ -90,7 +93,7 @@ export default function Newsletter() {
               You’re on the list. Use this code at checkout:
             </p>
             <p className="brand-wordmark mt-3 inline-block rounded-md border border-dashed border-ochre/70 bg-cream/10 px-6 py-2.5 text-xl text-ochre-soft">
-              MEROLA10
+              {settings.commerce.welcomeCode}
             </p>
           </div>
         ) : (

@@ -5,22 +5,38 @@ import { useState } from "react";
 import Reveal from "@/components/Reveal";
 import { MailIcon, OliveIcon } from "@/components/icons";
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name.trim() || !form.message.trim()) {
       setError("Please add your name and a message.");
       return;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+    if (!EMAIL_RE.test(form.email.trim())) {
       setError("Please enter a valid email address.");
       return;
     }
     setError("");
+    try {
+      await fetch("/api/enquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          kind: "contact",
+          name: form.name,
+          email: form.email,
+          text: form.message,
+        }),
+      });
+    } catch {
+      /* message still acknowledged locally */
+    }
     setSent(true);
   };
 

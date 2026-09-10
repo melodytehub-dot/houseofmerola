@@ -10,20 +10,19 @@ import { formatGBP } from "@/lib/format";
 import {
   getCollectionBySlug,
   getProductBySlug,
-  products,
-} from "@/lib/products";
+  getProducts,
+  getSettings,
+} from "@/lib/content";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  return products.map((product) => ({ slug: product.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) return {};
   return {
     title: product.name,
@@ -38,11 +37,15 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) notFound();
 
-  const collection = getCollectionBySlug(product.collection);
-  const related = products
+  const [collection, allProducts, settings] = await Promise.all([
+    getCollectionBySlug(product.collection),
+    getProducts(),
+    getSettings(),
+  ]);
+  const related = allProducts
     .filter((p) => p.collection === product.collection && p.slug !== product.slug)
     .slice(0, 4);
 
@@ -143,7 +146,11 @@ export default async function ProductPage({ params }: PageProps) {
                 <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-ochre/40 bg-ochre/10 px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-ochre">
                   ✦ Designed & made to order in Liverpool
                 </p>
-                <BespokeEnquiry product={product} />
+                <BespokeEnquiry
+                  product={product}
+                  products={allProducts.filter((p) => p.madeToOrder)}
+                  contactEmail={settings.contactEmail}
+                />
               </div>
             ) : (
               <ProductConfigurator product={product} />
@@ -180,7 +187,7 @@ export default async function ProductPage({ params }: PageProps) {
             <div className="product-grid">
               {related.map((product, index) => (
                 <Reveal key={product.slug} className="h-full" delay={Math.min(index, 3) * 70}>
-                  <ProductCard product={product} />
+                  <ProductCard product={product} collectionName={collection?.name} />
                 </Reveal>
               ))}
             </div>

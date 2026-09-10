@@ -7,6 +7,9 @@ import CartDrawer from "@/components/CartDrawer";
 import ScrollToTop from "@/components/ScrollToTop";
 import { CartProvider } from "@/lib/cart";
 import { WishlistProvider } from "@/lib/wishlist";
+import { getCollections, getSettings } from "@/lib/content";
+
+export const dynamic = "force-dynamic";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -23,41 +26,40 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: "House of Merola · Art · Casa · Mediterraneo",
-    template: "%s · House of Merola",
-  },
-  description:
-    "Original artwork UV-printed onto ceramic and wood, and laser-engraved pieces, designed and finished by hand in our Liverpool studio. Mediterranean soul, botanical beauty, sacred tradition.",
-  keywords: [
-    "House of Merola",
-    "UV printed ceramic tiles",
-    "laser engraved wood art",
-    "bespoke personalised plaques",
-    "botanical wall art",
-    "Mediterranean decor",
-    "sacred art tiles",
-  ],
-  metadataBase: new URL("https://houseofmerola.com"),
-  openGraph: {
-    title: "House of Merola · Art · Casa · Mediterraneo",
-    description:
-      "Original artwork UV-printed onto ceramic and wood, and laser-engraved pieces, designed and finished by hand in our Liverpool studio.",
-    siteName: "House of Merola",
-    type: "website",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSettings();
+  const base = new URL(settings.metadata.url || "https://houseofmerola.vercel.app");
+  return {
+    metadataBase: base,
+    title: {
+      default: settings.metadata.title,
+      template: settings.metadata.titleTemplate,
+    },
+    description: settings.metadata.description,
+    keywords: settings.metadata.keywords,
+    openGraph: {
+      title: settings.metadata.title,
+      description: settings.metadata.description,
+      siteName: settings.siteName,
+      type: "website",
+      url: base.toString(),
+    },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#0E2A4D",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [settings, collections] = await Promise.all([
+    getSettings(),
+    getCollections(),
+  ]);
   return (
     <html lang="en" className={`${cormorant.variable} ${montserrat.variable}`}>
       <body className="flex min-h-svh flex-col bg-cream font-sans text-navy antialiased">
@@ -66,12 +68,12 @@ export default function RootLayout({
             {".reveal{opacity:1!important;transform:none!important}"}
           </style>
         </noscript>
-        <CartProvider>
+        <CartProvider discountCodes={settings.commerce.discountCodes}>
           <WishlistProvider>
             <ScrollToTop />
-            <Header />
+            <Header settings={settings} collections={collections} />
             <main className="flex-1">{children}</main>
-            <Footer />
+            <Footer settings={settings} collections={collections} />
             <CartDrawer />
           </WishlistProvider>
         </CartProvider>

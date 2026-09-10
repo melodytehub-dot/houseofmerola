@@ -8,7 +8,7 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from "react";
-import { DISCOUNT_CODES, type Product } from "./products";
+import { type Product } from "./products";
 
 export interface CartItem {
   key: string; // composite key: slug + variant, so variants are separate lines
@@ -124,9 +124,16 @@ function persist(next: CartSnapshot) {
   listeners.forEach((l) => l());
 }
 
-export function CartProvider({ children }: { children: ReactNode }) {
+export function CartProvider({
+  children,
+  discountCodes,
+}: {
+  children: ReactNode;
+  discountCodes?: Record<string, number>;
+}) {
   const store = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const open = useSyncExternalStore(subscribeOpen, getOpenSnapshot, getOpenSnapshot);
+  const codes = useMemo(() => discountCodes ?? {}, [discountCodes]);
 
   const addItem = useCallback(
     (
@@ -188,13 +195,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
     persist({ ...getSnapshot(), items: [] });
   }, []);
 
-  const applyDiscount = useCallback((code: string) => {
-    const normalized = code.trim().toUpperCase();
-    const percent = DISCOUNT_CODES[normalized];
-    if (!percent) return false;
-    persist({ ...getSnapshot(), discountCode: normalized });
-    return true;
-  }, []);
+  const applyDiscount = useCallback(
+    (code: string) => {
+      const normalized = code.trim().toUpperCase();
+      const percent = codes[normalized];
+      if (!percent) return false;
+      persist({ ...getSnapshot(), discountCode: normalized });
+      return true;
+    },
+    [codes],
+  );
 
   const removeDiscount = useCallback(() => {
     persist({ ...getSnapshot(), discountCode: null });
@@ -207,7 +217,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       0,
     );
     const discountPercent = store.discountCode
-      ? DISCOUNT_CODES[store.discountCode] ?? 0
+      ? codes[store.discountCode] ?? 0
       : 0;
     const discountAmount = (subtotal * discountPercent) / 100;
     const total = subtotal - discountAmount;
@@ -231,6 +241,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     };
   }, [
     store,
+    codes,
     open,
     addItem,
     removeItem,

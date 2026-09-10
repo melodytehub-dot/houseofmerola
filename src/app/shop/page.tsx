@@ -1,36 +1,15 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
-import ProductCard from "@/components/ProductCard";
+import ShopGrid from "@/components/ShopGrid";
 import Reveal from "@/components/Reveal";
 import { BoxIcon, BrushIcon, ReturnIcon } from "@/components/icons";
-import { collections, products } from "@/lib/products";
+import { getCollections, getProducts } from "@/lib/content";
 
-const tabs = [
-  { slug: "all", name: "All pieces" },
-  ...collections.map((collection) => ({
-    slug: collection.slug,
-    name: collection.name,
-  })),
-];
-
-export default function ShopPage() {
-  const [active, setActive] = useState("all");
-
-  const visible = useMemo(
-    () =>
-      active === "all"
-        ? products
-        : products.filter((p) => p.collection === active),
-    [active],
-  );
-
-  const countFor = (slug: string) =>
-    slug === "all"
-      ? products.length
-      : products.filter((p) => p.collection === slug).length;
+export default async function ShopPage() {
+  const [products, collections] = await Promise.all([
+    getProducts(),
+    getCollections(),
+  ]);
 
   return (
     <>
@@ -75,56 +54,8 @@ export default function ShopPage() {
         </Reveal>
       </section>
 
-      {/* Sticky filter bar */}
-      <div className="sticky top-[4.5rem] z-20 border-b border-navy/10 bg-cream-soft/90 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl items-center justify-center gap-2 overflow-x-auto px-4 py-3 sm:px-6 [scrollbar-width:none]">
-          {tabs.map((tab) => {
-            const isActive = active === tab.slug;
-            return (
-              <button
-                key={tab.slug}
-                type="button"
-                onClick={() => setActive(tab.slug)}
-                className={`flex shrink-0 items-center gap-2 rounded-full px-5 py-2 text-[0.68rem] font-medium uppercase tracking-[0.18em] transition ${
-                  isActive
-                    ? "bg-navy text-cream shadow-[0_8px_20px_rgb(14_42_77/0.25)]"
-                    : "border border-navy/15 text-navy hover:border-ochre hover:text-ochre"
-                }`}
-              >
-                {tab.name}
-                <span
-                  className={`text-[0.6rem] ${
-                    isActive ? "text-cream/60" : "text-steel/70"
-                  }`}
-                >
-                  {countFor(tab.slug)}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Grid */}
-      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-        {visible.length > 0 ? (
-          <div className="product-grid">
-            {visible.map((product, index) => (
-              <Reveal
-                key={product.slug}
-                className="h-full"
-                delay={Math.min(index, 5) * 70}
-              >
-                <ProductCard product={product} />
-              </Reveal>
-            ))}
-          </div>
-        ) : (
-          <p className="py-20 text-center text-navy/60">
-            No pieces here yet. Check back soon.
-          </p>
-        )}
-      </section>
+      {/* Filterable grid */}
+      <ShopGrid products={products} collections={collections} />
 
       {/* Craft strip */}
       <section className="border-y border-navy/10 bg-cream/60">

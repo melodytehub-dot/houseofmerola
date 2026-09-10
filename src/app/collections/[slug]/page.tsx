@@ -4,22 +4,19 @@ import { notFound } from "next/navigation";
 import ProductCard from "@/components/ProductCard";
 import Reveal from "@/components/Reveal";
 import {
-  collections,
   getCollectionBySlug,
   getProductsByCollection,
-} from "@/lib/products";
+} from "@/lib/content";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  return collections.map((collection) => ({ slug: collection.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
-  const collection = getCollectionBySlug(slug);
+  const collection = await getCollectionBySlug(slug);
   if (!collection) return {};
   return {
     title: collection.name,
@@ -29,10 +26,10 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function CollectionPage({ params }: PageProps) {
   const { slug } = await params;
-  const collection = getCollectionBySlug(slug);
+  const collection = await getCollectionBySlug(slug);
   if (!collection) notFound();
 
-  const items = getProductsByCollection(collection.slug);
+  const items = await getProductsByCollection(collection.slug);
 
   return (
     <>
@@ -93,7 +90,7 @@ export default async function CollectionPage({ params }: PageProps) {
         <div className="product-grid">
           {items.map((product, index) => (
             <Reveal key={product.slug} className="h-full" delay={Math.min(index, 5) * 70}>
-              <ProductCard product={product} />
+              <ProductCard product={product} collectionName={collection.name} />
             </Reveal>
           ))}
         </div>

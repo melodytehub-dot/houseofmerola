@@ -3,14 +3,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/lib/cart";
-import { getCollectionBySlug, type Product } from "@/lib/products";
+import type { Product } from "@/lib/products";
 import { formatGBP } from "@/lib/format";
 import { BagIcon } from "./icons";
 import WishlistButton from "./WishlistButton";
 
-export default function ProductCard({ product }: { product: Product }) {
+export default function ProductCard({
+  product,
+  collectionName,
+}: {
+  product: Product;
+  collectionName?: string;
+}) {
   const { addItem, openCart } = useCart();
-  const collection = getCollectionBySlug(product.collection);
+  const collection = collectionName ? { name: collectionName } : undefined;
   const isBespoke = product.madeToOrder;
 
   const handleAdd = (e: React.MouseEvent) => {

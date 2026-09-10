@@ -51,3 +51,7 @@ server-simple.js
 # source screenshots
 public/screenshot*
 server.log
+
+# local admin/data (not committed)
+.data
+!.env.example

@@ -5,7 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import Logo from "./Logo";
 import { HeartIcon } from "./icons";
 import { useCart } from "@/lib/cart";
-import { collections } from "@/lib/products";
+import type { Collection } from "@/lib/products";
+import type { SiteSettings } from "@/lib/site";
 import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
 import { useWishlist } from "@/lib/wishlist";
 
@@ -16,7 +17,13 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-export default function Header() {
+export default function Header({
+  settings,
+  collections,
+}: {
+  settings: SiteSettings;
+  collections: Collection[];
+}) {
   const { count, openCart } = useCart();
   const { count: wishCount } = useWishlist();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -70,53 +77,105 @@ export default function Header() {
 
   const closeMenu = () => setMenuOpen(false);
 
+  const actions = (
+    <>
+      <Link
+        href="/wishlist"
+        aria-label={`Wishlist, ${wishCount} items`}
+        className="group relative flex h-10 w-10 items-center justify-center rounded-full border border-navy/15 text-navy transition hover:border-ochre hover:text-ochre"
+      >
+        <HeartIcon className="h-[18px] w-[18px]" />
+        {wishCount > 0 && (
+          <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-ochre px-1 text-[0.62rem] font-semibold text-navy-deep">
+            {wishCount}
+          </span>
+        )}
+      </Link>
+      <button
+        type="button"
+        onClick={openCart}
+        aria-label={`Open cart, ${count} items`}
+        className="group relative flex h-10 w-10 items-center justify-center rounded-full border border-navy/15 text-navy transition hover:border-ochre hover:text-ochre"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M6 7h12l1.5 12.5a1 1 0 0 1-1 1.1H5.5a1 1 0 0 1-1-1.1L6 7Z" />
+          <path d="M9 9V6a3 3 0 0 1 6 0v3" />
+        </svg>
+        {count > 0 && (
+          <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-oxblood px-1 text-[0.62rem] font-semibold text-cream">
+            {count}
+          </span>
+        )}
+      </button>
+    </>
+  );
+
   return (
     <>
       <header className="sticky top-0 z-40">
+        {settings.announcement && (
+          <div className="bg-navy-deep text-center text-[0.64rem] font-medium uppercase tracking-[0.24em] text-cream">
+            <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6">{settings.announcement}</div>
+          </div>
+        )}
         {/* Main bar */}
         <div
           className={`border-b border-navy/10 bg-cream-soft/90 backdrop-blur-md transition-shadow ${
             scrolled ? "shadow-[0_10px_30px_rgb(14_42_77/0.08)]" : ""
           }`}
         >
-          <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-            {/* Mobile menu button, fixed width so the logo stays centred */}
-            <div className="flex w-20 items-center lg:hidden">
-            <button
-              type="button"
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={menuOpen}
-              aria-controls="mobile-menu"
-              onClick={() => setMenuOpen((v) => !v)}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-navy/15 text-navy transition hover:border-ochre hover:text-ochre"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-              >
-                {menuOpen ? (
-                  <path d="M6 6l12 12M18 6L6 18" />
-                ) : (
-                  <>
-                    <path d="M4 7h16M4 12h16M4 17h10" />
-                  </>
-                )}
-              </svg>
-            </button>
+          <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
+            {/* Mobile row */}
+            <div className="flex items-center justify-between gap-4 lg:hidden">
+              <div className="flex w-20 items-center">
+                <button
+                  type="button"
+                  aria-label={menuOpen ? "Close menu" : "Open menu"}
+                  aria-expanded={menuOpen}
+                  aria-controls="mobile-menu"
+                  onClick={() => setMenuOpen((v) => !v)}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-navy/15 text-navy transition hover:border-ochre hover:text-ochre"
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                  >
+                    {menuOpen ? (
+                      <path d="M6 6l12 12M18 6L6 18" />
+                    ) : (
+                      <>
+                        <path d="M4 7h16M4 12h16M4 17h10" />
+                      </>
+                    )}
+                  </svg>
+                </button>
+              </div>
+              <div className="flex flex-1 justify-center">
+                <Logo />
+              </div>
+              <div className="flex w-20 items-center justify-end gap-1.5">{actions}</div>
             </div>
 
-            {/* Logo, perfectly centered on mobile and left on desktop */}
-            <div className="flex flex-1 justify-center lg:flex-none lg:justify-start">
-              <Logo />
-            </div>
-
-            {/* Desktop nav */}
-            <nav className="hidden items-center gap-8 lg:flex" aria-label="Main">
+            {/* Desktop row — nav perfectly centred */}
+            <div className="hidden items-center lg:grid lg:grid-cols-[1fr_auto_1fr]">
+              <div className="flex justify-start">
+                <Logo />
+              </div>
+              <nav className="flex items-center justify-center gap-7" aria-label="Main">
               <Link
                 href="/shop"
                 className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-navy transition hover:text-ochre"
@@ -194,48 +253,9 @@ export default function Header() {
                 Contact
               </Link>
             </nav>
-
-            {/* Wishlist + cart, fixed width on mobile so the logo stays centred */}
-            <div className="flex w-20 items-center justify-end gap-1.5 lg:w-auto lg:flex-1">
-              <Link
-                href="/wishlist"
-                aria-label={`Wishlist, ${wishCount} items`}
-                className="group relative flex h-10 w-10 items-center justify-center rounded-full border border-navy/15 text-navy transition hover:border-ochre hover:text-ochre"
-              >
-                <HeartIcon className="h-[18px] w-[18px]" />
-                {wishCount > 0 && (
-                  <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-ochre px-1 text-[0.62rem] font-semibold text-navy-deep">
-                    {wishCount}
-                  </span>
-                )}
-              </Link>
-              <button
-                type="button"
-                onClick={openCart}
-                aria-label={`Open cart, ${count} items`}
-                className="group relative flex h-10 w-10 items-center justify-center rounded-full border border-navy/15 text-navy transition hover:border-ochre hover:text-ochre"
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M6 7h12l1.5 12.5a1 1 0 0 1-1 1.1H5.5a1 1 0 0 1-1-1.1L6 7Z" />
-                  <path d="M9 9V6a3 3 0 0 1 6 0v3" />
-                </svg>
-                {count > 0 && (
-                  <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-oxblood px-1 text-[0.62rem] font-semibold text-cream">
-                    {count}
-                  </span>
-                )}
-              </button>
-            </div>
+            <div className="flex items-center justify-end gap-1.5">{actions}</div>
           </div>
+        </div>
         </div>
       </header>
 
