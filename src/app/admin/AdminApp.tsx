@@ -1,14 +1,15 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import type { Content, Enquiry } from "@/lib/site";
+import type { Content, Enquiry, Order } from "@/lib/site";
 import ProductsPanel from "./ProductsPanel";
 import CollectionsPanel from "./CollectionsPanel";
 import SettingsPanel from "./SettingsPanel";
 import StripePanel from "./StripePanel";
 import EnquiriesPanel from "./EnquiriesPanel";
+import OrdersPanel from "./OrdersPanel";
 
-type Tab = "products" | "collections" | "settings" | "stripe" | "enquiries";
+type Tab = "products" | "collections" | "settings" | "stripe" | "enquiries" | "orders";
 type Phase = "loading" | "login" | "dashboard";
 
 const TABS: { id: Tab; label: string }[] = [
@@ -17,6 +18,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "settings", label: "Settings" },
   { id: "stripe", label: "Stripe" },
   { id: "enquiries", label: "Enquiries" },
+  { id: "orders", label: "Orders" },
 ];
 
 async function jsonFetch(url: string, init?: RequestInit) {
@@ -32,6 +34,7 @@ export default function AdminApp() {
   const [phase, setPhase] = useState<Phase>("loading");
   const [content, setContent] = useState<Content | null>(null);
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [tab, setTab] = useState<Tab>("products");
   const [loginError, setLoginError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -43,12 +46,14 @@ export default function AdminApp() {
   }, []);
 
   const loadDashboard = useCallback(async () => {
-    const [c, e] = await Promise.all([
+    const [c, e, o] = await Promise.all([
       jsonFetch("/api/admin/content"),
       jsonFetch("/api/admin/enquiries"),
+      jsonFetch("/api/admin/orders"),
     ]);
     if (c.ok) setContent(c.data);
     if (e.ok) setEnquiries(e.data.enquiries ?? []);
+    if (o.ok) setOrders(o.data.orders ?? []);
     setPhase("dashboard");
   }, []);
 
@@ -181,8 +186,10 @@ export default function AdminApp() {
             <SettingsPanel content={content} onChange={setContent} />
           ) : tab === "stripe" ? (
             <StripePanel content={content} onChange={setContent} />
-          ) : (
+          ) : tab === "enquiries" ? (
             <EnquiriesPanel enquiries={enquiries} onChange={setEnquiries} notify={notify} />
+          ) : (
+            <OrdersPanel orders={orders} onChange={setOrders} notify={notify} />
           )
         ) : (
           <p className="py-20 text-center text-navy/60">No studio data loaded.</p>

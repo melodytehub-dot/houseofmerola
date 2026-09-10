@@ -15,11 +15,13 @@ import {
   type Enquiry,
   type SiteSettings,
   type StripeConfig,
+  type Order,
 } from "./site";
 import { readJson, writeJson } from "./store";
 
 const CONTENT_KEY = "hm_content";
 const ENQUIRIES_KEY = "hm_enquiries";
+const ORDERS_KEY = "hm_orders";
 
 function isContent(x: unknown): x is Content {
   if (!x || typeof x !== "object") return false;
@@ -128,6 +130,32 @@ export async function setEnquiryStatus(id: string, status: Enquiry["status"]): P
   await writeJson<Enquiry[]>(
     ENQUIRIES_KEY,
     list.map((e) => (e.id === id ? { ...e, status } : e)),
+  );
+}
+
+/* ── Orders ─────────────────────────────────────────────────── */
+
+export async function getOrders(): Promise<Order[]> {
+  const list = await readJson<Order[]>(ORDERS_KEY);
+  return Array.isArray(list) ? list : [];
+}
+
+/** Idempotent upsert keyed by the Stripe session id, so retried webhooks
+ * (and Stripe's at-least-once delivery) never duplicate an order. */
+export async function saveOrder(order: Order): Promise<void> {
+  const list = await getOrders();
+  const exists = list.some((o) => o.id === order.id);
+  const next = exists
+    ? list.map((o) => (o.id === order.id ? { ...o, ...order } : o))
+    : [order, ...list];
+  await writeJson<Order[]>(ORDERS_KEY, next);
+}
+
+export async function setOrderStatus(id: string, status: Order["status"]): Promise<void> {
+  const list = await getOrders();
+  await writeJson<Order[]>(
+    ORDERS_KEY,
+    list.map((o) => (o.id === id ? { ...o, status } : o)),
   );
 }
 

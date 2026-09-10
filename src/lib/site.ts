@@ -91,6 +91,35 @@ export interface Enquiry {
   status: "new" | "done";
 }
 
+export type OrderStatus = "new" | "fulfilled";
+
+export interface OrderItem {
+  name: string;
+  /** Unit price in major currency units (e.g. 15 for £15.00). */
+  unitPrice: number;
+  qty: number;
+  /** Human-readable variant string, e.g. "UV-printed ceramic · 15 × 15 cm". */
+  variant?: string;
+}
+
+export interface Order {
+  /** Stripe Checkout session id — used as the stable, idempotency-safe key. */
+  id: string;
+  createdAt: string;
+  email: string;
+  name?: string;
+  deliveryZone: "uk" | "international";
+  currency: string;
+  /** Sum of line items before shipping, in major currency units. */
+  subtotal: number;
+  shipping: number;
+  /** amount_total from Stripe (includes shipping), in major currency units. */
+  total: number;
+  items: OrderItem[];
+  status: OrderStatus;
+  paymentStatus?: "paid";
+}
+
 export interface Content {
   products: import("./products").Product[];
   collections: import("./products").Collection[];

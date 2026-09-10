@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "@/lib/cart";
 import { formatGBP, formatGBPWhole } from "@/lib/format";
 import Reveal from "./Reveal";
@@ -41,6 +41,19 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
   const [error, setError] = useState("");
   const [placed, setPlaced] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [stripeState, setStripeState] = useState<"success" | "cancelled" | null>(
+    null,
+  );
+
+  // Handle Stripe's redirects back to this page: `?success=1` or `?cancelled=1`.
+  useEffect(() => {
+    const qs = new URLSearchParams(window.location.search);
+    if (qs.get("success") !== "1" && qs.get("cancelled") !== "1") return;
+    // Mount-only initialisation from the URL — safe to set state here.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setStripeState(qs.get("success") === "1" ? "success" : "cancelled");
+    if (qs.get("success") === "1") clearCart();
+  }, [clearCart]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,16 +96,48 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
     setBusy(false);
   };
 
-  if (placed) {
+  if (stripeState === "cancelled") {
+    return (
+      <div className="mx-auto max-w-2xl px-4 py-20 text-center sm:px-6">
+        <BagIcon className="h-16 w-16 text-steel" />
+        <h1 className="mt-5 font-serif text-4xl text-navy sm:text-5xl">
+          Checkout cancelled
+        </h1>
+        <p className="mx-auto mt-4 max-w-md leading-relaxed text-navy/70">
+          No payment was taken and your basket is still saved. You can return to
+          your order whenever you’re ready.
+        </p>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <Link
+            href="/checkout"
+            className="rounded-full bg-oxblood px-8 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-cream transition hover:bg-oxblood-deep"
+          >
+            Return to checkout
+          </Link>
+          <Link
+            href="/shop"
+            className="rounded-full border border-navy/20 px-8 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-navy transition hover:border-oxblood hover:text-oxblood"
+          >
+            Continue shopping
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (placed || stripeState === "success") {
     return (
       <div className="mx-auto max-w-2xl px-4 py-20 text-center sm:px-6">
         <OliveIcon className="h-16 w-16 text-ochre" />
         <h1 className="mt-5 font-serif text-4xl text-navy sm:text-5xl">
-          Grazie, {form.name.split(" ")[0]}!
+          {stripeState === "success"
+            ? "Grazie!"
+            : `Grazie, ${form.name.split(" ")[0]}!`}
         </h1>
         <p className="mx-auto mt-4 max-w-md leading-relaxed text-navy/70">
-          Your order has been received. We’ll email you within one working day
-          to confirm payment and arrange delivery.
+          {stripeState === "success"
+            ? "Your payment was successful and your order is confirmed. We’ll be in touch within one working day to arrange delivery."
+            : "Your order has been received. We’ll email you within one working day to confirm payment and arrange delivery."}
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <Link

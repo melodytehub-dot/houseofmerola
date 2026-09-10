@@ -44,6 +44,11 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       url: base.toString(),
     },
+    twitter: {
+      card: "summary_large_image",
+      title: settings.metadata.title,
+      description: settings.metadata.description,
+    },
   };
 }
 
@@ -60,6 +65,19 @@ export default async function RootLayout({
     getSettings(),
     getCollections(),
   ]);
+  const baseUrl = settings.metadata.url || "https://houseofmerola.vercel.app";
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: settings.siteName,
+    url: baseUrl,
+    logo: `${baseUrl}/icon.svg`,
+    sameAs: [
+      settings.social.instagram,
+      settings.social.pinterest,
+      settings.social.tiktok,
+    ].filter(Boolean),
+  };
   return (
     <html lang="en" className={`${cormorant.variable} ${montserrat.variable}`}>
       <body className="flex min-h-svh flex-col bg-cream font-sans text-navy antialiased">
@@ -77,6 +95,10 @@ export default async function RootLayout({
             <CartDrawer settings={settings} />
           </WishlistProvider>
         </CartProvider>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
       </body>
     </html>
   );
