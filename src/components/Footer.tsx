@@ -16,8 +16,8 @@ export default function Footer() {
               Arte · Casa · Mediterraneo
             </p>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-cream/70">
-              Hand-painted ceramic tiles and gold-engraved study boards, crafted
-              in the spirit of old Sicilian majolica, for walls that carry a
+              Original artwork UV-printed onto ceramic and wood, engraved and
+              finished by hand in our Liverpool studio, for walls that carry a
               little sunshine.
             </p>
             <div className="mt-6 flex gap-3">
@@ -105,9 +105,9 @@ export default function Footer() {
           <div className="md:col-span-2">
             <h3 className="eyebrow mb-5 text-ochre-soft">Studio</h3>
             <p className="text-sm leading-relaxed text-cream/75">
-              Made by hand,
+              Made to order
               <br />
-              inspired by Sicily.
+              in our Liverpool studio.
               <br />
               hello@houseofmerola.com
             </p>

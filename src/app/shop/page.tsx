@@ -53,13 +53,13 @@ export default function ShopPage() {
             Made slowly, <em className="text-ochre-soft">by hand</em>
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-cream/85">
-            Every tile is hand-painted and every study board drawn, painted and
-            engraved in our studio. Small batches only, no two pieces alike,
-            made to be kept.
+            Original artwork UV-printed onto ceramic and wood, engraved and
+            finished by hand — designed and made to order in our Liverpool
+            studio. Small batches only, made to be kept.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 border-t border-cream/15 pt-6 text-cream/80">
             {[
-              "Hand-painted in Sicily",
+              "Designed & finished in Liverpool",
               "Free UK delivery over £50",
               "14-day returns",
             ].map((item) => (
@@ -132,8 +132,8 @@ export default function ShopPage() {
           {[
             {
               icon: BrushIcon,
-              title: "Hand-painted, in small batches",
-              body: "Each tile is painted individually and each board engraved line by line, so a little variation is part of every piece.",
+              title: "Made to order, piece by piece",
+              body: "Each piece is designed in-house, UV-printed or laser-engraved, then finished by hand in our Liverpool studio — so every one is individual.",
             },
             {
               icon: BoxIcon,
@@ -179,11 +179,11 @@ export default function ShopPage() {
               Looking for something made just for you?
             </p>
             <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-cream/75">
-              Commissions are our favourite work. Tell us your idea and we will
-              paint the first sketch.
+              Commissions are our favourite work. Tell us your idea, add a
+              reference image and we’ll send you a mock-up before you commit.
             </p>
             <Link
-              href="/contact"
+              href="/bespoke"
               className="mt-8 inline-flex items-center gap-2 rounded-full bg-ochre px-8 py-4 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-navy-deep transition hover:bg-ochre-soft"
             >
               Start a commission

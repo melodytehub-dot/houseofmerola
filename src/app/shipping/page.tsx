@@ -11,7 +11,7 @@ const sections = [
   {
     title: "Shipping",
     body: [
-      "All pieces are made and dispatched by hand from our studio.",
+      "All pieces are designed and made to order in our Liverpool studio, then dispatched by hand.",
       "UK: £3.95, free over £50. Standard delivery 2–4 working days after dispatch.",
       "Europe: from £9. Delivery 5–10 working days.",
       "Rest of world: from £14. Delivery 7–14 working days.",

@@ -212,7 +212,7 @@ export default function CheckoutPage() {
             <div className="rounded-2xl border border-navy/10 bg-cream-soft p-6">
               <ul className="divide-y divide-navy/10">
                 {items.map((item) => (
-                  <li key={item.slug} className="flex items-center gap-4 py-3">
+                  <li key={item.key} className="flex items-center gap-4 py-3">
                     <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md border border-navy/10">
                       <Image
                         src={item.image}
@@ -226,6 +226,11 @@ export default function CheckoutPage() {
                       <p className="truncate font-serif text-sm text-navy">
                         {item.name}
                       </p>
+                      {item.variant && (
+                        <p className="truncate text-[0.65rem] uppercase tracking-wide text-steel/70">
+                          {item.variant}
+                        </p>
+                      )}
                       <p className="text-xs text-steel">Qty {item.qty}</p>
                     </div>
                     <p className="text-sm font-medium text-navy">

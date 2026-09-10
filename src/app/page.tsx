@@ -28,8 +28,8 @@ export default function HomePage() {
             </h1>
 
             <p className="mt-6 max-w-md animate-fade-up delay-3 text-[0.95rem] leading-relaxed text-navy/70">
-              Hand-painted ceramic tiles and gold-engraved study boards, crafted
-              in the spirit of old Sicilian majolica, each piece carrying the
+              Original artwork UV-printed onto ceramic and wood, engraved and
+              finished by hand in our Liverpool studio — each piece carrying the
               cobalt, lemon and ochre of a sun-washed coast.
             </p>
 
@@ -110,7 +110,7 @@ export default function HomePage() {
                   lengthAdjust="spacingAndGlyphs"
                 >
                   <textPath href="#merola-badge-circle">
-                    HAND-PAINTED IN SICILY · HOUSE OF MEROLA ·
+                    ORIGINAL ARTWORK · MADE IN LIVERPOOL · HOUSE OF MEROLA ·
                   </textPath>
                 </text>
               </svg>
@@ -139,7 +139,7 @@ export default function HomePage() {
             <span className="eyebrow text-navy">The Collections</span>
           </div>
           <h2 className="mt-4 font-serif text-3xl text-navy sm:text-4xl lg:text-5xl">
-            Two houses, one spirit
+            Four houses, one spirit
           </h2>
         </Reveal>
 
@@ -254,15 +254,14 @@ export default function HomePage() {
             <p className="mt-5 max-w-lg leading-relaxed text-navy/70">
               House of Merola is a love letter to the Mediterranean: to
               lemon groves, cobalt majolica, and the old naturalists’ cabinets.
-              Each tile is hand-painted; each study board is drawn, painted and
-              laser-engraved by hand, so no two pieces leave the studio
-              identical.
+              Each piece is designed in-house and finished by hand in our
+              Liverpool studio, so no two pieces leave the studio identical.
             </p>
             <ul className="mt-6 space-y-3">
               {[
-                "Hand-painted ceramic, fired with care",
-                "Painted & laser-engraved wood study boards",
-                "Small-batch, made to be kept",
+                "Original artwork UV-printed onto ceramic",
+                "UV-printed & laser-engraved wood pieces",
+                "Designed & made to order in Liverpool",
               ].map((point) => (
                 <li
                   key={point}

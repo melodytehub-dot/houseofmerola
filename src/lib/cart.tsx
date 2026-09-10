@@ -11,11 +11,13 @@ import {
 import { DISCOUNT_CODES, type Product } from "./products";
 
 export interface CartItem {
+  key: string; // composite key: slug + variant, so variants are separate lines
   slug: string;
   name: string;
-  price: number;
+  price: number; // final price (includes any variant deltas)
   image: string;
   qty: number;
+  variant?: string; // human-readable selection, e.g. "UV-printed ceramic · 15 × 15 cm"
 }
 
 interface CartContextValue {
@@ -29,7 +31,11 @@ interface CartContextValue {
   isOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
-  addItem: (product: Product, qty?: number) => void;
+  addItem: (
+    product: Product,
+    qty?: number,
+    variant?: { label: string; price: number },
+  ) => void;
   removeItem: (slug: string) => void;
   updateQty: (slug: string, qty: number) => void;
   clearCart: () => void;
@@ -57,7 +63,12 @@ const listeners = new Set<() => void>();
 function readStorage(): CartSnapshot {
   try {
     const rawItems = window.localStorage.getItem(STORAGE_KEY);
-    const items: CartItem[] = rawItems ? JSON.parse(rawItems) : [];
+    const stored: CartItem[] = rawItems ? JSON.parse(rawItems) : [];
+    // Normalise pre-variant carts so the dedupe key always exists.
+    const items: CartItem[] = stored.map((item) => ({
+      ...item,
+      key: item.key ?? item.slug,
+    }));
     return {
       items,
       discountCode: window.localStorage.getItem(DISCOUNT_KEY),
@@ -117,48 +128,58 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const store = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const open = useSyncExternalStore(subscribeOpen, getOpenSnapshot, getOpenSnapshot);
 
-  const addItem = useCallback((product: Product, qty = 1) => {
-    const current = getSnapshot();
-    const existing = current.items.find((item) => item.slug === product.slug);
-    let items: CartItem[];
-    if (existing) {
-      items = current.items.map((item) =>
-        item.slug === product.slug
-          ? { ...item, qty: Math.min(99, item.qty + qty) }
-          : item,
-      );
-    } else {
-      items = [
-        ...current.items,
-        {
-          slug: product.slug,
-          name: product.name,
-          price: product.price,
-          image: product.image,
-          qty,
-        },
-      ];
-    }
-    persist({ ...current, items });
-  }, []);
+  const addItem = useCallback(
+    (
+      product: Product,
+      qty = 1,
+      variant?: { label: string; price: number },
+    ) => {
+      const current = getSnapshot();
+      const key = variant ? `${product.slug}::${variant.label}` : product.slug;
+      const existing = current.items.find((item) => item.key === key);
+      let items: CartItem[];
+      if (existing) {
+        items = current.items.map((item) =>
+          item.key === key
+            ? { ...item, qty: Math.min(99, item.qty + qty) }
+            : item,
+        );
+      } else {
+        items = [
+          ...current.items,
+          {
+            key,
+            slug: product.slug,
+            name: product.name,
+            price: variant ? variant.price : product.price,
+            image: product.image,
+            qty,
+            variant: variant?.label,
+          },
+        ];
+      }
+      persist({ ...current, items });
+    },
+    [],
+  );
 
-  const removeItem = useCallback((slug: string) => {
+  const removeItem = useCallback((key: string) => {
     const current = getSnapshot();
     persist({
       ...current,
-      items: current.items.filter((item) => item.slug !== slug),
+      items: current.items.filter((item) => item.key !== key),
     });
   }, []);
 
-  const updateQty = useCallback((slug: string, qty: number) => {
+  const updateQty = useCallback((key: string, qty: number) => {
     const current = getSnapshot();
     persist({
       ...current,
       items:
         qty <= 0
-          ? current.items.filter((item) => item.slug !== slug)
+          ? current.items.filter((item) => item.key !== key)
           : current.items.map((item) =>
-              item.slug === slug ? { ...item, qty: Math.min(99, qty) } : item,
+              item.key === key ? { ...item, qty: Math.min(99, qty) } : item,
             ),
     });
   }, []);

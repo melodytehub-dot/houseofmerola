@@ -11,6 +11,7 @@ import WishlistButton from "./WishlistButton";
 export default function ProductCard({ product }: { product: Product }) {
   const { addItem, openCart } = useCart();
   const collection = getCollectionBySlug(product.collection);
+  const isBespoke = product.madeToOrder;
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -56,16 +57,35 @@ export default function ProductCard({ product }: { product: Product }) {
         </p>
         <div className="mt-auto flex items-center justify-between gap-2 pt-2 sm:pt-4">
           <span className="text-sm font-semibold text-navy sm:text-base">
-            {formatGBP(product.price)}
+            {isBespoke ? "Made to order" : formatGBP(product.price)}
           </span>
-          <button
-            type="button"
-            onClick={handleAdd}
-            aria-label={`Add ${product.name} to cart`}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-navy text-cream shadow-[0_8px_18px_rgb(14_42_77/0.25)] transition hover:scale-105 hover:bg-oxblood active:scale-95"
-          >
-            <BagIcon className="h-4 w-4" />
-          </button>
+          {isBespoke ? (
+            <span className="flex h-9 shrink-0 items-center gap-1.5 rounded-full bg-navy px-4 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-cream">
+              Enquire
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </span>
+          ) : (
+            <button
+              type="button"
+              onClick={handleAdd}
+              aria-label={`Add ${product.name} to cart`}
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-navy text-cream shadow-[0_8px_18px_rgb(14_42_77/0.25)] transition hover:scale-105 hover:bg-oxblood active:scale-95"
+            >
+              <BagIcon className="h-4 w-4" />
+            </button>
+          )}
         </div>
       </div>
     </Link>

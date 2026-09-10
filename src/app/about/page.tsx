@@ -7,7 +7,7 @@ import { BrushIcon, HourglassIcon, LeafIcon } from "@/components/icons";
 export const metadata = {
   title: "Our Story",
   description:
-    "The story of House of Merola: hand-painted ceramic tiles and gold-engraved study boards, inspired by Sicilian majolica.",
+    "The story of House of Merola: original artwork UV-printed onto ceramic and wood, and laser-engraved pieces, made to order in our Liverpool studio.",
 };
 
 export default function AboutPage() {
@@ -20,10 +20,10 @@ export default function AboutPage() {
           <h1 className="mt-4 font-serif text-4xl leading-tight text-navy sm:text-6xl">
             Made in the spirit
             <br />
-            <em className="font-light italic text-ochre">of old Sicilian majolica</em>
+            <em className="font-light italic text-ochre">of the old Mediterranean</em>
           </h1>
           <p className="mx-auto mt-6 max-w-xl leading-relaxed text-navy/70">
-            House of Merola began with a shelf of lemon-painted tiles and a
+            House of Merola began with a shelf of lemon-grove-inspired art and a
             belief that a wall can carry a little sunshine.
           </p>
         </Reveal>
@@ -61,11 +61,11 @@ export default function AboutPage() {
               one study board at a time.
             </p>
             <p className="mt-4 leading-relaxed text-navy/70">
-              Our tiles are hand-painted in the tradition of Sicilian majolica,
+              Our pieces are designed in the spirit of old Sicilian majolica,
               with borders of scrollwork and blossom that echo old chapel
               floors. Our study boards draw on the naturalists’ cabinets of the
-              nineteenth century: herbals, herpetology and mycology, painted and
-              laser-engraved in antique gold on dark wood.
+              nineteenth century: herbals, herpetology and mycology, UV-printed
+              and laser-engraved in antique gold on dark wood.
             </p>
           </div>
         </Reveal>
@@ -79,11 +79,11 @@ export default function AboutPage() {
               No two pieces are identical
             </h2>
             <p className="mt-5 leading-relaxed text-navy/70">
-              Small-batch by design. Each tile is painted individually, each
-              board is engraved line by line, so the glaze catches the light a
+              Made to order, piece by piece. Each design is printed or engraved
+              individually, then finished by hand, so the light catches it a
               little differently every time. The subtle variations you’ll see
-              are not imperfections; they’re the signature of the hand that
-              made it.
+              are not imperfections; they’re the signature of the hand that made
+              it.
             </p>
             <Link
               href="/shop"
@@ -126,7 +126,7 @@ export default function AboutPage() {
               {
                 icon: BrushIcon,
                 title: "Handmade",
-                body: "Every tile is painted and every board engraved by hand, in small batches.",
+                body: "Every piece is UV-printed or engraved, then finished by hand in our Liverpool studio.",
               },
               {
                 icon: LeafIcon,

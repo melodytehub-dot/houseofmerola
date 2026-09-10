@@ -11,6 +11,7 @@ import { useWishlist } from "@/lib/wishlist";
 
 const navLinks = [
   { href: "/shop", label: "Shop" },
+  { href: "/bespoke", label: "Bespoke" },
   { href: "/about", label: "Our Story" },
   { href: "/contact", label: "Contact" },
 ];
@@ -121,6 +122,13 @@ export default function Header() {
                 className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-navy transition hover:text-ochre"
               >
                 Shop
+              </Link>
+
+              <Link
+                href="/bespoke"
+                className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-navy transition hover:text-ochre"
+              >
+                Bespoke
               </Link>
 
               <li

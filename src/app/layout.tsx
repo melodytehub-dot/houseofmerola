@@ -29,13 +29,13 @@ export const metadata: Metadata = {
     template: "%s · House of Merola",
   },
   description:
-    "Hand-painted ceramic tiles and gold-engraved botanical study boards, crafted in the spirit of old Sicilian majolica. Mediterranean soul, botanical beauty, sacred tradition.",
+    "Original artwork UV-printed onto ceramic and wood, and laser-engraved pieces, designed and finished by hand in our Liverpool studio. Mediterranean soul, botanical beauty, sacred tradition.",
   keywords: [
     "House of Merola",
-    "Sicilian majolica",
-    "hand-painted ceramic tiles",
-    "botanical wall art",
+    "UV printed ceramic tiles",
     "laser engraved wood art",
+    "bespoke personalised plaques",
+    "botanical wall art",
     "Mediterranean decor",
     "sacred art tiles",
   ],
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "House of Merola · Art · Casa · Mediterraneo",
     description:
-      "Hand-painted ceramic tiles and gold-engraved botanical study boards, crafted in the spirit of old Sicilian majolica.",
+      "Original artwork UV-printed onto ceramic and wood, and laser-engraved pieces, designed and finished by hand in our Liverpool studio.",
     siteName: "House of Merola",
     type: "website",
   },

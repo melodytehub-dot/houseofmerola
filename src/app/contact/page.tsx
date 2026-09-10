@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import Reveal from "@/components/Reveal";
 import { MailIcon, OliveIcon } from "@/components/icons";
@@ -45,8 +46,8 @@ export default function ContactPage() {
             <div>
               <h2 className="font-serif text-2xl text-navy">The studio</h2>
               <p className="mt-3 text-sm leading-relaxed text-navy/70">
-                House of Merola is a small studio: tiles painted, boards
-                engraved, and parcels wrapped by hand.
+                House of Merola is a small studio: every piece is designed and
+                finished by hand, and every parcel is wrapped by hand too.
               </p>
             </div>
             <div className="space-y-4 text-sm">
@@ -65,9 +66,15 @@ export default function ContactPage() {
                 “Looking for something specific?”
               </p>
               <p className="mt-2 text-sm leading-relaxed text-steel">
-                Bespoke tiles and personalised study boards are our favourite
-                commissions; share your idea and we’ll paint the first sketch.
+                We love bespoke commissions. Share your idea and a reference
+                image and we’ll send a mock-up before you commit.
               </p>
+              <Link
+                href="/bespoke"
+                className="mt-4 inline-flex items-center gap-2 text-[0.72rem] font-medium uppercase tracking-[0.2em] text-navy transition hover:text-ochre"
+              >
+                Start a bespoke enquiry →
+              </Link>
             </div>
           </Reveal>
 

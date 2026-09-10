@@ -24,9 +24,10 @@ export default function TermsPage() {
             The pieces we sell
           </h2>
           <p>
-            All products are handmade, small-batch pieces. Because each item is
-            made by hand, slight variations in colour, glaze and engraving are
-            to be expected and are not considered faults.
+            All pieces are designed in-house and made to order in our Liverpool
+            studio. Because each item is finished by hand, slight variations in
+            colour and engraving are to be expected and are not considered
+            faults.
           </p>
         </div>
         <div>

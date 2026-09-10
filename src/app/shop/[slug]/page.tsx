@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import AddToCart from "./AddToCart";
+import BespokeEnquiry from "@/components/BespokeEnquiry";
 import ProductCard from "@/components/ProductCard";
+import ProductConfigurator from "@/components/ProductConfigurator";
 import Reveal from "@/components/Reveal";
 import WishlistButton from "@/components/WishlistButton";
 import { formatGBP } from "@/lib/format";
@@ -123,9 +124,11 @@ export default async function ProductPage({ params }: PageProps) {
               </p>
               <p className="flex gap-3 text-sm text-navy/80">
                 <span className="w-24 shrink-0 uppercase tracking-[0.14em] text-steel">
-                  Dispatch
+                  {product.madeToOrder ? "Made to order" : "Dispatch"}
                 </span>
-                1–3 working days
+                {product.madeToOrder
+                  ? "Mock-up first, then made to order"
+                  : "1–3 working days"}
               </p>
               <p className="flex gap-3 text-sm text-navy/80">
                 <span className="w-24 shrink-0 uppercase tracking-[0.14em] text-steel">
@@ -135,7 +138,16 @@ export default async function ProductPage({ params }: PageProps) {
               </p>
             </div>
 
-            <AddToCart product={product} />
+            {product.madeToOrder ? (
+              <div className="mt-8">
+                <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-ochre/40 bg-ochre/10 px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-ochre">
+                  ✦ Designed & made to order in Liverpool
+                </p>
+                <BespokeEnquiry product={product} />
+              </div>
+            ) : (
+              <ProductConfigurator product={product} />
+            )}
 
             <div className="mt-4">
               <WishlistButton product={product} variant="inline" className="w-full" />
@@ -146,9 +158,9 @@ export default async function ProductPage({ params }: PageProps) {
                 <span className="font-serif text-base italic text-navy">
                   A note on handmade:
                 </span>{" "}
-                because every piece is made by hand, subtle variations in glaze
-                and engraving are part of the charm: your tile is genuinely one
-                of one.
+                every piece is designed in-house and finished by hand in our
+                Liverpool studio, and made to order — so subtle variations in
+                the print and engraving are part of the charm.
               </p>
             </div>
           </Reveal>

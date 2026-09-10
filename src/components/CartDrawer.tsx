@@ -102,7 +102,9 @@ export default function CartDrawer() {
               Your cart is empty
             </p>
             <p className="text-sm text-steel">
-              Hand-painted tiles and engraved studies await.
+              Original artwork,
+              <br />
+              made to order, awaits.
             </p>
             <Link
               href="/shop"
@@ -118,7 +120,7 @@ export default function CartDrawer() {
             <div className="flex-1 overflow-y-auto px-6 py-4">
               <ul className="divide-y divide-navy/10">
                 {items.map((item) => (
-                  <li key={item.slug} className="flex gap-4 py-4">
+                  <li key={item.key} className="flex gap-4 py-4">
                     <Link
                       href={`/shop/${item.slug}`}
                       onClick={closeCart}
@@ -143,7 +145,7 @@ export default function CartDrawer() {
                         </Link>
                         <button
                           type="button"
-                          onClick={() => removeItem(item.slug)}
+                          onClick={() => removeItem(item.key)}
                           aria-label={`Remove ${item.name}`}
                           className="text-steel/70 transition hover:text-oxblood"
                         >
@@ -160,6 +162,11 @@ export default function CartDrawer() {
                           </svg>
                         </button>
                       </div>
+                      {item.variant && (
+                        <p className="mt-0.5 text-[0.65rem] uppercase tracking-wide text-steel/70">
+                          {item.variant}
+                        </p>
+                      )}
                       <p className="mt-0.5 text-xs text-steel">
                         {formatGBP(item.price)}
                       </p>
@@ -167,7 +174,7 @@ export default function CartDrawer() {
                         <div className="flex items-center rounded-full border border-navy/15">
                           <button
                             type="button"
-                            onClick={() => updateQty(item.slug, item.qty - 1)}
+                            onClick={() => updateQty(item.key, item.qty - 1)}
                             aria-label="Decrease quantity"
                             className="px-2.5 py-1 text-navy transition hover:text-ochre"
                           >
@@ -178,7 +185,7 @@ export default function CartDrawer() {
                           </span>
                           <button
                             type="button"
-                            onClick={() => updateQty(item.slug, item.qty + 1)}
+                            onClick={() => updateQty(item.key, item.qty + 1)}
                             aria-label="Increase quantity"
                             className="px-2.5 py-1 text-navy transition hover:text-ochre"
                           >

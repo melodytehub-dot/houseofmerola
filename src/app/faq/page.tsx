@@ -6,9 +6,9 @@ import Reveal from "@/components/Reveal";
 
 const faqs = [
   {
-    question: "Are the pieces really handmade?",
+    question: "Are the pieces handmade and made to order?",
     answer:
-      "Yes, every tile is hand-painted and every study board is drawn, painted and laser-engraved by hand in small batches. Subtle variations in glaze and line are part of the charm: no two pieces are identical.",
+      "Yes. Our original artwork is UV-printed onto ceramic or wood, with some pieces laser-engraved or cut, then finished by hand in our Liverpool studio. Every piece is designed in-house and made to order, so a little variation is part of the charm.",
   },
   {
     question: "How long does delivery take?",
@@ -23,7 +23,7 @@ const faqs = [
   {
     question: "Do you take commissions?",
     answer:
-      "We love them. Bespoke tiles, personalised study boards and wedding or housewarming pieces are our favourite projects. Send us your idea via the contact page and we’ll sketch a proposal.",
+      "We love them. Bespoke ceramic, wooden plaques and engraved pieces are our favourite projects. Share your idea and a reference image via our bespoke enquiry and we’ll send a mock-up before you commit.",
   },
   {
     question: "What if my piece arrives damaged?",
@@ -31,9 +31,9 @@ const faqs = [
       "Send a photo within 48 hours of delivery and we’ll replace or refund it, no fuss. See our shipping & returns page for the full policy.",
   },
   {
-    question: "How do I look after a tile or study board?",
+    question: "How do I look after a ceramic piece or wooden board?",
     answer:
-      "Ceramic tiles: wipe with a soft dry cloth, avoid harsh chemicals. Wood boards: dust gently and keep them out of damp rooms. More details on our shipping & returns page.",
+      "Ceramic: wipe with a soft dry cloth, avoid harsh chemicals. Wood: dust gently and keep it out of damp rooms. More details on our shipping & returns page.",
   },
 ];
 
