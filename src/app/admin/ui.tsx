@@ -69,20 +69,20 @@ export function Toggle({
       role="switch"
       aria-checked={checked}
       onClick={() => onChange(!checked)}
-      className="flex items-center gap-2.5 text-sm text-navy"
+      className="group flex cursor-pointer select-none items-center gap-2.5 rounded-lg text-sm text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ochre/60"
     >
       <span
-        className={`relative h-6 w-11 rounded-full transition ${
+        className={`relative h-6 w-11 shrink-0 rounded-full transition-colors duration-200 ${
           checked ? "bg-ochre" : "bg-navy/20"
         }`}
       >
         <span
-          className={`absolute top-0.5 h-5 w-5 rounded-full bg-cream shadow transition-transform ${
-            checked ? "translate-x-5" : "translate-x-0.5"
+          className={`absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-cream shadow transition-transform duration-200 ${
+            checked ? "translate-x-5" : "translate-x-0"
           }`}
         />
       </span>
-      <span className="text-[0.72rem] font-medium uppercase tracking-[0.18em] text-navy/80">
+      <span className="text-[0.72rem] font-medium uppercase tracking-[0.18em] text-navy/80 transition-colors group-hover:text-navy">
         {label}
       </span>
     </button>

@@ -12,7 +12,10 @@ interface Line {
 }
 
 export async function POST(request: Request) {
-  const body = (await request.json().catch(() => null)) as { items?: Line[] } | null;
+  const body = (await request.json().catch(() => null)) as {
+    items?: Line[];
+    zone?: "uk" | "international";
+  } | null;
   const items = Array.isArray(body?.items) ? body.items : [];
   if (items.length === 0) {
     return NextResponse.json({ error: "Cart is empty." }, { status: 400 });
@@ -49,13 +52,17 @@ export async function POST(request: Request) {
     },
   }));
 
-  // Compute shipping (mirror of the cart logic) as a single line item.
+  // Zone-aware shipping (mirror of the cart logic): UK by default, international when chosen.
+  const isInternational = body?.zone === "international";
+  const freeThreshold = isInternational
+    ? settings.commerce.internationalFreeShippingThreshold
+    : settings.commerce.freeShippingThreshold;
+  const shippingFee = isInternational
+    ? settings.commerce.internationalShippingFee
+    : settings.commerce.shippingFee;
   const subtotal = items.reduce((sum, i) => sum + i.price * i.qty, 0);
-  const shipping =
-    settings.commerce.freeShippingThreshold > 0 &&
-    subtotal >= settings.commerce.freeShippingThreshold
-      ? 0
-      : settings.commerce.shippingFee;
+  const shipping = freeThreshold > 0 && subtotal >= freeThreshold ? 0 : shippingFee;
+  const displayName = isInternational ? "International delivery" : "UK delivery";
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -68,7 +75,7 @@ export async function POST(request: Request) {
                 shipping_rate_data: {
                   type: "fixed_amount",
                   fixed_amount: { amount: Math.round(shipping * 100), currency: settings.commerce.currency?.toLowerCase() || "gbp" },
-                  display_name: "UK delivery",
+                  display_name: displayName,
                 },
               },
             ],
@@ -78,6 +85,7 @@ export async function POST(request: Request) {
       cancel_url: `${origin}/checkout?cancelled=1`,
       metadata: {
         source: "houseofmerola",
+        ...(isInternational ? { delivery_zone: "international" } : { delivery_zone: "uk" }),
         ...(settings.metadata.url ? { site: settings.metadata.url } : {}),
       },
     });

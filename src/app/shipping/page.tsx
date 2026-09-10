@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import { getSettings } from "@/lib/content";
+import { formatGBPWhole } from "@/lib/format";
 
 export const metadata = {
   title: "Shipping & Returns",
@@ -7,17 +9,7 @@ export const metadata = {
     "UK and international delivery times and our 14-day returns policy for House of Merola pieces.",
 };
 
-const sections = [
-  {
-    title: "Shipping",
-    body: [
-      "All pieces are designed and made to order in our Liverpool studio, then dispatched by hand.",
-      "UK: £3.95, free over £50. Standard delivery 2–4 working days after dispatch.",
-      "Europe: from £9. Delivery 5–10 working days.",
-      "Rest of world: from £14. Delivery 7–14 working days.",
-      "Dispatch happens within 1–3 working days; bespoke commissions may take longer, and we’ll let you know when your piece ships.",
-    ],
-  },
+const careSections = [
   {
     title: "Care",
     body: [
@@ -36,7 +28,35 @@ const sections = [
   },
 ];
 
-export default function ShippingPage() {
+export default async function ShippingPage() {
+  const settings = await getSettings();
+  const commerce = settings.commerce;
+  const money = formatGBPWhole;
+
+  const ukLine =
+    commerce.freeShippingThreshold > 0
+      ? `United Kingdom: ${money(commerce.shippingFee)}, free over ${money(commerce.freeShippingThreshold)}. Standard delivery 2–4 working days after dispatch.`
+      : `United Kingdom: ${money(commerce.shippingFee)}. Standard delivery 2–4 working days after dispatch.`;
+
+  const intlLine = commerce.internationalEnabled
+    ? commerce.internationalFreeShippingThreshold > 0
+      ? `International: ${money(commerce.internationalShippingFee)}, free over ${money(commerce.internationalFreeShippingThreshold)}. Delivery 5–14 working days depending on the destination.`
+      : `International: from ${money(commerce.internationalShippingFee)}. Delivery 5–14 working days depending on the destination.`
+    : "International delivery is quoted individually — we’ll confirm the price for your destination before you pay.";
+
+  const sections = [
+    {
+      title: "Shipping",
+      body: [
+        "All pieces are designed and made to order in our Liverpool studio, then dispatched by hand.",
+        ukLine,
+        intlLine,
+        "Dispatch happens within 1–3 working days; bespoke commissions may take longer, and we’ll let you know when your piece ships.",
+      ],
+    },
+    ...careSections,
+  ];
+
   return (
     <>
       <section className="border-b border-navy/10 bg-cream">

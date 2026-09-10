@@ -21,7 +21,7 @@ export default function StripePanel({
       <section className="rounded-2xl border border-navy/10 bg-cream-soft p-6">
         <h2 className="eyebrow mb-5 text-navy">Stripe payments</h2>
         <div className="mb-5 rounded-xl border border-ochre/30 bg-ochre/5 p-4 text-sm leading-relaxed text-navy/80">
-          Paste the keys from your{" "}
+          Add your keys from the{" "}
           <a
             href="https://dashboard.stripe.com/apikeys"
             target="_blank"
@@ -30,10 +30,13 @@ export default function StripePanel({
           >
             Stripe dashboard
           </a>
-          . Secret keys are stored server-side and shown masked here — type a key
-          to replace it, or leave it blank to keep the current one. Use
-          &ldquo;sandbox&rdquo; while testing and switch to &ldquo;live&rdquo;
-          when you are ready to take real payments.
+          . Use the{" "}
+          <strong className="font-medium text-navy">Sandbox</strong> keys while
+          testing, then switch the active mode to{" "}
+          <strong className="font-medium text-navy">Live</strong> when you&rsquo;re
+          ready to take real payments. Secret keys and webhook secrets are kept
+          server-side and shown masked — type a new value to replace one, or leave
+          it blank to keep the current key.
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
@@ -52,13 +55,13 @@ export default function StripePanel({
       <section className="rounded-2xl border border-navy/10 bg-cream-soft p-6">
         <h2 className="eyebrow mb-5 text-navy">Sandbox / test keys</h2>
         <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Publishable key">
+          <Field label="Publishable key" hint="Starts with pk_test_ · Stripe Dashboard → Developers → API keys">
             <TextInput value={s.sandbox.publishableKey} onChange={(e) => env("sandbox", { publishableKey: e.target.value })} placeholder="pk_test_…" />
           </Field>
-          <Field label="Secret key" hint="Stored server-side">
+          <Field label="Secret key" hint="Starts with sk_test_ · shown masked, stored server-side">
             <TextInput value={s.sandbox.secretKey} onChange={(e) => env("sandbox", { secretKey: e.target.value })} placeholder="sk_test_…" />
           </Field>
-          <Field label="Webhook signing secret" className="sm:col-span-2">
+          <Field label="Webhook signing secret" hint="Starts with whsec_ · Stripe Dashboard → Developers → Webhooks, add your endpoint first" className="sm:col-span-2">
             <TextInput value={s.sandbox.webhookSecret} onChange={(e) => env("sandbox", { webhookSecret: e.target.value })} placeholder="whsec_…" />
           </Field>
         </div>
@@ -67,13 +70,13 @@ export default function StripePanel({
       <section className="rounded-2xl border border-navy/10 bg-cream-soft p-6">
         <h2 className="eyebrow mb-5 text-navy">Live keys</h2>
         <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Publishable key">
+          <Field label="Publishable key" hint="Starts with pk_live_ · Stripe Dashboard → Developers → API keys">
             <TextInput value={s.live.publishableKey} onChange={(e) => env("live", { publishableKey: e.target.value })} placeholder="pk_live_…" />
           </Field>
-          <Field label="Secret key" hint="Stored server-side">
+          <Field label="Secret key" hint="Starts with sk_live_ · shown masked, stored server-side">
             <TextInput value={s.live.secretKey} onChange={(e) => env("live", { secretKey: e.target.value })} placeholder="sk_live_…" />
           </Field>
-          <Field label="Webhook signing secret" className="sm:col-span-2">
+          <Field label="Webhook signing secret" hint="Starts with whsec_ · Stripe Dashboard → Developers → Webhooks, add your endpoint first" className="sm:col-span-2">
             <TextInput value={s.live.webhookSecret} onChange={(e) => env("live", { webhookSecret: e.target.value })} placeholder="whsec_…" />
           </Field>
         </div>
@@ -84,11 +87,13 @@ export default function StripePanel({
         <code className="rounded bg-navy/10 px-1.5 py-0.5 text-xs">
           /api/webhooks/stripe
         </code>{" "}
-        · add it in Stripe for the events{" "}
+        · in Stripe add it under{" "}
+        <span className="font-medium text-navy/80">Developers → Webhooks</span> and
+        select the{" "}
         <code className="rounded bg-navy/10 px-1.5 py-0.5 text-xs">
           checkout.session.completed
-        </code>
-        .
+        </code>{" "}
+        event.
       </p>
     </div>
   );

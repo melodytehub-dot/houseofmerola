@@ -4,11 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useCart } from "@/lib/cart";
-import { formatGBP } from "@/lib/format";
+import { deliverySummary, formatGBP } from "@/lib/format";
 import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
+import type { SiteSettings } from "@/lib/site";
 import { OliveIcon } from "./icons";
 
-export default function CartDrawer() {
+export default function CartDrawer({ settings }: { settings: SiteSettings }) {
   const {
     items,
     isOpen,
@@ -269,7 +270,7 @@ export default function CartDrawer() {
                   <span>{formatGBP(total)}</span>
                 </div>
                 <p className="pt-1 text-xs text-steel">
-                  UK delivery from £3.95 · free over £50
+                  {deliverySummary(settings.commerce)}
                 </p>
               </div>
 

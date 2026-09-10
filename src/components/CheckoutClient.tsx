@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "@/lib/cart";
-import { formatGBP } from "@/lib/format";
+import { formatGBP, formatGBPWhole } from "@/lib/format";
 import Reveal from "./Reveal";
 import { BagIcon, LockIcon, OliveIcon } from "./icons";
 import type { SiteSettings } from "@/lib/site";
@@ -15,21 +15,29 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
   const { items, subtotal, discountAmount, discountPercent, total, clearCart } =
     useCart();
 
-  const shipping =
-    subtotal === 0
-      ? 0
-      : subtotal >= settings.commerce.freeShippingThreshold
-        ? 0
-        : settings.commerce.shippingFee;
-  const grandTotal = total + shipping;
-
   const [form, setForm] = useState({
     name: "",
     email: "",
     address: "",
     city: "",
     postcode: "",
+    zone: "uk" as "uk" | "international",
   });
+
+  const isInternational = form.zone === "international";
+  const commerce = settings.commerce;
+  const fee = isInternational ? commerce.internationalShippingFee : commerce.shippingFee;
+  const freeThreshold = isInternational
+    ? commerce.internationalFreeShippingThreshold
+    : commerce.freeShippingThreshold;
+  const zoneLabel = isInternational ? "International" : "UK";
+  const shipping =
+    subtotal === 0
+      ? 0
+      : freeThreshold > 0 && subtotal >= freeThreshold
+        ? 0
+        : fee;
+  const grandTotal = total + shipping;
   const [error, setError] = useState("");
   const [placed, setPlaced] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -53,6 +61,7 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
         qty: i.qty,
         variant: i.variant,
       })),
+      zone: form.zone,
     };
     try {
       const res = await fetch("/api/checkout", {
@@ -141,6 +150,26 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
           {/* Delivery details */}
           <Reveal className="space-y-5 lg:col-span-3">
             <h2 className="font-serif text-2xl text-navy">Delivery details</h2>
+            <div>
+              <label
+                htmlFor="co-zone"
+                className="mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel"
+              >
+                Delivery destination
+              </label>
+              <select
+                id="co-zone"
+                name="zone"
+                value={form.zone}
+                onChange={(e) => setForm({ ...form, zone: e.target.value as "uk" | "international" })}
+                className="w-full rounded-lg border border-navy/15 bg-cream-soft px-4 py-3 text-sm text-navy focus:border-ochre focus:outline-none"
+              >
+                <option value="uk">United Kingdom</option>
+                {commerce.internationalEnabled && (
+                  <option value="international">International / Rest of world</option>
+                )}
+              </select>
+            </div>
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
                 <label
@@ -284,13 +313,13 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
                   </div>
                 )}
                 <div className="flex justify-between">
-                  <span>Shipping</span>
+                  <span>Shipping · {zoneLabel}</span>
                   <span>{shipping === 0 ? "Free" : formatGBP(shipping)}</span>
                 </div>
-                {shipping > 0 && (
+                {shipping > 0 && freeThreshold > 0 && (
                   <p className="text-xs text-steel">
-                    Free delivery on orders over{" "}
-                    {formatGBP(settings.commerce.freeShippingThreshold)}
+                    Free {isInternational ? "international" : "UK"} delivery on orders over{" "}
+                    {formatGBPWhole(freeThreshold)}
                   </p>
                 )}
                 <div className="flex justify-between border-t border-navy/10 pt-3 text-base font-semibold text-navy">

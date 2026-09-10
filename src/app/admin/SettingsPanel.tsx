@@ -1,7 +1,7 @@
 "use client";
 
 import type { Content, SiteSettings } from "@/lib/site";
-import { Field, TextInput, TextArea, NumInput, AddButton } from "./ui";
+import { Field, TextInput, TextArea, NumInput, AddButton, Toggle } from "./ui";
 
 export default function SettingsPanel({
   content,
@@ -87,15 +87,37 @@ export default function SettingsPanel({
           <Field label="Currency code">
             <TextInput value={s.commerce.currency} onChange={(e) => comm({ currency: e.target.value })} />
           </Field>
-          <Field label="Shipping fee (£)">
+          <Field label="UK shipping fee (£)">
             <NumInput value={s.commerce.shippingFee} onChange={(e) => comm({ shippingFee: Number(e.target.value) || 0 })} />
           </Field>
-          <Field label="Free shipping threshold (£)">
+          <Field label="Free UK shipping over (£)" hint="0 = no free UK delivery">
             <NumInput value={s.commerce.freeShippingThreshold} onChange={(e) => comm({ freeShippingThreshold: Number(e.target.value) || 0 })} />
           </Field>
-          <Field label="Delivery note">
-            <TextInput value={s.commerce.deliveryNote} onChange={(e) => comm({ deliveryNote: e.target.value })} />
-          </Field>
+        </div>
+
+        <div className="mt-5 rounded-xl border border-navy/10 p-4">
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="eyebrow text-steel">International shipping</p>
+              <p className="mt-1 max-w-md text-xs text-steel/70">
+                Charged at checkout when a shopper selects &ldquo;International / Rest of world&rdquo;. Switch this on once you have your rates.
+              </p>
+            </div>
+            <Toggle checked={s.commerce.internationalEnabled} onChange={(v) => comm({ internationalEnabled: v })} label="Enable" />
+          </div>
+          {s.commerce.internationalEnabled && (
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field label="International shipping fee (£)">
+                <NumInput value={s.commerce.internationalShippingFee} onChange={(e) => comm({ internationalShippingFee: Number(e.target.value) || 0 })} />
+              </Field>
+              <Field label="Free international shipping over (£)" hint="0 = no free international delivery">
+                <NumInput value={s.commerce.internationalFreeShippingThreshold} onChange={(e) => comm({ internationalFreeShippingThreshold: Number(e.target.value) || 0 })} />
+              </Field>
+            </div>
+          )}
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Welcome code">
             <TextInput value={s.commerce.welcomeCode} onChange={(e) => comm({ welcomeCode: e.target.value })} />
           </Field>

@@ -4,10 +4,8 @@ import { useRef, useState } from "react";
 import { Field } from "./ui";
 
 /**
- * A text/browse image field. Typing a path (e.g. /images/x.jpg) works as before;
- * the Upload button POSTs the chosen file to /api/admin/upload and stores the
- * returned URL. On Vercel the upload writes to the repo (GitHub) when
- * GITHUB_TOKEN + GITHUB_REPO are set, otherwise to local public/images (dev).
+ * Image field with a browse-and-upload action. Typing a path directly also works;
+ * the Upload button sends the file to /api/admin/upload and stores the returned URL.
  */
 export default function ImageUploader({
   value,

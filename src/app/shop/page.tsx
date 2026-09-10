@@ -3,12 +3,14 @@ import Link from "next/link";
 import ShopGrid from "@/components/ShopGrid";
 import Reveal from "@/components/Reveal";
 import { BoxIcon, BrushIcon, ReturnIcon } from "@/components/icons";
-import { getCollections, getProducts } from "@/lib/content";
+import { getCollections, getProducts, getSettings } from "@/lib/content";
+import { deliverySummary, formatGBPWhole } from "@/lib/format";
 
 export default async function ShopPage() {
-  const [products, collections] = await Promise.all([
+  const [products, collections, settings] = await Promise.all([
     getProducts(),
     getCollections(),
+    getSettings(),
   ]);
 
   return (
@@ -39,7 +41,9 @@ export default async function ShopPage() {
           <div className="mt-9 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 border-t border-cream/15 pt-6 text-cream/80">
             {[
               "Designed & finished in Liverpool",
-              "Free UK delivery over £50",
+              settings.commerce.freeShippingThreshold > 0
+                ? `Free UK delivery over ${formatGBPWhole(settings.commerce.freeShippingThreshold)}`
+                : "UK delivery",
               "14-day returns",
             ].map((item) => (
               <p
@@ -69,7 +73,7 @@ export default async function ShopPage() {
             {
               icon: BoxIcon,
               title: "Wrapped and shipped with care",
-              body: "UK delivery from £3.95 and free over £50, with every parcel wrapped by hand and sent with tracking.",
+              body: `Every parcel is wrapped by hand and sent with tracking. ${deliverySummary(settings.commerce)}.`,
             },
             {
               icon: ReturnIcon,

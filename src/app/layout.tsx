@@ -74,7 +74,7 @@ export default async function RootLayout({
             <Header settings={settings} collections={collections} />
             <main className="flex-1">{children}</main>
             <Footer settings={settings} collections={collections} />
-            <CartDrawer />
+            <CartDrawer settings={settings} />
           </WishlistProvider>
         </CartProvider>
       </body>

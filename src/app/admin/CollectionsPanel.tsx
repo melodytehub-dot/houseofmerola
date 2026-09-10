@@ -101,7 +101,7 @@ export default function CollectionsPanel({
               </Field>
               <ImageUploader
                 label="Banner image"
-                hint="Upload or paste a path."
+                hint="Upload a file, or paste a path to an existing image."
                 className="sm:col-span-2"
                 value={active.bannerImage}
                 onChange={(bannerImage) => patch(active.slug, { bannerImage })}

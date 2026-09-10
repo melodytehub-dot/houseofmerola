@@ -155,7 +155,7 @@ function ProductForm({ product, collections, onPatch, onDelete }: ProductFormPro
         </Field>
         <ImageUploader
           label="Image"
-          hint="Upload or paste a path. On Vercel uploads commit to your GitHub repo."
+          hint="Upload a file, or paste a path to an existing image."
           className="sm:col-span-2"
           value={product.image}
           onChange={(image) => onPatch({ image })}

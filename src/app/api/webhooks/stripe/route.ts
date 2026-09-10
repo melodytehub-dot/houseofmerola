@@ -22,14 +22,11 @@ export async function POST(req: Request) {
     return new NextResponse("Invalid signature", { status: 400 });
   }
 
-  // Async fulfilment: record completed Checkout Sessions so orders are visible.
+  // A completed Checkout session means an order was paid — log it here so it can feed an orders list or fulfilment flow.
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
     const email = session.customer_details?.email || "unknown";
-    const name = session.customer_details?.name || email;
-    // A real backend can write this to an orders table or trigger fulfilment.
     console.info(`[stripe] order completed: ${session.id} · ${email}`);
-    void name;
   }
 
   return NextResponse.json({ received: true });

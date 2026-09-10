@@ -6,7 +6,7 @@ import ProductCard from "@/components/ProductCard";
 import ProductConfigurator from "@/components/ProductConfigurator";
 import Reveal from "@/components/Reveal";
 import WishlistButton from "@/components/WishlistButton";
-import { formatGBP } from "@/lib/format";
+import { deliverySummary, formatGBP } from "@/lib/format";
 import {
   getCollectionBySlug,
   getProductBySlug,
@@ -137,7 +137,7 @@ export default async function ProductPage({ params }: PageProps) {
                 <span className="w-24 shrink-0 uppercase tracking-[0.14em] text-steel">
                   Delivery
                 </span>
-                From £3.95 · free over £50 (UK)
+                {deliverySummary(settings.commerce)}
               </p>
             </div>
 

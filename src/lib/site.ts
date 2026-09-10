@@ -29,9 +29,13 @@ export interface SiteSettings {
   };
   commerce: {
     currency: string;
+    /** United Kingdom carriage — the default delivery zone. */
     shippingFee: number;
     freeShippingThreshold: number;
-    deliveryNote: string;
+    /** International / rest-of-world carriage, chosen at checkout. */
+    internationalEnabled: boolean;
+    internationalShippingFee: number;
+    internationalFreeShippingThreshold: number;
     /** newsletter welcome discount shown after subscribing */
     welcomeCode: string;
     welcomeCodePercent: number;
@@ -127,7 +131,9 @@ export const defaultSettings: SiteSettings = {
     currency: "GBP",
     shippingFee: 3.95,
     freeShippingThreshold: 50,
-    deliveryNote: "From £3.95 · free over £50 (UK)",
+    internationalEnabled: false,
+    internationalShippingFee: 15,
+    internationalFreeShippingThreshold: 0,
     welcomeCode: "MEROLA10",
     welcomeCodePercent: 10,
     discountCodes: {

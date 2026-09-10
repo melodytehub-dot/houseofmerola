@@ -27,13 +27,42 @@ function isContent(x: unknown): x is Content {
   return Array.isArray(c.products) && Array.isArray(c.collections) && !!c.settings && !!c.stripe;
 }
 
+type Commerce = SiteSettings["commerce"];
+
+/** Deep-merge commerce settings so persisted data without the newer
+ * fields (e.g. international carriage) keeps its values and gains safe defaults. */
+function mergeCommerce(base: Commerce, stored?: Partial<Commerce>): Commerce {
+  if (!stored) return base;
+  const num = (v: unknown, fallback: number) => (typeof v === "number" && Number.isFinite(v) ? v : fallback);
+  return {
+    ...base,
+    ...stored,
+    currency: stored.currency ?? base.currency,
+    shippingFee: num(stored.shippingFee, base.shippingFee),
+    freeShippingThreshold: num(stored.freeShippingThreshold, base.freeShippingThreshold),
+    internationalEnabled:
+      typeof stored.internationalEnabled === "boolean"
+        ? stored.internationalEnabled
+        : base.internationalEnabled,
+    internationalShippingFee: num(stored.internationalShippingFee, base.internationalShippingFee),
+    internationalFreeShippingThreshold: num(
+      stored.internationalFreeShippingThreshold,
+      base.internationalFreeShippingThreshold,
+    ),
+  };
+}
+
 async function loadContent(): Promise<Content> {
   const stored = await readJson<Content>(CONTENT_KEY);
   if (isContent(stored)) {
     return {
       products: stored.products,
       collections: stored.collections,
-      settings: { ...defaultSettings, ...stored.settings },
+      settings: {
+        ...defaultSettings,
+        ...stored.settings,
+        commerce: mergeCommerce(defaultSettings.commerce, stored.settings?.commerce),
+      },
       stripe: { ...defaultStripe, ...stored.stripe },
     };
   }
