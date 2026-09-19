@@ -15,7 +15,7 @@ export interface HeroContent {
 
 export interface SiteSettings {
   siteName: string;
-  /** Short strapline, e.g. "Arte · Casa · Mediterraneo". */
+  /** Short strapline, e.g. "Art for a more magical home". */
   tagline: string;
   /** Announcement bar text — blank hides the bar. */
   announcement: string;
@@ -36,11 +36,6 @@ export interface SiteSettings {
     internationalEnabled: boolean;
     internationalShippingFee: number;
     internationalFreeShippingThreshold: number;
-    /** newsletter welcome discount shown after subscribing */
-    welcomeCode: string;
-    welcomeCodePercent: number;
-    /** Flat discount codes the shopper can enter at checkout. */
-    discountCodes: Record<string, number>;
   };
   social: {
     instagram: string;
@@ -129,31 +124,32 @@ export interface Content {
 
 export const defaultSettings: SiteSettings = {
   siteName: "House of Merola",
-  tagline: "Arte · Casa · Mediterraneo",
+  tagline: "Art for a more magical home.",
   announcement: "",
   contactEmail: "hello@houseofmerola.com",
   footerBlurb:
-    "Original artwork UV-printed onto ceramic and wood, engraved and finished by hand in our Liverpool studio, for walls that carry a little sunshine.",
+    "Original artwork UV-printed onto ceramic and wood, engraved and finished by hand in our Liverpool studio — for walls that carry a little magic, somewhere between a Mediterranean house, an old apothecary and a cabinet of curiosities.",
   hero: {
     eyebrow: "The House Collection",
     lines: [
       "Mediterranean soul.",
-      "Botanical beauty.",
-      "Sacred tradition.",
+      "Sacred & celestial.",
+      "Botanical curiosities.",
     ],
     accentWord: "soul.",
     subheading:
-      "Original artwork UV-printed onto ceramic and wood, engraved and finished by hand in our Liverpool studio — each piece carrying the cobalt, lemon and ochre of a sun-washed coast.",
+      "Original artwork UV-printed onto ceramic and wood, engraved and finished by hand in our Liverpool studio — art for a more magical home, caught between a Mediterranean house, an old apothecary and a cabinet of curiosities.",
   },
   aboutIntro: {
-    heading: "Every tile begins with a little Sicilian light",
+    heading: "From a Mediterranean house to a cabinet of curiosities",
     body: [
-      "House of Merola is a love letter to the Mediterranean: to lemon groves, cobalt majolica, and the old naturalists’ cabinets. Each piece is designed in-house and finished by hand in our Liverpool studio, so no two pieces leave the studio identical.",
+      "House of Merola began with the Mediterranean — lemons, saints, tiled courtyards and the colours of southern Italy. From there the collection wandered into old botanical books, natural history cabinets, celestial imagery and the strange and beautiful.",
     ],
     points: [
       "Original artwork UV-printed onto ceramic",
       "UV-printed & laser-engraved wood pieces",
       "Designed & made to order in Liverpool",
+      "From the Mediterranean to the mystical and curious",
     ],
   },
   commerce: {
@@ -163,11 +159,6 @@ export const defaultSettings: SiteSettings = {
     internationalEnabled: false,
     internationalShippingFee: 15,
     internationalFreeShippingThreshold: 0,
-    welcomeCode: "MEROLA10",
-    welcomeCodePercent: 10,
-    discountCodes: {
-      MEROLA10: 10,
-    },
   },
   social: {
     instagram: "https://instagram.com",
@@ -175,10 +166,10 @@ export const defaultSettings: SiteSettings = {
     tiktok: "https://tiktok.com",
   },
   metadata: {
-    title: "House of Merola · Art · Casa · Mediterraneo",
+    title: "House of Merola · Art for a more magical home",
     titleTemplate: "%s · House of Merola",
     description:
-      "Original artwork UV-printed onto ceramic and wood, and laser-engraved pieces, designed and finished by hand in our Liverpool studio. Mediterranean soul, botanical beauty, sacred tradition.",
+      "Original artwork UV-printed onto ceramic and wood, and laser-engraved pieces, designed and finished by hand in our Liverpool studio. From the Mediterranean to the mystical, botanical and curious — art for a more magical home.",
     keywords: [
       "House of Merola",
       "UV printed ceramic tiles",
@@ -187,6 +178,9 @@ export const defaultSettings: SiteSettings = {
       "botanical wall art",
       "Mediterranean decor",
       "sacred art tiles",
+      "cabinet of curiosities",
+      "mystical wall art",
+      "celestial art tiles",
     ],
     url: "https://houseofmerola.vercel.app",
   },

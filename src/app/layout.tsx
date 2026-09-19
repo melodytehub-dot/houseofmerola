@@ -86,7 +86,7 @@ export default async function RootLayout({
             {".reveal{opacity:1!important;transform:none!important}"}
           </style>
         </noscript>
-        <CartProvider discountCodes={settings.commerce.discountCodes}>
+        <CartProvider>
           <WishlistProvider>
             <ScrollToTop />
             <Header settings={settings} collections={collections} />

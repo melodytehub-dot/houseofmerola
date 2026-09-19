@@ -1,7 +1,7 @@
 "use client";
 
 import type { Content, SiteSettings } from "@/lib/site";
-import { Field, TextInput, TextArea, NumInput, AddButton, Toggle } from "./ui";
+import { Field, TextInput, TextArea, NumInput, Toggle } from "./ui";
 
 export default function SettingsPanel({
   content,
@@ -117,65 +117,6 @@ export default function SettingsPanel({
           )}
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Welcome code">
-            <TextInput value={s.commerce.welcomeCode} onChange={(e) => comm({ welcomeCode: e.target.value })} />
-          </Field>
-          <Field label="Welcome code %">
-            <NumInput value={s.commerce.welcomeCodePercent} onChange={(e) => comm({ welcomeCodePercent: Number(e.target.value) || 0 })} />
-          </Field>
-        </div>
-        <div className="mt-5 rounded-xl border border-navy/10 p-4">
-          <div className="mb-3 flex items-center justify-between">
-            <p className="eyebrow text-steel">Discount codes</p>
-            <AddButton onClick={() => comm({ discountCodes: { ...s.commerce.discountCodes, NEW: 10 } })}>
-              Add code
-            </AddButton>
-          </div>
-          {Object.keys(s.commerce.discountCodes).length === 0 ? (
-            <p className="text-sm text-steel/70">No codes yet.</p>
-          ) : (
-            <div className="space-y-2">
-              {Object.entries(s.commerce.discountCodes).map(([code, percent]) => (
-                <div key={code} className="flex items-center gap-2">
-                  <TextInput
-                    value={code}
-                    onChange={(e) => {
-                      const next = { ...s.commerce.discountCodes };
-                      next[e.target.value.toUpperCase()] = percent;
-                      delete next[code];
-                      comm({ discountCodes: next });
-                    }}
-                    placeholder="CODE"
-                    className="w-40"
-                  />
-                  <div className="relative flex-1">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-steel">%</span>
-                    <NumInput
-                      value={percent}
-                      onChange={(e) =>
-                        comm({ discountCodes: { ...s.commerce.discountCodes, [code]: Number(e.target.value) || 0 } })
-                      }
-                      className="pl-8"
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    aria-label="Remove"
-                    onClick={() => {
-                      const next = { ...s.commerce.discountCodes };
-                      delete next[code];
-                      comm({ discountCodes: next });
-                    }}
-                    className="shrink-0 rounded-full border border-navy/15 px-2.5 py-2 text-xs text-steel transition hover:border-oxblood hover:text-oxblood"
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
       </Section>
 
       <Section title="Social links">

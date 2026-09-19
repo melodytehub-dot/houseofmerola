@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useCart } from "@/lib/cart";
 import { deliverySummary, formatGBP } from "@/lib/format";
 import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
@@ -17,16 +17,8 @@ export default function CartDrawer({ settings }: { settings: SiteSettings }) {
     updateQty,
     removeItem,
     subtotal,
-    discountCode,
-    discountPercent,
-    discountAmount,
     total,
-    applyDiscount,
-    removeDiscount,
   } = useCart();
-
-  const [codeInput, setCodeInput] = useState("");
-  const [codeError, setCodeError] = useState(false);
 
   useEffect(() => {
     if (isOpen) lockScroll();
@@ -41,15 +33,6 @@ export default function CartDrawer({ settings }: { settings: SiteSettings }) {
     if (isOpen) window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [isOpen, closeCart]);
-
-  const handleApplyCode = () => {
-    if (applyDiscount(codeInput)) {
-      setCodeError(false);
-      setCodeInput("");
-    } else {
-      setCodeError(true);
-    }
-  };
 
   return (
     <>
@@ -205,66 +188,11 @@ export default function CartDrawer({ settings }: { settings: SiteSettings }) {
 
             {/* Footer */}
             <div className="border-t border-navy/10 bg-cream px-6 py-5">
-              {/* Discount */}
-              {discountCode ? (
-                <div className="mb-4 flex items-center justify-between rounded-lg border border-ochre/40 bg-ochre/10 px-4 py-2.5">
-                  <p className="text-sm text-navy">
-                    Code{" "}
-                    <span className="font-semibold text-ochre">
-                      {discountCode}
-                    </span>{" "}
-                    applied · −{discountPercent}%
-                  </p>
-                  <button
-                    type="button"
-                    onClick={removeDiscount}
-                    className="text-xs text-steel underline transition hover:text-oxblood"
-                  >
-                    Remove
-                  </button>
-                </div>
-              ) : (
-                <div className="mb-4">
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      value={codeInput}
-                      onChange={(e) => {
-                        setCodeInput(e.target.value);
-                        setCodeError(false);
-                      }}
-                      onKeyDown={(e) => e.key === "Enter" && handleApplyCode()}
-                      placeholder="Discount code"
-                      aria-label="Discount code"
-                      className="min-w-0 flex-1 rounded-full border border-navy/15 bg-cream-soft px-4 py-2.5 text-sm text-navy placeholder:text-steel/60 focus:border-ochre focus:outline-none"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleApplyCode}
-                      className="rounded-full border border-navy px-5 py-2.5 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-navy transition hover:bg-navy hover:text-cream"
-                    >
-                      Apply
-                    </button>
-                  </div>
-                  {codeError && (
-                    <p className="mt-1.5 pl-4 text-xs text-oxblood">
-                      That code isn’t valid. Please check and try again.
-                    </p>
-                  )}
-                </div>
-              )}
-
               <div className="space-y-1.5 text-sm text-navy/80">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
                   <span>{formatGBP(subtotal)}</span>
                 </div>
-                {discountAmount > 0 && (
-                  <div className="flex justify-between text-ochre">
-                    <span>Discount ({discountPercent}%)</span>
-                    <span>−{formatGBP(discountAmount)}</span>
-                  </div>
-                )}
                 <div className="flex justify-between border-t border-navy/10 pt-2 text-base font-semibold text-navy">
                   <span>Total</span>
                   <span>{formatGBP(total)}</span>

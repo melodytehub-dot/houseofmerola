@@ -24,9 +24,6 @@ interface CartContextValue {
   items: CartItem[];
   count: number;
   subtotal: number;
-  discountCode: string | null;
-  discountPercent: number;
-  discountAmount: number;
   total: number;
   isOpen: boolean;
   openCart: () => void;
@@ -39,21 +36,17 @@ interface CartContextValue {
   removeItem: (slug: string) => void;
   updateQty: (slug: string, qty: number) => void;
   clearCart: () => void;
-  applyDiscount: (code: string) => boolean;
-  removeDiscount: () => void;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
 
 const STORAGE_KEY = "houseofmerola-cart";
-const DISCOUNT_KEY = "houseofmerola-discount";
 
 interface CartSnapshot {
   items: CartItem[];
-  discountCode: string | null;
 }
 
-const EMPTY_SNAPSHOT: CartSnapshot = { items: [], discountCode: null };
+const EMPTY_SNAPSHOT: CartSnapshot = { items: [] };
 
 /* Module-level store, hydrated from localStorage on first client read. */
 let snapshot: CartSnapshot = EMPTY_SNAPSHOT;
@@ -69,10 +62,7 @@ function readStorage(): CartSnapshot {
       ...item,
       key: item.key ?? item.slug,
     }));
-    return {
-      items,
-      discountCode: window.localStorage.getItem(DISCOUNT_KEY),
-    };
+    return { items };
   } catch {
     return EMPTY_SNAPSHOT;
   }
@@ -93,7 +83,7 @@ function getServerSnapshot(): CartSnapshot {
 function subscribe(listener: () => void): () => void {
   listeners.add(listener);
   const onStorage = (e: StorageEvent) => {
-    if (e.key === null || e.key === STORAGE_KEY || e.key === DISCOUNT_KEY) {
+    if (e.key === null || e.key === STORAGE_KEY) {
       snapshot = readStorage();
       listeners.forEach((l) => l());
     }
@@ -113,27 +103,15 @@ function persist(next: CartSnapshot) {
   snapshot = next;
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next.items));
-    if (next.discountCode) {
-      window.localStorage.setItem(DISCOUNT_KEY, next.discountCode);
-    } else {
-      window.localStorage.removeItem(DISCOUNT_KEY);
-    }
   } catch {
     /* storage unavailable */
   }
   listeners.forEach((l) => l());
 }
 
-export function CartProvider({
-  children,
-  discountCodes,
-}: {
-  children: ReactNode;
-  discountCodes?: Record<string, number>;
-}) {
+export function CartProvider({ children }: { children: ReactNode }) {
   const store = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const open = useSyncExternalStore(subscribeOpen, getOpenSnapshot, getOpenSnapshot);
-  const codes = useMemo(() => discountCodes ?? {}, [discountCodes]);
 
   const addItem = useCallback(
     (
@@ -195,39 +173,17 @@ export function CartProvider({
     persist({ ...getSnapshot(), items: [] });
   }, []);
 
-  const applyDiscount = useCallback(
-    (code: string) => {
-      const normalized = code.trim().toUpperCase();
-      const percent = codes[normalized];
-      if (!percent) return false;
-      persist({ ...getSnapshot(), discountCode: normalized });
-      return true;
-    },
-    [codes],
-  );
-
-  const removeDiscount = useCallback(() => {
-    persist({ ...getSnapshot(), discountCode: null });
-  }, []);
-
   const value = useMemo<CartContextValue>(() => {
     const count = store.items.reduce((sum, item) => sum + item.qty, 0);
     const subtotal = store.items.reduce(
       (sum, item) => sum + item.price * item.qty,
       0,
     );
-    const discountPercent = store.discountCode
-      ? codes[store.discountCode] ?? 0
-      : 0;
-    const discountAmount = (subtotal * discountPercent) / 100;
-    const total = subtotal - discountAmount;
+    const total = subtotal;
     return {
       items: store.items,
       count,
       subtotal,
-      discountCode: store.discountCode,
-      discountPercent,
-      discountAmount,
       total,
       isOpen: open,
       openCart: () => setIsOpen(true),
@@ -236,19 +192,14 @@ export function CartProvider({
       removeItem,
       updateQty,
       clearCart,
-      applyDiscount,
-      removeDiscount,
     };
   }, [
     store,
-    codes,
     open,
     addItem,
     removeItem,
     updateQty,
     clearCart,
-    applyDiscount,
-    removeDiscount,
   ]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

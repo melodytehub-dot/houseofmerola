@@ -29,7 +29,7 @@ export default function Image() {
             textTransform: "uppercase",
           }}
         >
-          Arte · Casa · Mediterraneo
+          Art for a more magical home
         </div>
         <div
           style={{ display: "flex", fontSize: 96, fontWeight: 700, marginTop: 24 }}

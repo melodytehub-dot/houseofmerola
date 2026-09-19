@@ -3,7 +3,6 @@ import Link from "next/link";
 import Newsletter from "@/components/Newsletter";
 import Reveal from "@/components/Reveal";
 import { BrushIcon, HourglassIcon, LeafIcon } from "@/components/icons";
-import { getSettings } from "@/lib/content";
 
 export const metadata = {
   title: "Our Story",
@@ -11,8 +10,7 @@ export const metadata = {
     "The story of House of Merola: original artwork UV-printed onto ceramic and wood, and laser-engraved pieces, made to order in our Liverpool studio.",
 };
 
-export default async function AboutPage() {
-  const settings = await getSettings();
+export default function AboutPage() {
   return (
     <>
       {/* Header */}
@@ -22,11 +20,12 @@ export default async function AboutPage() {
           <h1 className="mt-4 font-serif text-4xl leading-tight text-navy sm:text-6xl">
             Made in the spirit
             <br />
-            <em className="font-light italic text-ochre">of the old Mediterranean</em>
+            <em className="font-light italic text-ochre">of the Mediterranean & the cabinet of curiosities</em>
           </h1>
           <p className="mx-auto mt-6 max-w-xl leading-relaxed text-navy/70">
-            House of Merola began with a shelf of lemon-grove-inspired art and a
-            belief that a wall can carry a little sunshine.
+            House of Merola began with the Mediterranean — lemons, saints, tiled
+            courtyards and the colours of southern Italy — and wandered into old
+            botanical books, celestial imagery and the strange and beautiful.
           </p>
         </Reveal>
       </section>
@@ -54,7 +53,7 @@ export default async function AboutPage() {
               <span className="eyebrow text-navy">The beginning</span>
             </div>
             <h2 className="mt-4 font-serif text-3xl text-navy sm:text-4xl">
-              A love letter to the Mediterranean
+              From the Mediterranean to the cabinet of curiosities
             </h2>
             <p className="mt-5 leading-relaxed text-navy/70">
               Everything starts with the coast: cobalt blue against white
@@ -63,11 +62,13 @@ export default async function AboutPage() {
               one study board at a time.
             </p>
             <p className="mt-4 leading-relaxed text-navy/70">
-              Our pieces are designed in the spirit of old Sicilian majolica,
-              with borders of scrollwork and blossom that echo old chapel
-              floors. Our study boards draw on the naturalists’ cabinets of the
-              nineteenth century: herbals, herpetology and mycology, UV-printed
-              and laser-engraved in antique gold on dark wood.
+              From there the collection wandered into old botanical books and
+              natural-history cabinets, celestial imagery and the strange and
+              beautiful. Our pieces are designed in the spirit of old Sicilian
+              majolica, with borders of scrollwork and blossom that echo old
+              chapel floors; our study boards draw on the naturalists’ cabinets
+              of the nineteenth century — herbals, herpetology and mycology,
+              UV-printed and laser-engraved in antique gold on dark wood.
             </p>
           </div>
         </Reveal>
@@ -120,7 +121,7 @@ export default async function AboutPage() {
               <span className="eyebrow text-ochre-soft">What we hold dear</span>
             </div>
             <h2 className="mt-4 font-serif text-3xl sm:text-4xl">
-              Arte · Casa · Mediterraneo
+              Art for a more magical home
             </h2>
           </Reveal>
           <div className="grid gap-8 text-center sm:grid-cols-3">
@@ -132,8 +133,8 @@ export default async function AboutPage() {
               },
               {
                 icon: LeafIcon,
-                title: "Mediterranean",
-                body: "Cobalt, lemon and ochre: the pigments of an old Sicilian tile.",
+                title: "Mediterranean & beyond",
+                body: "Cobalt, lemon and ochre — and, beyond the coast, a cabinet of curiosities.",
               },
               {
                 icon: HourglassIcon,
@@ -162,7 +163,7 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <Newsletter settings={settings} />
+      <Newsletter />
     </>
   );
 }

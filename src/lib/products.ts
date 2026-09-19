@@ -42,6 +42,9 @@ export interface Collection {
   tagline: string;
   description: string;
   bannerImage: string;
+  /** Seasonal / limited-run collections (e.g. Halloween) that are surfaced
+   *  across the site but not counted among the core "four houses" grid. */
+  temporary?: boolean;
 }
 
 /* Shared option sets so every product supports the same materials/sizes. */
@@ -82,10 +85,10 @@ const bespokePersonalisation: PersonalisationConfig = {
 export const collections: Collection[] = [
   {
     slug: "mediterranean-italian",
-    name: "Mediterranean / Italian",
+    name: "Mediterranean",
     tagline: "Sun-washed art of the Italian coast",
     description:
-      "Original artwork celebrating the Amalfi coast, Sicilian groves and the joy of Italian living — cobalt, lemon and ochre, UV-printed onto ceramic or wood in our Liverpool studio.",
+      "The soul of the house: the Amalfi coast, Sicilian groves and the joy of Italian living — cobalt, lemon and ochre, UV-printed onto ceramic or wood in our Liverpool studio.",
     bannerImage: "/images/collection-mediterranean.jpg",
   },
   {
@@ -98,10 +101,10 @@ export const collections: Collection[] = [
   },
   {
     slug: "botanical-curiosities",
-    name: "Botanical & Natural History / Curiosities",
+    name: "Cabinet of Curiosities",
     tagline: "Antique study boards from the naturalist’s cabinet",
     description:
-      "Herbals, herpetology, mycology and curiosities — engraved study boards for the nineteenth-century naturalist’s cabinet.",
+      "Old botanical books, natural-history cabinets and the strange and beautiful — herbals, herpetology, mycology and curiosities, engraved in antique gold on dark wood.",
     bannerImage: "/images/collection-botanical.jpg",
   },
   {
@@ -112,9 +115,18 @@ export const collections: Collection[] = [
       "Tell us what you have in mind — a name, a date, a reference image — and we’ll design a piece just for you, made to order in our Liverpool studio.",
     bannerImage: "/images/prod-herbolologia.jpg",
   },
+  {
+    slug: "halloween-strange",
+    name: "Halloween & The Strange",
+    tagline: "A seasonal cabinet of the strange and wonderful",
+    description:
+      "A temporary seasonal collection for the spookier months: curious, celestial and unsettling pieces to bewitch the house. New pieces are on their way.",
+    bannerImage: "/images/prod-phases-moon.jpg",
+    temporary: true,
+  },
 ];
 export const products: Product[] = [
-  // ── Mediterranean / Italian ───────────────────────────────────────
+  // ── Mediterranean ─────────────────────────────────────────────────
   {
     id: "amalfi-ape-truck",
     slug: "amalfi-ape-truck",
@@ -249,7 +261,7 @@ export const products: Product[] = [
     sizeOptions: boardSizes,
   },
 
-  // ── Botanical & Natural History / Curiosities ─────────────────────
+  // ── Cabinet of Curiosities ────────────────────────────────────────
   {
     id: "herbolologia-medica",
     slug: "herbolologia-medica",
@@ -390,8 +402,4 @@ export function getProductBySlug(slug: string): Product | undefined {
 }
 
 export const bespokeProducts = products.filter((product) => product.madeToOrder);
-
-export const DISCOUNT_CODES: Record<string, number> = {
-  MEROLA10: 10,
-};
 

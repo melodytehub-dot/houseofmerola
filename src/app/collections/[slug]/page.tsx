@@ -87,13 +87,19 @@ export default async function CollectionPage({ params }: PageProps) {
             All pieces →
           </Link>
         </div>
-        <div className="product-grid">
-          {items.map((product, index) => (
-            <Reveal key={product.slug} className="h-full" delay={Math.min(index, 5) * 70}>
-              <ProductCard product={product} collectionName={collection.name} />
-            </Reveal>
-          ))}
-        </div>
+        {items.length > 0 ? (
+          <div className="product-grid">
+            {items.map((product, index) => (
+              <Reveal key={product.slug} className="h-full" delay={Math.min(index, 5) * 70}>
+                <ProductCard product={product} collectionName={collection.name} />
+              </Reveal>
+            ))}
+          </div>
+        ) : (
+          <p className="py-16 text-center text-navy/60">
+            New pieces are on the way. Check back soon.
+          </p>
+        )}
       </section>
     </>
   );

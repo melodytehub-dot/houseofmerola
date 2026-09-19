@@ -12,6 +12,9 @@ export default async function HomePage() {
     getSettings(),
   ]);
   const featured = products.filter((p) => p.featured).slice(0, 6);
+  // The core "four houses" grid — seasonal collections (e.g. Halloween) are
+  // still surfaced in the nav/shop but not counted among the main four.
+  const mainCollections = collections.filter((c) => !c.temporary);
   const collectionName = (slug: string) =>
     collections.find((c) => c.slug === slug)?.name;
   return (
@@ -163,7 +166,7 @@ export default async function HomePage() {
         </Reveal>
 
         <div className="grid gap-6 md:grid-cols-2">
-          {collections.map((collection, index) => (
+          {mainCollections.map((collection, index) => (
             <Reveal key={collection.slug} className="h-full" delay={index * 120}>
             <Link
               href={`/collections/${collection.slug}`}
@@ -306,7 +309,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Newsletter ──────────────────────────────────────────── */}
-      <Newsletter settings={settings} />
+      <Newsletter />
     </>
   );
 }

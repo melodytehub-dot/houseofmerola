@@ -12,8 +12,7 @@ import type { SiteSettings } from "@/lib/site";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function CheckoutClient({ settings }: { settings: SiteSettings }) {
-  const { items, subtotal, discountAmount, discountPercent, total, clearCart } =
-    useCart();
+  const { items, subtotal, total, clearCart } = useCart();
 
   const [form, setForm] = useState({
     name: "",
@@ -351,12 +350,6 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
                   <span>Subtotal</span>
                   <span>{formatGBP(subtotal)}</span>
                 </div>
-                {discountAmount > 0 && (
-                  <div className="flex justify-between text-ochre">
-                    <span>Discount ({discountPercent}%)</span>
-                    <span>−{formatGBP(discountAmount)}</span>
-                  </div>
-                )}
                 <div className="flex justify-between">
                   <span>Shipping · {zoneLabel}</span>
                   <span>{shipping === 0 ? "Free" : formatGBP(shipping)}</span>

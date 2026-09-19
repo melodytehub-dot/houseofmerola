@@ -16,11 +16,6 @@ const faqs = [
       "We dispatch within 1–3 working days. UK delivery is 2–4 working days after dispatch, Europe 5–10, and the rest of the world 7–14. Every parcel is wrapped by hand and sent with tracking.",
   },
   {
-    question: "Can I use the discount code with anything?",
-    answer:
-      "Code MEROLA10 gives you 10% off your first order at checkout. It can be combined with our free-UK-delivery-over-£50 offer, but not with other discounts.",
-  },
-  {
     question: "Do you take commissions?",
     answer:
       "We love them. Bespoke ceramic, wooden plaques and engraved pieces are our favourite projects. Share your idea and a reference image via our bespoke enquiry and we’ll send a mock-up before you commit.",
