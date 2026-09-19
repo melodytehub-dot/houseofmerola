@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import ProductGallery from "@/components/ProductGallery";
 import { notFound } from "next/navigation";
 import BespokeEnquiry from "@/components/BespokeEnquiry";
 import ProductCard from "@/components/ProductCard";
@@ -85,16 +85,10 @@ export default async function ProductPage({ params }: PageProps) {
               className="absolute -inset-3 rounded-2xl border border-ochre/40"
               aria-hidden="true"
             />
-            <div className="relative overflow-hidden rounded-xl border border-navy/15 bg-cream-warm shadow-[0_30px_60px_rgb(14_42_77/0.2)]">
-              <Image
-                src={product.image}
-                alt={product.name}
-                width={900}
-                height={900}
-                priority
-                className="h-auto w-full"
-              />
-            </div>
+            <ProductGallery
+              sources={[product.image, ...(product.images ?? [])]}
+              alt={product.name}
+            />
           </Reveal>
 
           {/* Details */}

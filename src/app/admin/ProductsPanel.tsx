@@ -160,6 +160,15 @@ function ProductForm({ product, collections, onPatch, onDelete }: ProductFormPro
           value={product.image}
           onChange={(image) => onPatch({ image })}
         />
+        <Field label="Additional images" hint="One image path per line" className="sm:col-span-2">
+          <TextArea
+            rows={3}
+            value={(product.images ?? []).join("\n")}
+            onChange={(e) =>
+              onPatch({ images: e.target.value.split("\n").map((s) => s.trim()).filter(Boolean) })
+            }
+          />
+        </Field>
         <Field label="Tagline" className="sm:col-span-2">
           <TextInput value={product.tagline} onChange={(e) => onPatch({ tagline: e.target.value })} />
         </Field>

@@ -21,6 +21,8 @@ export interface Product {
   name: string;
   price: number; // GBP base price
   image: string;
+  /** Additional gallery images shown on the product page (the hero is `image`). */
+  images?: string[];
   collection: string; // collection slug
   materials: string[];
   tagline: string;
@@ -195,6 +197,10 @@ export const products: Product[] = [
     name: "La Dolce Vita — Amalfi Ape Ceramic Tile",
     price: 20,
     image: "/images/prod-la-dolce-vita.jpg",
+    images: [
+      "/images/prod-la-dolce-vita-2.jpg",
+      "/images/prod-la-dolce-vita-3.jpg",
+    ],
     collection: "mediterranean-italian",
     materials: ["Original artwork UV-printed onto ceramic"],
     tagline: "A vintage Amalfi Ape, overflowing with lemons",
@@ -209,6 +215,10 @@ export const products: Product[] = [
     name: "Oliva — Mediterranean Ceramic Tile",
     price: 20,
     image: "/images/prod-oliva.jpg",
+    images: [
+      "/images/prod-oliva-2.jpg",
+      "/images/prod-oliva-3.jpg",
+    ],
     collection: "mediterranean-italian",
     materials: ["Original artwork UV-printed onto ceramic"],
     tagline: "A majolica jug with olive branches and blossom",
@@ -239,6 +249,10 @@ export const products: Product[] = [
     name: "Madonna Celeste — Sacred Heart Wall Art",
     price: 30,
     image: "/images/prod-madonna-celeste.jpg",
+    images: [
+      "/images/prod-madonna-celeste-2.jpg",
+      "/images/prod-madonna-celeste-3.jpg",
+    ],
     collection: "sacred-mystical",
     materials: ["Original artwork UV-printed & laser-cut onto wood"],
     tagline: "A celestial Madonna, laser cut in cobalt and ivory",
