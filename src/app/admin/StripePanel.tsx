@@ -74,10 +74,10 @@ export default function StripePanel({
   return (
     <div className="space-y-8">
       <section className="rounded-2xl border border-navy/10 bg-cream-soft p-6">
-        <h2 className="eyebrow mb-5 text-navy">stripe payments</h2>
+        <h2 className="eyebrow mb-5 text-navy">Stripe Payments</h2>
         <div className="flex items-end pb-1">
           <div>
-            <span className="mb-1.5 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel">
+            <span className="mb-1.5 block text-[0.68rem] font-medium tracking-[0.2em] text-steel">
               Active mode
               <HelpTip title="sandbox vs live mode">
                 <ol>
@@ -114,7 +114,7 @@ export default function StripePanel({
               label={isLive ? "Live" : "Sandbox (test)"}
             />
             <p className="mt-1 text-xs text-steel/70">
-              {isLive ? "taking real payments." : "testing only — no real charges."}
+              {isLive ? "Taking real payments." : "Testing only — no real charges."}
             </p>
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function StripePanel({
 
       <section className="rounded-2xl border border-navy/10 bg-cream-soft p-6">
         <h2 className="eyebrow mb-5 text-navy">
-          {isLive ? "live keys" : "sandbox"}
+          {isLive ? "Live Keys" : "Sandbox"}
         </h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field
@@ -277,7 +277,7 @@ export default function StripePanel({
       </section>
 
       <p className="text-sm text-steel">
-        webhook endpoint:{" "}
+        Webhook endpoint:{" "}
         <code className="break-all rounded bg-navy/10 px-1.5 py-0.5 text-xs">
           {webhookUrl}
         </code>{" "}

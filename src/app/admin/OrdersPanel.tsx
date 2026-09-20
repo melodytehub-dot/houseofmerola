@@ -54,11 +54,11 @@ export default function OrdersPanel({
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-navy px-3 py-1 text-[0.6rem] font-medium uppercase tracking-[0.16em] text-cream">
+                <span className={`rounded-full bg-navy px-3 py-1 text-[0.6rem] font-medium tracking-[0.16em] text-cream ${o.deliveryZone === "international" ? "" : "uppercase"}`}>
                   {o.deliveryZone === "international" ? "International" : "UK"}
                 </span>
                 <span
-                  className={`rounded-full px-3 py-1 text-[0.6rem] font-medium uppercase tracking-[0.16em] ${
+                  className={`rounded-full px-3 py-1 text-[0.6rem] font-medium capitalize tracking-[0.16em] ${
                     o.status === "new"
                       ? "bg-ochre/20 text-ochre"
                       : "bg-navy/10 text-steel"
@@ -67,7 +67,7 @@ export default function OrdersPanel({
                   {o.status}
                 </span>
                 {o.paymentStatus && (
-                  <span className="rounded-full bg-emerald-700/10 px-3 py-1 text-[0.6rem] font-medium uppercase tracking-[0.16em] text-emerald-700">
+                  <span className="rounded-full bg-emerald-700/10 px-3 py-1 text-[0.6rem] font-medium capitalize tracking-[0.16em] text-emerald-700">
                     {o.paymentStatus}
                   </span>
                 )}
@@ -82,7 +82,7 @@ export default function OrdersPanel({
             <button
               type="button"
               onClick={() => toggle(o)}
-              className={`rounded-full border px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.16em] transition ${
+              className={`rounded-full border px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] transition ${
                 o.status === "new"
                   ? "border-ochre/50 text-ochre hover:bg-ochre hover:text-navy-deep"
                   : "border-navy/20 text-navy hover:bg-navy hover:text-cream"
@@ -101,7 +101,7 @@ export default function OrdersPanel({
                 <div className="min-w-0">
                   <p className="truncate font-medium text-navy">{item.name}</p>
                   {item.variant && (
-                    <p className="truncate text-[0.65rem] uppercase tracking-wide text-steel/70">
+                    <p className="truncate text-[0.65rem] tracking-wide text-steel/70">
                       {item.variant}
                     </p>
                   )}
@@ -128,7 +128,7 @@ export default function OrdersPanel({
             </div>
           </dl>
 
-          <p className="mt-3 text-[0.64rem] uppercase tracking-wide text-steel/70">
+          <p className="mt-3 break-all text-[0.64rem] tracking-wide text-steel/70">
             {new Date(o.createdAt).toLocaleString()} · {o.id}
           </p>
         </article>

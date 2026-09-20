@@ -55,7 +55,7 @@ export default function ImageUploader({
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={busy}
-          className="shrink-0 whitespace-nowrap rounded-lg border border-navy/20 px-3 py-2.5 text-[0.64rem] font-medium uppercase tracking-[0.14em] text-navy transition hover:border-ochre hover:bg-ochre/10 disabled:opacity-50 sm:px-3.5 sm:text-[0.68rem]"
+          className="shrink-0 whitespace-nowrap rounded-lg border border-navy/20 px-3 py-2.5 text-[0.64rem] font-medium tracking-[0.14em] text-navy transition hover:border-ochre hover:bg-ochre/10 disabled:opacity-50 sm:px-3.5 sm:text-[0.68rem]"
         >
           {busy ? "Uploading…" : "Upload"}
         </button>

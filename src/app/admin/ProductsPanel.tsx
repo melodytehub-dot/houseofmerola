@@ -93,8 +93,8 @@ export default function ProductsPanel({
                 <span className="block truncate text-sm font-medium text-navy">
                   {p.name}
                 </span>
-                <span className="block text-[0.62rem] uppercase tracking-wide text-steel">
-                  £{p.price} · {p.collection}
+                <span className="block text-[0.62rem] tracking-wide text-steel">
+                  £{p.price} · {content.collections.find((c) => c.slug === p.collection)?.name ?? p.collection}
                 </span>
               </button>
             </li>
@@ -175,7 +175,7 @@ function ProductForm({ product, collections, onPatch, onDelete }: ProductFormPro
         <button
           type="button"
           onClick={onDelete}
-          className="shrink-0 rounded-full border border-oxblood/40 px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.16em] text-oxblood transition hover:bg-oxblood hover:text-cream"
+          className="shrink-0 rounded-full border border-oxblood/40 px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] text-oxblood transition hover:bg-oxblood hover:text-cream"
         >
           Delete
         </button>
@@ -366,7 +366,7 @@ function PersonalisationEditor({
         <button
           type="button"
           onClick={() => onChange(undefined)}
-          className="rounded-full border border-oxblood/40 px-3 py-1.5 text-[0.64rem] font-medium uppercase tracking-[0.14em] text-oxblood transition hover:bg-oxblood hover:text-cream"
+          className="rounded-full border border-oxblood/40 px-3 py-1.5 text-[0.64rem] font-medium tracking-[0.14em] text-oxblood transition hover:bg-oxblood hover:text-cream"
         >
           Disable
         </button>

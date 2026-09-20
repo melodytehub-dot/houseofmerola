@@ -51,7 +51,7 @@ export default function CollectionsPanel({
     <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
       <aside className="space-y-3">
         <div className="flex items-center justify-between">
-          <p className="eyebrow text-navy">{collections.length} collections</p>
+          <p className="eyebrow text-navy">{collections.length} Collections</p>
           <AddButton onClick={add}>New collection</AddButton>
         </div>
         <ul className="space-y-1.5">
@@ -67,7 +67,7 @@ export default function CollectionsPanel({
                 }`}
               >
                 <span className="block truncate text-sm font-medium text-navy">{c.name}</span>
-                <span className="block text-[0.62rem] uppercase tracking-wide text-steel">
+                <span className="block text-[0.62rem] tracking-wide text-steel">
                   {content.products.filter((p) => p.collection === c.slug).length} pieces
                 </span>
               </button>
@@ -84,7 +84,7 @@ export default function CollectionsPanel({
               <button
                 type="button"
                 onClick={() => remove(active.slug)}
-                className="shrink-0 rounded-full border border-oxblood/40 px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.16em] text-oxblood transition hover:bg-oxblood hover:text-cream"
+                className="shrink-0 rounded-full border border-oxblood/40 px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] text-oxblood transition hover:bg-oxblood hover:text-cream"
               >
                 Delete
               </button>

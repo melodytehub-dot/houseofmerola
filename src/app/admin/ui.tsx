@@ -90,7 +90,7 @@ export function Field({
 }) {
   return (
     <div className={`block ${className}`}>
-      <span className="mb-1.5 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel">
+      <span className="mb-1.5 block text-[0.68rem] font-medium tracking-[0.2em] text-steel">
         {label}
         {help && (
           <HelpTip title={helpTitle ?? (typeof label === "string" ? label : "Help")}>
@@ -162,7 +162,7 @@ export function Toggle({
           }`}
         />
       </span>
-      <span className="text-[0.72rem] font-medium uppercase tracking-[0.18em] text-navy/80 transition-colors group-hover:text-navy">
+      <span className="text-[0.72rem] font-medium tracking-[0.18em] text-navy/80 transition-colors group-hover:text-navy">
         {label}
       </span>
     </button>
@@ -180,7 +180,7 @@ export function AddButton({
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-navy/30 px-4 py-2 text-[0.7rem] font-medium uppercase tracking-[0.16em] text-steel transition hover:border-ochre hover:text-ochre"
+      className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-navy/30 px-4 py-2 text-[0.7rem] font-medium tracking-[0.16em] text-steel transition hover:border-ochre hover:text-ochre"
     >
       + {children}
     </button>
