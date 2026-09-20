@@ -44,7 +44,7 @@ export function HelpTip({ title, children }: { title: string; children: ReactNod
             className="absolute inset-0 bg-navy-deep/60"
             onClick={() => setOpen(false)}
           />
-          <div className="relative max-h-[85vh] w-full max-w-md overflow-y-auto rounded-2xl border border-navy/10 bg-cream-soft p-6 shadow-2xl">
+          <div className="relative max-h-[85vh] w-full max-w-md overflow-y-auto rounded-2xl border border-navy/10 bg-cream-soft p-6 normal-case font-normal tracking-normal shadow-2xl">
             <div className="flex items-start justify-between gap-4">
               <h3 className="font-serif text-xl leading-snug text-navy">{title}</h3>
               <button
@@ -62,9 +62,9 @@ export function HelpTip({ title, children }: { title: string; children: ReactNod
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="mt-5 w-full rounded-full bg-navy px-5 py-2.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-cream transition hover:bg-oxblood"
+              className="mt-5 w-full rounded-full bg-navy px-5 py-2.5 text-[0.68rem] font-semibold normal-case tracking-[0.18em] text-cream transition hover:bg-oxblood"
             >
-              Got it
+              got it
             </button>
           </div>
         </div>

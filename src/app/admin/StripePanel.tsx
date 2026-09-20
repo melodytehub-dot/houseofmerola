@@ -1,8 +1,43 @@
 "use client";
 
 import { useState } from "react";
-import type { Content, StripeConfig, StripeMode } from "@/lib/site";
+import type { Content, StripeConfig } from "@/lib/site";
 import { Field, HelpTip, TextInput, Toggle } from "./ui";
+
+function SecretInput({
+  value,
+  onChange,
+  placeholder,
+  replacePlaceholder,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  placeholder: string;
+  replacePlaceholder: string;
+}) {
+  const masked = value.includes("…") || value.includes("••");
+  const longEnough = value.length > 8;
+  return (
+    <div className="space-y-2">
+      {masked && value.length > 0 && (
+        <p>
+          <code className="break-all rounded bg-navy/10 px-1.5 py-0.5 text-xs text-navy/80">
+            {longEnough ? value.slice(0, 6) : ""}
+            <span aria-hidden="true" className="select-none blur-[2px]">
+              ••••••
+            </span>
+            {longEnough ? value.slice(-4) : ""}
+          </code>
+        </p>
+      )}
+      <TextInput
+        value={masked ? "" : value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={masked ? replacePlaceholder : placeholder}
+      />
+    </div>
+  );
+}
 
 export default function StripePanel({
   content,
@@ -14,32 +49,33 @@ export default function StripePanel({
   const s = content.stripe;
   const set = (patch: Partial<StripeConfig>) =>
     onChange({ ...content, stripe: { ...s, ...patch } });
-  const env = (which: StripeMode, patch: Partial<StripeConfig["sandbox"]>) =>
-    set({ [which]: { ...s[which], ...patch } } as Partial<StripeConfig>);
-
   const isLive = s.mode === "live";
+  const keys = isLive ? s.live : s.sandbox;
+  const put = (patch: Partial<StripeConfig["sandbox"]>) =>
+    set({ [s.mode]: { ...keys, ...patch } } as Partial<StripeConfig>);
 
   const [origin] = useState(() =>
     typeof window !== "undefined" ? window.location.origin : "",
   );
   const webhookUrl = `${origin || "https://your-site"}/api/webhooks/stripe`;
 
+  const pkPrefix = isLive ? "pk_live_" : "pk_test_";
+  const skPrefix = isLive ? "sk_live_" : "sk_test_";
+  const apiKeysUrl = isLive
+    ? "https://dashboard.stripe.com/apikeys"
+    : "https://dashboard.stripe.com/test/apikeys";
+  const apiKeysLabel = isLive ? "live api keys" : "test api keys";
+  const webhooksUrl = isLive
+    ? "https://dashboard.stripe.com/webhooks"
+    : "https://dashboard.stripe.com/test/webhooks";
+  const webhooksLabel = isLive ? "live webhooks" : "test webhooks";
+  const modeName = isLive ? "live" : "sandbox (test)";
+  const otherMode = isLive ? "test mode" : "live mode";
+
   return (
     <div className="space-y-8">
       <section className="rounded-2xl border border-navy/10 bg-cream-soft p-6">
-        <h2 className="eyebrow mb-5 text-navy">Stripe payments</h2>
-        <div className="mb-5 rounded-xl border border-ochre/30 bg-ochre/5 p-4 text-sm leading-relaxed text-navy/80">
-          <strong className="font-medium text-navy">stripe checkout is always on.</strong>{" "}
-          add your keys below and checkout will redirect shoppers to stripe. the switch starts in{" "}
-          <strong className="font-medium text-navy">sandbox (test)</strong> by default — use the{" "}
-          <strong className="font-medium text-navy">sandbox</strong> keys while
-          testing, then flip the switch to{" "}
-          <strong className="font-medium text-navy">live</strong> when you&rsquo;re
-          ready to take real payments. secret keys and webhook secrets are kept
-          server-side and shown masked — type a new value to replace one, or leave
-          it blank to keep the current key.
-        </div>
-
+        <h2 className="eyebrow mb-5 text-navy">stripe payments</h2>
         <div className="flex items-end pb-1">
           <div>
             <span className="mb-1.5 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel">
@@ -58,8 +94,9 @@ export default function StripePanel({
                     <strong>live</strong> uses real keys and takes real payments.
                   </li>
                   <li>
-                    recommended flow: fill in the sandbox keys first, place a test order,
-                    and check the orders tab plus your stripe dashboard (in test mode).
+                    only one set of fields is shown below — the switch decides which side
+                    you are editing. each side keeps its own keys, so flipping back
+                    restores what you pasted.
                   </li>
                   <li>
                     when ready, fill in the live keys, flip this switch to live, then
@@ -67,7 +104,7 @@ export default function StripePanel({
                   </li>
                   <li>
                     test and live each need their <strong>own webhook secret</strong> —
-                    see the ? on each webhook field below.
+                    see the ? on the webhook field below.
                   </li>
                 </ol>
               </HelpTip>
@@ -80,17 +117,22 @@ export default function StripePanel({
             <p className="mt-1 text-xs text-steel/70">
               {isLive ? "taking real payments." : "testing only — no real charges."}
             </p>
+            <p className="mt-0.5 text-xs text-steel/70">
+              keys pasted below are saved as {modeName} keys.
+            </p>
           </div>
         </div>
       </section>
 
       <section className="rounded-2xl border border-navy/10 bg-cream-soft p-6">
-        <h2 className="eyebrow mb-5 text-navy">Sandbox / test keys</h2>
+        <h2 className="eyebrow mb-5 text-navy">
+          {isLive ? "live keys" : "sandbox / test keys"}
+        </h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field
             label="Publishable key"
-            hint="starts with pk_test_ · stripe dashboard → developers → api keys"
-            helpTitle="where to find your test publishable key"
+            hint={`starts with ${pkPrefix} · stripe dashboard → developers → api keys`}
+            helpTitle={`where to find your ${isLive ? "live" : "test"} publishable key`}
             help={
               <ol>
                 <li>
@@ -101,71 +143,103 @@ export default function StripePanel({
                   .
                 </li>
                 <li>
-                  switch on <strong>test mode</strong> (toggle in the dashboard header).
+                  {isLive ? (
+                    <>switch <strong>off test mode</strong> so you are in <strong>live mode</strong>.</>
+                  ) : (
+                    <>switch on <strong>test mode</strong> (toggle in the dashboard header).</>
+                  )}
                 </li>
                 <li>
                   go to <strong>developers → api keys</strong> (or open{" "}
-                  <a href="https://dashboard.stripe.com/test/apikeys" target="_blank" rel="noreferrer">
-                    test api keys
+                  <a href={apiKeysUrl} target="_blank" rel="noreferrer">
+                    {apiKeysLabel}
                   </a>
                   ).
                 </li>
                 <li>
                   under <strong>standard keys</strong>, copy the <strong>publishable key</strong> starting{" "}
-                  <code>pk_test_…</code>.
+                  <code>{pkPrefix}…</code>.
                 </li>
                 <li>paste it here, then press save changes.</li>
               </ol>
             }
           >
-            <TextInput value={s.sandbox.publishableKey} onChange={(e) => env("sandbox", { publishableKey: e.target.value })} placeholder="pk_test_…" />
+            <SecretInput
+              value={keys.publishableKey}
+              onChange={(v) => put({ publishableKey: v })}
+              placeholder={`${pkPrefix}…`}
+              replacePlaceholder="paste a new key to replace the saved one"
+            />
           </Field>
           <Field
             label="Secret key"
-            hint="starts with sk_test_ · shown masked, stored server-side"
-            helpTitle="where to find your test secret key"
+            hint={`starts with ${skPrefix} · saved key shows partly blurred`}
+            helpTitle={`where to find your ${isLive ? "live" : "test"} secret key`}
             help={
               <ol>
                 <li>
-                  in <strong>test mode</strong>, go to{" "}
+                  {isLive ? (
+                    <>with <strong>test mode off</strong>, go to{" "}</>
+                  ) : (
+                    <>in <strong>test mode</strong>, go to{" "}</>
+                  )}
                   <strong>developers → api keys</strong> ({" "}
-                  <a href="https://dashboard.stripe.com/test/apikeys" target="_blank" rel="noreferrer">
-                    test api keys
+                  <a href={apiKeysUrl} target="_blank" rel="noreferrer">
+                    {apiKeysLabel}
                   </a>
                   ).
                 </li>
                 <li>
                   under <strong>standard keys</strong>, find <strong>secret key</strong> →{" "}
-                  <strong>reveal test key</strong> and copy it (starts <code>sk_test_…</code>).
+                  <strong>{isLive ? "reveal live key" : "reveal test key"}</strong> and copy it
+                  (starts <code>{skPrefix}…</code>).
+                  {isLive && " you may need to roll/create one if none exists."}
                 </li>
-                <li>paste it here and press save changes. it will show masked afterwards.</li>
+                <li>paste it here and press save changes. it will show partly blurred afterwards.</li>
                 <li>
-                  keep it private — it can create charges and refunds. it is stored server-side
-                  and never shown in full again.
+                  {isLive ? (
+                    <>this key moves real money — never paste it anywhere public or commit it to git.</>
+                  ) : (
+                    <>keep it private — it can create charges and refunds. it is stored server-side and never shown in full again.</>
+                  )}
                 </li>
               </ol>
             }
           >
-            <TextInput value={s.sandbox.secretKey} onChange={(e) => env("sandbox", { secretKey: e.target.value })} placeholder="sk_test_…" />
+            <SecretInput
+              value={keys.secretKey}
+              onChange={(v) => put({ secretKey: v })}
+              placeholder={`${skPrefix}…`}
+              replacePlaceholder="paste a new key to replace the saved one"
+            />
           </Field>
           <Field
             label="Webhook signing secret"
             hint="starts with whsec_ · stripe dashboard → developers → webhooks, add your endpoint first"
             className="sm:col-span-2"
-            helpTitle="create your test webhook"
+            helpTitle={`create your ${isLive ? "live" : "test"} webhook`}
             help={
               <>
                 <ol>
                   <li>
-                    in <strong>test mode</strong>, go to <strong>developers → webhooks</strong> ({" "}
-                    <a href="https://dashboard.stripe.com/test/webhooks" target="_blank" rel="noreferrer">
-                      test webhooks
+                    {isLive ? (
+                      <>with <strong>test mode off</strong>, go to{" "}</>
+                    ) : (
+                      <>in <strong>test mode</strong>, go to{" "}</>
+                    )}
+                    <strong>developers → webhooks</strong> ({" "}
+                    <a href={webhooksUrl} target="_blank" rel="noreferrer">
+                      {webhooksLabel}
                     </a>
                     ) → <strong>add endpoint</strong>.
                   </li>
                   <li>
-                    endpoint url: <code>{webhookUrl}</code> (use your live vercel domain, not
-                    localhost).
+                    endpoint url: <code>{webhookUrl}</code>
+                    {isLive ? (
+                      <> — the same path as test, but added while in <strong>live mode</strong>. test and live endpoints are separate.</>
+                    ) : (
+                      <> (use your live vercel domain, not localhost).</>
+                    )}
                   </li>
                   <li>
                     under <strong>listen to events</strong>, select{" "}
@@ -175,10 +249,19 @@ export default function StripePanel({
                     open the new endpoint → <strong>reveal signing secret</strong> → copy it
                     (starts <code>whsec_…</code>).
                   </li>
-                  <li>paste it here and press save changes.</li>
                   <li>
-                    place a test order — a new paid order should appear in the orders tab.
+                    paste it here{isLive && <>, flip <strong>active mode</strong> to live</>} and press save changes.
                   </li>
+                  {isLive ? (
+                    <li>
+                      place a small real order (or refund it after) to confirm orders appear in the
+                      orders tab.
+                    </li>
+                  ) : (
+                    <li>
+                      place a test order — a new paid order should appear in the orders tab.
+                    </li>
+                  )}
                 </ol>
                 <p>
                   without this secret, payments still succeed but orders won&rsquo;t be recorded
@@ -187,114 +270,12 @@ export default function StripePanel({
               </>
             }
           >
-            <TextInput value={s.sandbox.webhookSecret} onChange={(e) => env("sandbox", { webhookSecret: e.target.value })} placeholder="whsec_…" />
-          </Field>
-        </div>
-      </section>
-
-      <section className="rounded-2xl border border-navy/10 bg-cream-soft p-6">
-        <h2 className="eyebrow mb-5 text-navy">Live keys</h2>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field
-            label="Publishable key"
-            hint="starts with pk_live_ · stripe dashboard → developers → api keys"
-            helpTitle="where to find your live publishable key"
-            help={
-              <ol>
-                <li>
-                  sign in at{" "}
-                  <a href="https://dashboard.stripe.com" target="_blank" rel="noreferrer">
-                    dashboard.stripe.com
-                  </a>
-                  .
-                </li>
-                <li>
-                  switch <strong>off test mode</strong> so you are in <strong>live mode</strong>.
-                </li>
-                <li>
-                  go to <strong>developers → api keys</strong> (or open{" "}
-                  <a href="https://dashboard.stripe.com/apikeys" target="_blank" rel="noreferrer">
-                    live api keys
-                  </a>
-                  ).
-                </li>
-                <li>
-                  under <strong>standard keys</strong>, copy the <strong>publishable key</strong> starting{" "}
-                  <code>pk_live_…</code>.
-                </li>
-                <li>paste it here, then press save changes.</li>
-              </ol>
-            }
-          >
-            <TextInput value={s.live.publishableKey} onChange={(e) => env("live", { publishableKey: e.target.value })} placeholder="pk_live_…" />
-          </Field>
-          <Field
-            label="Secret key"
-            hint="starts with sk_live_ · shown masked, stored server-side"
-            helpTitle="where to find your live secret key"
-            help={
-              <ol>
-                <li>
-                  with <strong>test mode off</strong>, go to{" "}
-                  <strong>developers → api keys</strong> ({" "}
-                  <a href="https://dashboard.stripe.com/apikeys" target="_blank" rel="noreferrer">
-                    live api keys
-                  </a>
-                  ).
-                </li>
-                <li>
-                  under <strong>standard keys</strong>, find <strong>secret key</strong> →{" "}
-                  <strong>reveal live key</strong> and copy it (starts <code>sk_live_…</code>).
-                  you may need to roll/create one if none exists.
-                </li>
-                <li>paste it here and press save changes. it will show masked afterwards.</li>
-                <li>
-                  this key moves real money — never paste it anywhere public or commit it to git.
-                </li>
-              </ol>
-            }
-          >
-            <TextInput value={s.live.secretKey} onChange={(e) => env("live", { secretKey: e.target.value })} placeholder="sk_live_…" />
-          </Field>
-          <Field
-            label="Webhook signing secret"
-            hint="starts with whsec_ · stripe dashboard → developers → webhooks, add your endpoint first"
-            className="sm:col-span-2"
-            helpTitle="create your live webhook"
-            help={
-              <>
-                <ol>
-                  <li>
-                    with <strong>test mode off</strong>, go to <strong>developers → webhooks</strong> ({" "}
-                    <a href="https://dashboard.stripe.com/webhooks" target="_blank" rel="noreferrer">
-                      live webhooks
-                    </a>
-                    ) → <strong>add endpoint</strong>.
-                  </li>
-                  <li>
-                    endpoint url: <code>{webhookUrl}</code> — the same path as test, but added
-                    while in <strong>live mode</strong>. test and live endpoints are separate.
-                  </li>
-                  <li>
-                    under <strong>listen to events</strong>, select{" "}
-                    <code>checkout.session.completed</code>, then <strong>add endpoint</strong>.
-                  </li>
-                  <li>
-                    open the new endpoint → <strong>reveal signing secret</strong> → copy it
-                    (starts <code>whsec_…</code>).
-                  </li>
-                  <li>
-                    paste it here, flip <strong>active mode</strong> to live, and press save changes.
-                  </li>
-                </ol>
-                <p>
-                  place a small real order (or refund it after) to confirm orders appear in the
-                  orders tab.
-                </p>
-              </>
-            }
-          >
-            <TextInput value={s.live.webhookSecret} onChange={(e) => env("live", { webhookSecret: e.target.value })} placeholder="whsec_…" />
+            <SecretInput
+              value={keys.webhookSecret}
+              onChange={(v) => put({ webhookSecret: v })}
+              placeholder="whsec_…"
+              replacePlaceholder="paste a new secret to replace the saved one"
+            />
           </Field>
         </div>
       </section>
@@ -317,7 +298,8 @@ export default function StripePanel({
             </li>
             <li>
               select the <code>checkout.session.completed</code> event, then copy each endpoint&rsquo;s{" "}
-              <strong>signing secret</strong> into the matching field above.
+              <strong>signing secret</strong> into the matching field above — flip the{" "}
+              <strong>active mode</strong> switch to paste the {otherMode} one.
             </li>
           </ol>
         </HelpTip>
