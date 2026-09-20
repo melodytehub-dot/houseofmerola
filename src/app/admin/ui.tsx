@@ -25,9 +25,9 @@ export function HelpTip({ title, children }: { title: string; children: ReactNod
           e.stopPropagation();
           setOpen(true);
         }}
-        className="ml-1.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-steel/50 align-middle text-[0.6rem] font-bold leading-none text-steel transition hover:border-ochre hover:text-ochre"
+        className="ml-1.5 inline-flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full border border-steel/50 p-0 align-middle text-[11px] font-semibold normal-case leading-none tracking-normal text-steel transition hover:border-ochre hover:text-ochre"
       >
-        ?
+        <span className="block leading-none">?</span>
       </button>
       {open && (
         <div
@@ -56,7 +56,7 @@ export function HelpTip({ title, children }: { title: string; children: ReactNod
                 ✕
               </button>
             </div>
-            <div className="mt-3 space-y-2 text-sm leading-relaxed text-navy/80 [&_ol]:list-decimal [&_ol]:space-y-1.5 [&_ol]:pl-5 [&_a]:text-ochre [&_a]:underline [&_code]:rounded [&_code]:bg-navy/10 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-xs [&_strong]:font-medium [&_strong]:text-navy">
+            <div className="mt-3 space-y-2 text-sm leading-relaxed text-navy/80 [&_ol]:list-decimal [&_ol]:space-y-1.5 [&_ol]:pl-5 [&_a]:text-ochre [&_a]:underline [&_code]:break-all [&_code]:rounded [&_code]:bg-navy/10 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-xs [&_strong]:font-medium [&_strong]:text-navy">
               {children}
             </div>
             <button

@@ -65,8 +65,6 @@ export interface StripeConfig {
     secretKey: string;
     webhookSecret: string;
   };
-  /** Kept for backwards-compat with previously saved content; no longer used.
-   * Stripe Checkout is always on — checkout uses whichever mode's secret key is set. */
   enabled?: boolean;
 }
 

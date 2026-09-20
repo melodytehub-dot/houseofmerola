@@ -29,12 +29,13 @@ export default function StripePanel({
       <section className="rounded-2xl border border-navy/10 bg-cream-soft p-6">
         <h2 className="eyebrow mb-5 text-navy">Stripe payments</h2>
         <div className="mb-5 rounded-xl border border-ochre/30 bg-ochre/5 p-4 text-sm leading-relaxed text-navy/80">
-          <strong className="font-medium text-navy">Stripe Checkout is always on.</strong>{" "}
-          Add your keys below and checkout will redirect shoppers to Stripe. Use the{" "}
-          <strong className="font-medium text-navy">Sandbox</strong> keys while
+          <strong className="font-medium text-navy">stripe checkout is always on.</strong>{" "}
+          add your keys below and checkout will redirect shoppers to stripe. the switch starts in{" "}
+          <strong className="font-medium text-navy">sandbox (test)</strong> by default — use the{" "}
+          <strong className="font-medium text-navy">sandbox</strong> keys while
           testing, then flip the switch to{" "}
-          <strong className="font-medium text-navy">Live</strong> when you&rsquo;re
-          ready to take real payments. Secret keys and webhook secrets are kept
+          <strong className="font-medium text-navy">live</strong> when you&rsquo;re
+          ready to take real payments. secret keys and webhook secrets are kept
           server-side and shown masked — type a new value to replace one, or leave
           it blank to keep the current key.
         </div>
@@ -43,26 +44,29 @@ export default function StripePanel({
           <div>
             <span className="mb-1.5 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel">
               Active mode
-              <HelpTip title="Sandbox vs Live mode">
+              <HelpTip title="sandbox vs live mode">
                 <ol>
                   <li>
-                    <strong>Sandbox (test)</strong> uses test keys — no real money moves.
-                    Pay with the test card <code>4242 4242 4242 4242</code>, any future
-                    expiry date and any CVC.
+                    the switch starts in <strong>sandbox (test)</strong> by default.
                   </li>
                   <li>
-                    <strong>Live</strong> uses real keys and takes real payments.
+                    <strong>sandbox (test)</strong> uses test keys — no real money moves.
+                    pay with the test card <code>4242 4242 4242 4242</code>, any future
+                    expiry date and any cvc.
                   </li>
                   <li>
-                    Recommended flow: fill in the Sandbox keys first, place a test order,
-                    and check the Orders tab plus your Stripe Dashboard (in Test mode).
+                    <strong>live</strong> uses real keys and takes real payments.
                   </li>
                   <li>
-                    When ready, fill in the Live keys, flip this switch to Live, then
-                    press <strong>Save changes</strong>.
+                    recommended flow: fill in the sandbox keys first, place a test order,
+                    and check the orders tab plus your stripe dashboard (in test mode).
                   </li>
                   <li>
-                    Test and Live each need their <strong>own webhook secret</strong> —
+                    when ready, fill in the live keys, flip this switch to live, then
+                    press <strong>save changes</strong>.
+                  </li>
+                  <li>
+                    test and live each need their <strong>own webhook secret</strong> —
                     see the ? on each webhook field below.
                   </li>
                 </ol>
@@ -74,7 +78,7 @@ export default function StripePanel({
               label={isLive ? "Live" : "Sandbox (test)"}
             />
             <p className="mt-1 text-xs text-steel/70">
-              {isLive ? "Taking real payments." : "Testing only — no real charges."}
+              {isLive ? "taking real payments." : "testing only — no real charges."}
             </p>
           </div>
         </div>
@@ -85,32 +89,32 @@ export default function StripePanel({
         <div className="grid gap-4 sm:grid-cols-2">
           <Field
             label="Publishable key"
-            hint="Starts with pk_test_ · Stripe Dashboard → Developers → API keys"
-            helpTitle="Where to find your test publishable key"
+            hint="starts with pk_test_ · stripe dashboard → developers → api keys"
+            helpTitle="where to find your test publishable key"
             help={
               <ol>
                 <li>
-                  Sign in at{" "}
+                  sign in at{" "}
                   <a href="https://dashboard.stripe.com" target="_blank" rel="noreferrer">
                     dashboard.stripe.com
                   </a>
                   .
                 </li>
                 <li>
-                  Switch on <strong>Test mode</strong> (toggle in the dashboard header).
+                  switch on <strong>test mode</strong> (toggle in the dashboard header).
                 </li>
                 <li>
-                  Go to <strong>Developers → API keys</strong> (or open{" "}
+                  go to <strong>developers → api keys</strong> (or open{" "}
                   <a href="https://dashboard.stripe.com/test/apikeys" target="_blank" rel="noreferrer">
-                    Test API keys
+                    test api keys
                   </a>
                   ).
                 </li>
                 <li>
-                  Under <strong>Standard keys</strong>, copy the <strong>Publishable key</strong> starting{" "}
+                  under <strong>standard keys</strong>, copy the <strong>publishable key</strong> starting{" "}
                   <code>pk_test_…</code>.
                 </li>
-                <li>Paste it here, then press Save changes.</li>
+                <li>paste it here, then press save changes.</li>
               </ol>
             }
           >
@@ -118,25 +122,25 @@ export default function StripePanel({
           </Field>
           <Field
             label="Secret key"
-            hint="Starts with sk_test_ · shown masked, stored server-side"
-            helpTitle="Where to find your test secret key"
+            hint="starts with sk_test_ · shown masked, stored server-side"
+            helpTitle="where to find your test secret key"
             help={
               <ol>
                 <li>
-                  In <strong>Test mode</strong>, go to{" "}
-                  <strong>Developers → API keys</strong> ({" "}
+                  in <strong>test mode</strong>, go to{" "}
+                  <strong>developers → api keys</strong> ({" "}
                   <a href="https://dashboard.stripe.com/test/apikeys" target="_blank" rel="noreferrer">
-                    Test API keys
+                    test api keys
                   </a>
                   ).
                 </li>
                 <li>
-                  Under <strong>Standard keys</strong>, find <strong>Secret key</strong> →{" "}
-                  <strong>Reveal test key</strong> and copy it (starts <code>sk_test_…</code>).
+                  under <strong>standard keys</strong>, find <strong>secret key</strong> →{" "}
+                  <strong>reveal test key</strong> and copy it (starts <code>sk_test_…</code>).
                 </li>
-                <li>Paste it here and press Save changes. It will show masked afterwards.</li>
+                <li>paste it here and press save changes. it will show masked afterwards.</li>
                 <li>
-                  Keep it private — it can create charges and refunds. It is stored server-side
+                  keep it private — it can create charges and refunds. it is stored server-side
                   and never shown in full again.
                 </li>
               </ol>
@@ -146,38 +150,38 @@ export default function StripePanel({
           </Field>
           <Field
             label="Webhook signing secret"
-            hint="Starts with whsec_ · Stripe Dashboard → Developers → Webhooks, add your endpoint first"
+            hint="starts with whsec_ · stripe dashboard → developers → webhooks, add your endpoint first"
             className="sm:col-span-2"
-            helpTitle="Create your test webhook"
+            helpTitle="create your test webhook"
             help={
               <>
                 <ol>
                   <li>
-                    In <strong>Test mode</strong>, go to <strong>Developers → Webhooks</strong> ({" "}
+                    in <strong>test mode</strong>, go to <strong>developers → webhooks</strong> ({" "}
                     <a href="https://dashboard.stripe.com/test/webhooks" target="_blank" rel="noreferrer">
-                      Test Webhooks
+                      test webhooks
                     </a>
-                    ) → <strong>Add endpoint</strong>.
+                    ) → <strong>add endpoint</strong>.
                   </li>
                   <li>
-                    Endpoint URL: <code>{webhookUrl}</code> (use your live Vercel domain, not
+                    endpoint url: <code>{webhookUrl}</code> (use your live vercel domain, not
                     localhost).
                   </li>
                   <li>
-                    Under <strong>Listen to events</strong>, select{" "}
-                    <code>checkout.session.completed</code>, then <strong>Add endpoint</strong>.
+                    under <strong>listen to events</strong>, select{" "}
+                    <code>checkout.session.completed</code>, then <strong>add endpoint</strong>.
                   </li>
                   <li>
-                    Open the new endpoint → <strong>Reveal Signing secret</strong> → copy it
+                    open the new endpoint → <strong>reveal signing secret</strong> → copy it
                     (starts <code>whsec_…</code>).
                   </li>
-                  <li>Paste it here and press Save changes.</li>
+                  <li>paste it here and press save changes.</li>
                   <li>
-                    Place a test order — a new paid order should appear in the Orders tab.
+                    place a test order — a new paid order should appear in the orders tab.
                   </li>
                 </ol>
                 <p>
-                  Without this secret, payments still succeed but orders won&rsquo;t be recorded
+                  without this secret, payments still succeed but orders won&rsquo;t be recorded
                   automatically.
                 </p>
               </>
@@ -193,32 +197,32 @@ export default function StripePanel({
         <div className="grid gap-4 sm:grid-cols-2">
           <Field
             label="Publishable key"
-            hint="Starts with pk_live_ · Stripe Dashboard → Developers → API keys"
-            helpTitle="Where to find your live publishable key"
+            hint="starts with pk_live_ · stripe dashboard → developers → api keys"
+            helpTitle="where to find your live publishable key"
             help={
               <ol>
                 <li>
-                  Sign in at{" "}
+                  sign in at{" "}
                   <a href="https://dashboard.stripe.com" target="_blank" rel="noreferrer">
                     dashboard.stripe.com
                   </a>
                   .
                 </li>
                 <li>
-                  Switch <strong>off Test mode</strong> so you are in <strong>Live mode</strong>.
+                  switch <strong>off test mode</strong> so you are in <strong>live mode</strong>.
                 </li>
                 <li>
-                  Go to <strong>Developers → API keys</strong> (or open{" "}
+                  go to <strong>developers → api keys</strong> (or open{" "}
                   <a href="https://dashboard.stripe.com/apikeys" target="_blank" rel="noreferrer">
-                    Live API keys
+                    live api keys
                   </a>
                   ).
                 </li>
                 <li>
-                  Under <strong>Standard keys</strong>, copy the <strong>Publishable key</strong> starting{" "}
+                  under <strong>standard keys</strong>, copy the <strong>publishable key</strong> starting{" "}
                   <code>pk_live_…</code>.
                 </li>
-                <li>Paste it here, then press Save changes.</li>
+                <li>paste it here, then press save changes.</li>
               </ol>
             }
           >
@@ -226,26 +230,26 @@ export default function StripePanel({
           </Field>
           <Field
             label="Secret key"
-            hint="Starts with sk_live_ · shown masked, stored server-side"
-            helpTitle="Where to find your live secret key"
+            hint="starts with sk_live_ · shown masked, stored server-side"
+            helpTitle="where to find your live secret key"
             help={
               <ol>
                 <li>
-                  With <strong>Test mode off</strong>, go to{" "}
-                  <strong>Developers → API keys</strong> ({" "}
+                  with <strong>test mode off</strong>, go to{" "}
+                  <strong>developers → api keys</strong> ({" "}
                   <a href="https://dashboard.stripe.com/apikeys" target="_blank" rel="noreferrer">
-                    Live API keys
+                    live api keys
                   </a>
                   ).
                 </li>
                 <li>
-                  Under <strong>Standard keys</strong>, find <strong>Secret key</strong> →{" "}
-                  <strong>Reveal live key</strong> and copy it (starts <code>sk_live_…</code>).
-                  You may need to roll/create one if none exists.
+                  under <strong>standard keys</strong>, find <strong>secret key</strong> →{" "}
+                  <strong>reveal live key</strong> and copy it (starts <code>sk_live_…</code>).
+                  you may need to roll/create one if none exists.
                 </li>
-                <li>Paste it here and press Save changes. It will show masked afterwards.</li>
+                <li>paste it here and press save changes. it will show masked afterwards.</li>
                 <li>
-                  This key moves real money — never paste it anywhere public or commit it to git.
+                  this key moves real money — never paste it anywhere public or commit it to git.
                 </li>
               </ol>
             }
@@ -254,38 +258,38 @@ export default function StripePanel({
           </Field>
           <Field
             label="Webhook signing secret"
-            hint="Starts with whsec_ · Stripe Dashboard → Developers → Webhooks, add your endpoint first"
+            hint="starts with whsec_ · stripe dashboard → developers → webhooks, add your endpoint first"
             className="sm:col-span-2"
-            helpTitle="Create your live webhook"
+            helpTitle="create your live webhook"
             help={
               <>
                 <ol>
                   <li>
-                    With <strong>Test mode off</strong>, go to <strong>Developers → Webhooks</strong> ({" "}
+                    with <strong>test mode off</strong>, go to <strong>developers → webhooks</strong> ({" "}
                     <a href="https://dashboard.stripe.com/webhooks" target="_blank" rel="noreferrer">
-                      Live Webhooks
+                      live webhooks
                     </a>
-                    ) → <strong>Add endpoint</strong>.
+                    ) → <strong>add endpoint</strong>.
                   </li>
                   <li>
-                    Endpoint URL: <code>{webhookUrl}</code> — the same path as test, but added
-                    while in <strong>Live mode</strong>. Test and Live endpoints are separate.
+                    endpoint url: <code>{webhookUrl}</code> — the same path as test, but added
+                    while in <strong>live mode</strong>. test and live endpoints are separate.
                   </li>
                   <li>
-                    Under <strong>Listen to events</strong>, select{" "}
-                    <code>checkout.session.completed</code>, then <strong>Add endpoint</strong>.
+                    under <strong>listen to events</strong>, select{" "}
+                    <code>checkout.session.completed</code>, then <strong>add endpoint</strong>.
                   </li>
                   <li>
-                    Open the new endpoint → <strong>Reveal Signing secret</strong> → copy it
+                    open the new endpoint → <strong>reveal signing secret</strong> → copy it
                     (starts <code>whsec_…</code>).
                   </li>
                   <li>
-                    Paste it here, flip <strong>Active mode</strong> to Live, and press Save changes.
+                    paste it here, flip <strong>active mode</strong> to live, and press save changes.
                   </li>
                 </ol>
                 <p>
-                  Place a small real order (or refund it after) to confirm orders appear in the
-                  Orders tab.
+                  place a small real order (or refund it after) to confirm orders appear in the
+                  orders tab.
                 </p>
               </>
             }
@@ -296,29 +300,29 @@ export default function StripePanel({
       </section>
 
       <p className="text-sm text-steel">
-        Webhook endpoint:{" "}
-        <code className="rounded bg-navy/10 px-1.5 py-0.5 text-xs">
+        webhook endpoint:{" "}
+        <code className="break-all rounded bg-navy/10 px-1.5 py-0.5 text-xs">
           {webhookUrl}
         </code>{" "}
-        <HelpTip title="About the webhook endpoint">
+        <HelpTip title="about the webhook endpoint">
           <ol>
             <li>
-              This is the URL Stripe calls after a payment to record the order. Add it under{" "}
-              <strong>Developers → Webhooks</strong> — once in <strong>Test mode</strong> and once
-              in <strong>Live mode</strong>.
+              this is the url stripe calls after a payment to record the order. add it under{" "}
+              <strong>developers → webhooks</strong> — once in <strong>test mode</strong> and once
+              in <strong>live mode</strong>.
             </li>
             <li>
-              Use your public site URL (e.g. <code>https://houseofmerola.vercel.app/api/webhooks/stripe</code>
+              use your public site url (e.g. <code>https://houseofmerola.vercel.app/api/webhooks/stripe</code>
               ), not <code>localhost</code>.
             </li>
             <li>
-              Select the <code>checkout.session.completed</code> event, then copy each endpoint&rsquo;s{" "}
-              <strong>Signing secret</strong> into the matching field above.
+              select the <code>checkout.session.completed</code> event, then copy each endpoint&rsquo;s{" "}
+              <strong>signing secret</strong> into the matching field above.
             </li>
           </ol>
         </HelpTip>
-        · in Stripe add it under{" "}
-        <span className="font-medium text-navy/80">Developers → Webhooks</span> and
+        · in stripe add it under{" "}
+        <span className="font-medium text-navy/80">developers → webhooks</span> and
         select the{" "}
         <code className="rounded bg-navy/10 px-1.5 py-0.5 text-xs">
           checkout.session.completed
