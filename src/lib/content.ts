@@ -186,13 +186,14 @@ export function maskStripe(cfg: StripeConfig): StripeConfig {
 /**
  * Merge an incoming Stripe config over the stored one. Blank/marked keys are
  * left untouched so the admin can edit the UI without wiping real secrets.
+ * Stripe Checkout is always on — presence of the active mode's secret key
+ * decides whether /api/checkout creates a real Checkout Session.
  */
 export function mergeStripe(current: StripeConfig, incoming: StripeConfig): StripeConfig {
   const keep = (prev: string, next: string) =>
     next === "" || next.includes("…") || next.includes("••••") ? prev : next;
   return {
     mode: incoming.mode === "live" ? "live" : "sandbox",
-    enabled: Boolean(incoming.enabled),
     sandbox: {
       publishableKey: keep(current.sandbox.publishableKey, incoming.sandbox.publishableKey),
       secretKey: keep(current.sandbox.secretKey, incoming.sandbox.secretKey),

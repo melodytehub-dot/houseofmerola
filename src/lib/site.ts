@@ -65,8 +65,9 @@ export interface StripeConfig {
     secretKey: string;
     webhookSecret: string;
   };
-  /** When true and a secret key is present, checkout uses Stripe. */
-  enabled: boolean;
+  /** Kept for backwards-compat with previously saved content; no longer used.
+   * Stripe Checkout is always on — checkout uses whichever mode's secret key is set. */
+  enabled?: boolean;
 }
 
 export interface Enquiry {
@@ -188,7 +189,6 @@ export const defaultSettings: SiteSettings = {
 
 export const defaultStripe: StripeConfig = {
   mode: "sandbox",
-  enabled: false,
   sandbox: { publishableKey: "", secretKey: "", webhookSecret: "" },
   live: { publishableKey: "", secretKey: "", webhookSecret: "" },
 };

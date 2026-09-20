@@ -26,8 +26,9 @@ export async function POST(request: Request) {
   const secret = stripeCfg.mode === "live" ? stripeCfg.live.secretKey : stripeCfg.sandbox.secretKey;
   const publishable = stripeCfg.mode === "live" ? stripeCfg.live.publishableKey : stripeCfg.sandbox.publishableKey;
 
-  // Fall back to the current mock confirmation if Stripe isn't wired up yet.
-  if (!stripeCfg.enabled || !secret) {
+  // Stripe Checkout is always on — fall back to the mock confirmation
+  // only when the active mode's secret key isn't set yet.
+  if (!secret) {
     return NextResponse.json({ fallback: true });
   }
 

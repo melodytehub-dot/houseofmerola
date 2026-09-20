@@ -1,26 +1,106 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+
+export function HelpTip({ title, children }: { title: string; children: ReactNode }) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open ]);
+
+  return (
+    <>
+      <button
+        type="button"
+        aria-label={`Help: ${title}`}
+        title={title}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setOpen(true);
+        }}
+        className="ml-1.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-steel/50 align-middle text-[0.6rem] font-bold leading-none text-steel transition hover:border-ochre hover:text-ochre"
+      >
+        ?
+      </button>
+      {open && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label={title}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+        >
+          <div
+            className="absolute inset-0 bg-navy-deep/60"
+            onClick={() => setOpen(false)}
+          />
+          <div className="relative max-h-[85vh] w-full max-w-md overflow-y-auto rounded-2xl border border-navy/10 bg-cream-soft p-6 shadow-2xl">
+            <div className="flex items-start justify-between gap-4">
+              <h3 className="font-serif text-xl leading-snug text-navy">{title}</h3>
+              <button
+                type="button"
+                aria-label="Close help"
+                onClick={() => setOpen(false)}
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-navy/15 text-sm text-navy/70 transition hover:border-oxblood hover:text-oxblood"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="mt-3 space-y-2 text-sm leading-relaxed text-navy/80 [&_ol]:list-decimal [&_ol]:space-y-1.5 [&_ol]:pl-5 [&_a]:text-ochre [&_a]:underline [&_code]:rounded [&_code]:bg-navy/10 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-xs [&_strong]:font-medium [&_strong]:text-navy">
+              {children}
+            </div>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="mt-5 w-full rounded-full bg-navy px-5 py-2.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-cream transition hover:bg-oxblood"
+            >
+              Got it
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
 
 export function Field({
   label,
   hint,
+  helpTitle,
+  help,
   children,
   className = "",
 }: {
-  label: string;
+  label: ReactNode;
   hint?: string;
+  helpTitle?: string;
+  help?: ReactNode;
   children: ReactNode;
   className?: string;
 }) {
   return (
-    <label className={`block ${className}`}>
+    <div className={`block ${className}`}>
       <span className="mb-1.5 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel">
         {label}
+        {help && (
+          <HelpTip title={helpTitle ?? (typeof label === "string" ? label : "Help")}>
+            {help}
+          </HelpTip>
+        )}
       </span>
       {children}
       {hint && <span className="mt-1 block text-xs text-steel/70">{hint}</span>}
-    </label>
+    </div>
   );
 }
 
