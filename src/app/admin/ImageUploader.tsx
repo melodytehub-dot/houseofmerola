@@ -46,7 +46,7 @@ export default function ImageUploader({
     <Field label={label} hint={hint} className={className}>
       <div className="flex items-start gap-3">
         <input
-          className="min-w-0 flex-1 rounded-lg border border-navy/15 bg-cream px-3.5 py-2.5 text-sm text-navy placeholder:text-steel/50 focus:border-ochre focus:outline-none focus:ring-2 focus:ring-ochre/20"
+          className="min-w-0 flex-1 rounded-lg border border-navy/15 bg-cream px-3.5 py-2.5 text-base text-navy placeholder:text-steel/50 focus:border-ochre focus:outline-none focus:ring-2 focus:ring-ochre/20"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="/images/…"
