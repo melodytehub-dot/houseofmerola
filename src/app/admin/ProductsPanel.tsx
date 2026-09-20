@@ -14,6 +14,8 @@ import {
 } from "./ui";
 import ImageUploader from "./ImageUploader";
 
+const PAGE_SIZE = 5;
+
 export default function ProductsPanel({
   content,
   onChange,
@@ -23,6 +25,11 @@ export default function ProductsPanel({
 }) {
   const { products } = content;
   const [selected, setSelected] = useState<string | null>(products[0]?.slug ?? null);
+  const [page, setPage] = useState(0);
+
+  const pageCount = Math.max(1, Math.ceil(products.length / PAGE_SIZE));
+  const current = Math.min(page, pageCount - 1);
+  const visible = products.slice(current * PAGE_SIZE, current * PAGE_SIZE + PAGE_SIZE);
 
   const patch = (slug: string, p: Partial<Product>) =>
     onChange({
@@ -50,11 +57,16 @@ export default function ProductsPanel({
     };
     onChange({ ...content, products: [...products, product] });
     setSelected(base);
+    setPage(Math.ceil((products.length + 1) / PAGE_SIZE) - 1);
   };
 
   const remove = (slug: string) => {
-    onChange({ ...content, products: products.filter((x) => x.slug !== slug) });
-    if (selected === slug) setSelected(products[0]?.slug ?? null);
+    const next = products.filter((x) => x.slug !== slug);
+    onChange({ ...content, products: next });
+    if (selected === slug) {
+      setSelected(next[0]?.slug ?? null);
+      setPage(0);
+    }
   };
 
   const active = products.find((x) => x.slug === selected) ?? null;
@@ -63,11 +75,11 @@ export default function ProductsPanel({
     <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
       <aside className="space-y-3">
         <div className="flex items-center justify-between">
-          <p className="eyebrow text-navy">{products.length} pieces</p>
+          <p className="eyebrow text-navy">Pieces</p>
           <AddButton onClick={add}>New piece</AddButton>
         </div>
         <ul className="space-y-1.5">
-          {products.map((p) => (
+          {visible.map((p) => (
             <li key={p.slug}>
               <button
                 type="button"
@@ -88,6 +100,47 @@ export default function ProductsPanel({
             </li>
           ))}
         </ul>
+        {pageCount > 1 && (
+          <div className="flex flex-wrap items-center justify-center gap-1.5 pt-2">
+            <button
+              type="button"
+              onClick={() => setPage(current - 1)}
+              disabled={current === 0}
+              aria-label="Previous page"
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-navy/15 text-navy transition hover:border-ochre hover:text-ochre disabled:opacity-40"
+            >
+              ←
+            </button>
+            {Array.from({ length: pageCount }, (_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setPage(i)}
+                aria-label={`Page ${i + 1}`}
+                aria-current={i === current ? "page" : undefined}
+                className={`h-8 min-w-8 rounded-full px-2 text-xs font-medium transition ${
+                  i === current
+                    ? "bg-navy text-cream"
+                    : "border border-navy/15 text-navy hover:border-ochre hover:text-ochre"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => setPage(current + 1)}
+              disabled={current >= pageCount - 1}
+              aria-label="Next page"
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-navy/15 text-navy transition hover:border-ochre hover:text-ochre disabled:opacity-40"
+            >
+              →
+            </button>
+          </div>
+        )}
+        <p className="pt-1 text-center text-xs text-steel/70">
+          Page {current + 1} of {pageCount} · {products.length} pieces
+        </p>
       </aside>
 
       <div className="rounded-2xl border border-navy/10 bg-cream-soft p-6">
@@ -118,11 +171,11 @@ function ProductForm({ product, collections, onPatch, onDelete }: ProductFormPro
   return (
     <div className="space-y-6">
       <div className="flex items-start justify-between gap-4">
-        <h2 className="font-serif text-2xl text-navy">{product.name}</h2>
+        <h2 className="min-w-0 font-serif text-2xl text-navy">{product.name}</h2>
         <button
           type="button"
           onClick={onDelete}
-          className="rounded-full border border-oxblood/40 px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.16em] text-oxblood transition hover:bg-oxblood hover:text-cream"
+          className="shrink-0 rounded-full border border-oxblood/40 px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.16em] text-oxblood transition hover:bg-oxblood hover:text-cream"
         >
           Delete
         </button>
@@ -248,16 +301,16 @@ function OptionsEditor({
               onChange={(e) =>
                 onChange(value.map((o, idx) => (idx === i ? { ...o, label: e.target.value } : o)))
               }
-              className="flex-1"
+              className="min-w-0 flex-1"
             />
-            <div className="relative w-24 shrink-0">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-steel">+£</span>
+            <div className="relative w-20 shrink-0 sm:w-24">
+              <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-steel">+£</span>
               <NumInput
                 value={opt.priceDelta}
                 onChange={(e) =>
                   onChange(value.map((o, idx) => (idx === i ? { ...o, priceDelta: Number(e.target.value) || 0 } : o)))
                 }
-                className="pl-9"
+                className="pl-8"
               />
             </div>
             <button

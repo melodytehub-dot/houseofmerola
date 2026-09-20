@@ -75,7 +75,7 @@ export default function OrdersPanel({
               <h3 className="mt-2 font-serif text-xl text-navy">
                 {o.name || "Guest"}
               </h3>
-              <a href={`mailto:${o.email}`} className="text-sm text-ochre">
+              <a href={`mailto:${o.email}`} className="break-all text-sm text-ochre">
                 {o.email}
               </a>
             </div>

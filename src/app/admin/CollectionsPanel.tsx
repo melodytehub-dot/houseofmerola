@@ -80,11 +80,11 @@ export default function CollectionsPanel({
         {active ? (
           <div className="space-y-6">
             <div className="flex items-start justify-between gap-4">
-              <h2 className="font-serif text-2xl text-navy">{active.name}</h2>
+              <h2 className="min-w-0 font-serif text-2xl text-navy">{active.name}</h2>
               <button
                 type="button"
                 onClick={() => remove(active.slug)}
-                className="rounded-full border border-oxblood/40 px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.16em] text-oxblood transition hover:bg-oxblood hover:text-cream"
+                className="shrink-0 rounded-full border border-oxblood/40 px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.16em] text-oxblood transition hover:bg-oxblood hover:text-cream"
               >
                 Delete
               </button>

@@ -57,7 +57,7 @@ export default function EnquiriesPanel({
                 </span>
               </div>
               <h3 className="mt-2 font-serif text-xl text-navy">{e.name}</h3>
-              <a href={`mailto:${e.email}`} className="text-sm text-ochre">
+              <a href={`mailto:${e.email}`} className="break-all text-sm text-ochre">
                 {e.email}
               </a>
             </div>

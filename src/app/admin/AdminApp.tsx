@@ -133,38 +133,42 @@ export default function AdminApp() {
   return (
     <main className="min-h-svh bg-cream">
       <div className="sticky top-0 z-20 border-b border-navy/10 bg-cream-soft/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-          <div>
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-3 px-4 py-3 sm:px-6">
+          <div className="min-w-0">
             <p className="brand-wordmark text-sm text-navy">House of Merola</p>
             <p className="text-[0.62rem] uppercase tracking-[0.24em] text-steel">
               Studio Admin
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             <button
               type="button"
               onClick={save}
               disabled={busy}
-              className="rounded-full bg-oxblood px-5 py-2.5 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-cream transition hover:bg-oxblood-deep disabled:opacity-60"
+              className="rounded-full bg-oxblood px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-cream transition hover:bg-oxblood-deep disabled:opacity-60 sm:px-5 sm:py-2.5 sm:text-[0.7rem]"
             >
               {busy ? "Saving…" : "Save changes"}
             </button>
             <button
               type="button"
               onClick={handleLogout}
-              className="rounded-full border border-navy/20 px-4 py-2.5 text-[0.7rem] font-medium uppercase tracking-[0.18em] text-navy transition hover:border-oxblood hover:text-oxblood"
+              className="rounded-full border border-navy/20 px-4 py-2 text-[0.65rem] font-medium uppercase tracking-[0.18em] text-navy transition hover:border-oxblood hover:text-oxblood sm:py-2.5 sm:text-[0.7rem]"
             >
               Log out
             </button>
           </div>
         </div>
-        <nav className="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-4 pb-3 sm:px-6">
+        <nav
+          aria-label="Admin sections"
+          className="mx-auto grid max-w-6xl grid-cols-3 gap-1.5 px-4 pb-3 sm:flex sm:gap-1 sm:overflow-x-auto sm:px-6"
+        >
           {TABS.map((t) => (
             <button
               key={t.id}
               type="button"
               onClick={() => setTab(t.id)}
-              className={`shrink-0 rounded-full px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.16em] transition ${
+              aria-current={tab === t.id ? "page" : undefined}
+              className={`rounded-xl px-2 py-2.5 text-center text-[0.66rem] font-medium uppercase tracking-[0.14em] transition sm:shrink-0 sm:rounded-full sm:px-4 sm:py-2 sm:tracking-[0.16em] ${
                 tab === t.id
                   ? "bg-navy text-cream"
                   : "text-navy/70 hover:bg-navy/10"
@@ -197,7 +201,7 @@ export default function AdminApp() {
       </div>
 
       {toast && (
-        <div className="fixed bottom-6 left-1/2 z-30 -translate-x-1/2 rounded-full bg-navy-deep px-6 py-3 text-sm text-cream shadow-xl">
+        <div className="fixed bottom-6 left-1/2 z-30 w-max max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-full bg-navy-deep px-6 py-3 text-center text-sm text-cream shadow-xl">
           {toast}
         </div>
       )}

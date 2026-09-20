@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -61,11 +62,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [settings, collections, products] = await Promise.all([
-    getSettings(),
-    getCollections(),
-    getProducts(),
-  ]);
+  const pathname = (await headers()).get("x-pathname") ?? "";
+  const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
+  const settings = await getSettings();
+  const collections = isAdmin ? [] : await getCollections();
+  const products = isAdmin ? [] : await getProducts();
   const visibleCollections = collections.filter((c) =>
     products.some((p) => p.collection === c.slug),
   );
@@ -93,10 +94,10 @@ export default async function RootLayout({
         <CartProvider>
           <WishlistProvider>
             <ScrollToTop />
-            <Header settings={settings} collections={visibleCollections} />
+            {!isAdmin && <Header settings={settings} collections={visibleCollections} />}
             <main className="flex-1">{children}</main>
-            <Footer settings={settings} collections={visibleCollections} />
-            <CartDrawer settings={settings} />
+            {!isAdmin && <Footer settings={settings} collections={visibleCollections} />}
+            {!isAdmin && <CartDrawer settings={settings} />}
           </WishlistProvider>
         </CartProvider>
         <script
