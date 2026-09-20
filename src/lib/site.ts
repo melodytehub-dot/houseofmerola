@@ -17,7 +17,7 @@ export interface SiteSettings {
   siteName: string;
   /** Short strapline, e.g. "Art for a more magical home". */
   tagline: string;
-  /** Announcement bar text — blank hides the bar. */
+  /** Announcement bar text, blank hides the bar. */
   announcement: string;
   contactEmail: string;
   footerBlurb: string;
@@ -29,7 +29,7 @@ export interface SiteSettings {
   };
   commerce: {
     currency: string;
-    /** United Kingdom carriage — the default delivery zone. */
+    /** United Kingdom carriage, the default delivery zone. */
     shippingFee: number;
     freeShippingThreshold: number;
     /** International / rest-of-world carriage, chosen at checkout. */
@@ -98,7 +98,7 @@ export interface OrderItem {
 }
 
 export interface Order {
-  /** Stripe Checkout session id — used as the stable, idempotency-safe key. */
+  /** Stripe Checkout session id, used as the stable, idempotency-safe key. */
   id: string;
   createdAt: string;
   email: string;
@@ -128,7 +128,7 @@ export const defaultSettings: SiteSettings = {
   announcement: "",
   contactEmail: "hello@houseofmerola.com",
   footerBlurb:
-    "Original artwork UV-printed onto ceramic and wood, engraved and finished by hand in our Liverpool studio — for walls that carry a little magic, somewhere between a Mediterranean house, an old apothecary and a cabinet of curiosities.",
+    "Original artwork UV-printed onto ceramic and wood, engraved and finished by hand in our Liverpool studio, for walls that carry a little magic, somewhere between a Mediterranean house, an old apothecary and a cabinet of curiosities.",
   hero: {
     eyebrow: "The House Collection",
     lines: [
@@ -138,12 +138,12 @@ export const defaultSettings: SiteSettings = {
     ],
     accentWord: "soul.",
     subheading:
-      "Original artwork UV-printed onto ceramic and wood, engraved and finished by hand in our Liverpool studio — art for a more magical home, caught between a Mediterranean house, an old apothecary and a cabinet of curiosities.",
+      "Original artwork UV-printed onto ceramic and wood, engraved and finished by hand in our Liverpool studio, art for a more magical home, caught between a Mediterranean house, an old apothecary and a cabinet of curiosities.",
   },
   aboutIntro: {
     heading: "From a Mediterranean house to a cabinet of curiosities",
     body: [
-      "House of Merola began with the Mediterranean — lemons, saints, tiled courtyards and the colours of southern Italy. From there the collection wandered into old botanical books, natural history cabinets, celestial imagery and the strange and beautiful.",
+      "House of Merola began with the Mediterranean: lemons, saints, tiled courtyards and the colours of southern Italy. From there the collection wandered into old botanical books, natural history cabinets, celestial imagery and the strange and beautiful.",
     ],
     points: [
       "Original artwork UV-printed onto ceramic",
@@ -169,7 +169,7 @@ export const defaultSettings: SiteSettings = {
     title: "House of Merola · Art for a more magical home",
     titleTemplate: "%s · House of Merola",
     description:
-      "Original artwork UV-printed onto ceramic and wood, and laser-engraved pieces, designed and finished by hand in our Liverpool studio. From the Mediterranean to the mystical, botanical and curious — art for a more magical home.",
+      "Original artwork UV-printed onto ceramic and wood, and laser-engraved pieces, designed and finished by hand in our Liverpool studio. From the Mediterranean to the mystical, botanical and curious, art for a more magical home.",
     keywords: [
       "House of Merola",
       "UV printed ceramic tiles",

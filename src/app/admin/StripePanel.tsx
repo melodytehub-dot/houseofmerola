@@ -35,7 +35,7 @@ export default function StripePanel({
           testing, then switch the active mode to{" "}
           <strong className="font-medium text-navy">Live</strong> when you&rsquo;re
           ready to take real payments. Secret keys and webhook secrets are kept
-          server-side and shown masked — type a new value to replace one, or leave
+          server-side and shown masked, type a new value to replace one, or leave
           it blank to keep the current key.
         </div>
 

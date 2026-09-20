@@ -2,11 +2,11 @@
  * Persistence layer for the admin / site content.
  *
  * Backends (in order of preference):
- *   1. Postgres via the Neon serverless driver — production, durable,
+ *   1. Postgres via the Neon serverless driver, production, durable,
  *      serverless-friendly. Requires env DATABASE_URL (a Neon, Supabase
  *      or other Postgres connection string). Use @neondatabase/serverless.
- *   2. A local JSON file  — development only (writable filesystem).
- *   3. In-memory  — last resort; not durable across serverless instances.
+ *   2. A local JSON file , development only (writable filesystem).
+ *   3. In-memory , last resort; not durable across serverless instances.
  * ──────────────────────────────────────────────────────────────── */
 import { createHash } from "crypto";
 import { mkdir, readFile, writeFile } from "fs/promises";
@@ -133,7 +133,7 @@ export async function writeJson<T>(key: string, value: T): Promise<void> {
   await writeRaw(key, JSON.stringify(value));
 }
 
-/** Used for admin authorisation — not secret, but opaque. */
+/** Used for admin authorisation, not secret, but opaque. */
 export function hashPassword(secret: string): string {
   return createHash("sha256").update(secret).digest("hex");
 }

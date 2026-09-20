@@ -160,7 +160,7 @@ export default async function ProductPage({ params }: PageProps) {
                   A note on handmade:
                 </span>{" "}
                 every piece is designed in-house and finished by hand in our
-                Liverpool studio, and made to order — so subtle variations in
+                Liverpool studio, and made to order, so subtle variations in
                 the print and engraving are part of the charm.
               </p>
             </div>

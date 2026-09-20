@@ -47,7 +47,7 @@ export async function POST(request: Request) {
   const mime = MIME_BY_EXT[ext] || "application/octet-stream";
   const target = pickUploadTarget();
 
-  // 1) GitHub Contents API — when a token + repo are configured.
+  // 1) GitHub Contents API, when a token + repo are configured.
   if (target === "github") {
     try {
       const url = await uploadToGitHub(
@@ -71,7 +71,7 @@ export async function POST(request: Request) {
     }
   }
 
-  // 2) S3-compatible object storage — Cloudflare R2, Supabase, AWS, MinIO.
+  // 2) S3-compatible object storage, Cloudflare R2, Supabase, AWS, MinIO.
   if (target === "s3") {
     try {
       const base = (process.env.UPLOAD_PUBLIC_BASE || `/images`).trim();
@@ -98,7 +98,7 @@ export async function POST(request: Request) {
     }
   }
 
-  // 3) Local / dev filesystem — writes into public/images.
+  // 3) Local / dev filesystem, writes into public/images.
   try {
     const rel = path.join("public", "images");
     await mkdir(rel, { recursive: true });

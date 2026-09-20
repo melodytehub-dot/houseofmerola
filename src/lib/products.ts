@@ -28,7 +28,7 @@ export interface Product {
   tagline: string;
   description: string;
   featured?: boolean;
-  /** Made to order in our Liverpool studio — enquiry-led, not added straight to cart. */
+  /** Made to order in our Liverpool studio, enquiry-led, not added straight to cart. */
   madeToOrder?: boolean;
   /** Selectable material options with price deltas. */
   materialOptions?: ProductOption[];
@@ -94,7 +94,7 @@ export const collections: Collection[] = [
     name: "Mediterranean",
     tagline: "Sun-washed art of the Italian coast",
     description:
-      "The soul of the house: the Amalfi coast, Sicilian groves and the joy of Italian living — cobalt, lemon and ochre, UV-printed onto ceramic or wood in our Liverpool studio.",
+      "The soul of the house: the Amalfi coast, Sicilian groves and the joy of Italian living, in cobalt, lemon and ochre, UV-printed onto ceramic or wood in our Liverpool studio.",
     bannerImage: "/images/collection-mediterranean.jpg",
   },
   {
@@ -102,7 +102,7 @@ export const collections: Collection[] = [
     name: "Sacred & Mystical",
     tagline: "Madonnas, moons and old devotions",
     description:
-      "Our Lady in cobalt and gold, the phases of the moon and esoteric symbols — sacred and mystical pieces designed to bring quiet wonder home.",
+      "Our Lady in cobalt and gold, the phases of the moon and esoteric symbols, sacred and mystical pieces designed to bring quiet wonder home.",
     bannerImage: "/images/prod-madonna-sicilia.jpg",
   },
   {
@@ -110,7 +110,7 @@ export const collections: Collection[] = [
     name: "Cabinet of Curiosities",
     tagline: "Antique study boards from the naturalist’s cabinet",
     description:
-      "Old botanical books, natural-history cabinets and the strange and beautiful — herbals, herpetology, mycology and curiosities, engraved in antique gold on dark wood.",
+      "Old botanical books, natural-history cabinets and the strange and beautiful: herbals, herpetology, mycology and curiosities, engraved in antique gold on dark wood.",
     bannerImage: "/images/collection-botanical.jpg",
   },
   {
@@ -118,7 +118,7 @@ export const collections: Collection[] = [
     name: "Bespoke & Personalised",
     tagline: "Designed & made to order in Liverpool",
     description:
-      "Tell us what you have in mind — a name, a date, a reference image — and we’ll design a piece just for you, made to order in our Liverpool studio.",
+      "Tell us what you have in mind: a name, a date, a reference image, and we’ll design a piece just for you, made to order in our Liverpool studio.",
     bannerImage: "/images/prod-herbolologia.jpg",
   },
   {
@@ -205,7 +205,7 @@ export const products: Product[] = [
     materials: ["Original artwork UV-printed onto ceramic"],
     tagline: "A vintage Amalfi Ape, overflowing with lemons",
     description:
-      "Bring a little piece of the Italian coast home with La Dolce Vita, a decorative ceramic tile inspired by the colours and charm of southern Italy. Featuring a vintage Piaggio-style Ape overflowing with lemons against a dreamy coastal backdrop, the design is surrounded by an ornate blue, yellow and floral border reminiscent of traditional Italian ceramics. Each tile is UV printed individually in our Liverpool studio, giving the artwork rich colour and beautiful detail while retaining the character of the ceramic surface. Perfect displayed on a small easel, shelf, kitchen dresser or incorporated into a Mediterranean-inspired gallery wall. Decorative item — small variations may occur as each piece is individually produced.",
+      "Bring a little piece of the Italian coast home with La Dolce Vita, a decorative ceramic tile inspired by the colours and charm of southern Italy. Featuring a vintage Piaggio-style Ape overflowing with lemons against a dreamy coastal backdrop, the design is surrounded by an ornate blue, yellow and floral border reminiscent of traditional Italian ceramics. Each tile is UV printed individually in our Liverpool studio, giving the artwork rich colour and beautiful detail while retaining the character of the ceramic surface. Perfect displayed on a small easel, shelf, kitchen dresser or incorporated into a Mediterranean-inspired gallery wall. Decorative item, small variations may occur as each piece is individually produced.",
     materialOptions: ceramicMaterials,
     sizeOptions: ceramicSizes,
   },
@@ -223,7 +223,7 @@ export const products: Product[] = [
     materials: ["Original artwork UV-printed onto ceramic"],
     tagline: "A majolica jug with olive branches and blossom",
     description:
-      "Inspired by traditional Italian majolica, Oliva features an ornate ceramic jug surrounded by olive branches, blossoms and rich botanical detailing. Deep cobalt blue, warm ochre and olive green create a beautifully aged Mediterranean palette, while the elaborate scrollwork gives the piece the feel of a vintage Italian ceramic discovered in a little market somewhere in Sicily. Individually UV printed in our Liverpool studio, this decorative tile works beautifully in kitchens, dining spaces, gallery walls or simply displayed on a shelf or small easel. Decorative item — small variations in colour and finish may occur as each piece is individually produced.",
+      "Inspired by traditional Italian majolica, Oliva features an ornate ceramic jug surrounded by olive branches, blossoms and rich botanical detailing. Deep cobalt blue, warm ochre and olive green create a beautifully aged Mediterranean palette, while the elaborate scrollwork gives the piece the feel of a vintage Italian ceramic discovered in a little market somewhere in Sicily. Individually UV printed in our Liverpool studio, this decorative tile works beautifully in kitchens, dining spaces, gallery walls or simply displayed on a shelf or small easel. Decorative item, small variations in colour and finish may occur as each piece is individually produced.",
     materialOptions: ceramicMaterials,
     sizeOptions: ceramicSizes,
   },
@@ -372,7 +372,7 @@ export const products: Product[] = [
     image: "/images/prod-madonna-sicilia.jpg",
     collection: "bespoke-personalised",
     materials: ["Original artwork UV-printed onto ceramic"],
-    tagline: "Your name, a date or a design — on ceramic",
+    tagline: "Your name, a date or a design on ceramic",
     description:
       "A one-of-a-kind ceramic tile printed with your artwork, name or a short message. Tell us what you’d like, send a reference image and we’ll design a mock-up before you commit.",
     madeToOrder: true,
@@ -391,7 +391,7 @@ export const products: Product[] = [
     materials: ["Original artwork UV-printed onto wood"],
     tagline: "A wooden sign or plaque, printed with your design",
     description:
-      "A wooden plaque or sign printed with your design — a name, an address, a favourite phrase. Choose a size, add a reference image and we’ll create a mock-up for your approval.",
+      "A wooden plaque or sign printed with your design: a name, an address, a favourite phrase. Choose a size, add a reference image and we’ll create a mock-up for your approval.",
     madeToOrder: true,
     materialOptions: woodMaterials,
     sizeOptions: boardSizes,

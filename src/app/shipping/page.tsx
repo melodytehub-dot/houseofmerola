@@ -42,7 +42,7 @@ export default async function ShippingPage() {
     ? commerce.internationalFreeShippingThreshold > 0
       ? `International: ${money(commerce.internationalShippingFee)}, free over ${money(commerce.internationalFreeShippingThreshold)}. Delivery 5–14 working days depending on the destination.`
       : `International: from ${money(commerce.internationalShippingFee)}. Delivery 5–14 working days depending on the destination.`
-    : "International delivery is quoted individually — we’ll confirm the price for your destination before you pay.";
+    : "International delivery is quoted individually; we’ll confirm the price for your destination before you pay.";
 
   const sections = [
     {

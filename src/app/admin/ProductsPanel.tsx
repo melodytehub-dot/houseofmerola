@@ -287,7 +287,7 @@ function PersonalisationEditor({
       <div className="rounded-xl border border-navy/10 p-4">
         <p className="eyebrow mb-1 text-steel">Personalisation</p>
         <p className="mb-3 text-sm text-steel/80">
-          For bespoke pieces — require a name/text and offer an image upload.
+          For bespoke pieces, require a name/text and offer an image upload.
         </p>
         <AddButton
           onClick={() =>

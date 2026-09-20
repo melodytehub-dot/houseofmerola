@@ -12,14 +12,13 @@ export default async function HomePage() {
     getSettings(),
   ]);
   const featured = products.filter((p) => p.featured).slice(0, 6);
-  // The core "four houses" grid — seasonal collections (e.g. Halloween) are
+  // The core "four houses" grid, seasonal collections (e.g. Halloween) are
   // still surfaced in the nav/shop but not counted among the main four.
   const mainCollections = collections.filter((c) => !c.temporary);
   const collectionName = (slug: string) =>
     collections.find((c) => c.slug === slug)?.name;
   return (
     <>
-      {/* ── Editorial hero ─────────────────────────────────────── */}
       <section className="grain relative overflow-hidden">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 pb-16 pt-12 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:pb-24 lg:pt-20">
           {/* Text column */}
@@ -154,7 +153,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Collections ────────────────────────────────────────── */}
       <section id="collections" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <Reveal className="mb-10 text-center">
           <div className="section-rule justify-center">
@@ -207,7 +205,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Featured pieces ─────────────────────────────────────── */}
       <section className="bg-cream/50 py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal className="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
@@ -253,7 +250,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Story teaser ────────────────────────────────────────── */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <Reveal className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="relative order-2 mx-auto w-full max-w-md lg:order-1 lg:max-w-none">
@@ -308,7 +304,6 @@ export default async function HomePage() {
         </Reveal>
       </section>
 
-      {/* ── Newsletter ──────────────────────────────────────────── */}
       <Newsletter />
     </>
   );

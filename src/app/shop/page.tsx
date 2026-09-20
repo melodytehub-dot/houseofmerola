@@ -35,7 +35,7 @@ export default async function ShopPage() {
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-cream/85">
             Original artwork UV-printed onto ceramic and wood, engraved and
-            finished by hand — designed and made to order in our Liverpool
+            finished by hand, designed and made to order in our Liverpool
             studio. Small batches only, made to be kept.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 border-t border-cream/15 pt-6 text-cream/80">
@@ -68,7 +68,7 @@ export default async function ShopPage() {
             {
               icon: BrushIcon,
               title: "Made to order, piece by piece",
-              body: "Each piece is designed in-house, UV-printed or laser-engraved, then finished by hand in our Liverpool studio — so every one is individual.",
+              body: "Each piece is designed in-house, UV-printed or laser-engraved, then finished by hand in our Liverpool studio, so every one is individual.",
             },
             {
               icon: BoxIcon,

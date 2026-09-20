@@ -44,7 +44,7 @@ export async function POST(request: Request) {
           from: process.env.ENQUIRY_FROM_EMAIL || "House of Merola <onboarding@resend.dev>",
           to: process.env.ENQUIRY_TO_EMAIL,
           reply_to: enquiry.email,
-          subject: `New ${enquiry.kind} enquiry — ${enquiry.name}`,
+          subject: `New ${enquiry.kind} enquiry: ${enquiry.name}`,
           text: [
             `Type: ${enquiry.kind}`,
             enquiry.productName ? `Piece: ${enquiry.productName}` : "",

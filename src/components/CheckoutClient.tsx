@@ -48,7 +48,7 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
   useEffect(() => {
     const qs = new URLSearchParams(window.location.search);
     if (qs.get("success") !== "1" && qs.get("cancelled") !== "1") return;
-    // Mount-only initialisation from the URL — safe to set state here.
+    // Mount-only initialisation from the URL, safe to set state here.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setStripeState(qs.get("success") === "1" ? "success" : "cancelled");
     if (qs.get("success") === "1") clearCart();

@@ -81,9 +81,9 @@ export default function BespokeEnquiry({
     setError("");
 
     const body = [
-      "New bespoke enquiry — House of Merola",
+      "New bespoke enquiry: House of Merola",
       "",
-      `Piece: ${piece?.name ?? "—"}`,
+      `Piece: ${piece?.name ?? "Made to order"}`,
       material ? `Material: ${material.label}` : "",
       size ? `Size: ${size.label}` : "",
       personalisation?.requiresText
@@ -119,7 +119,7 @@ export default function BespokeEnquiry({
       });
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
     } catch {
-      /* storage unavailable — the backend still receives the enquiry */
+      /* storage unavailable, the backend still receives the enquiry */
     }
 
     // Send to the studio inbox; fall back to the visitor's mail client.
@@ -145,12 +145,12 @@ export default function BespokeEnquiry({
       });
       posted = res.ok;
     } catch {
-      /* ignore — mail fallback below */
+      /* ignore, mail fallback below */
     }
 
     if (!posted) {
       window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(
-        `Bespoke enquiry — ${piece?.name ?? "made-to-order piece"}`,
+        `Bespoke enquiry: ${piece?.name ?? "made-to-order piece"}`,
       )}&body=${encodeURIComponent(body)}`;
     }
     setSent(true);
@@ -162,7 +162,7 @@ export default function BespokeEnquiry({
         <OliveIcon className="h-14 w-14 text-ochre" />
         <h2 className="mt-4 font-serif text-3xl text-navy">Grazie mille!</h2>
         <p className="mt-3 max-w-sm text-sm leading-relaxed text-steel">
-          Thank you — your enquiry has been sent to the studio. We’ll reply
+          Thank you, your enquiry has been sent to the studio. We’ll reply
           within two working days with a mock-up and a quote.
         </p>
         <p className="mt-3 max-w-sm text-sm text-steel/80">
@@ -326,7 +326,7 @@ export default function BespokeEnquiry({
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             className={`${inputCls} resize-none`}
-            placeholder="Anything else — colours, occasion, deadline…"
+            placeholder="Anything else, colours, occasion, deadline…"
           />
         </div>
       )}
@@ -362,7 +362,7 @@ export default function BespokeEnquiry({
 
       {piece && (
         <p className="text-sm text-navy/70">
-          Estimated from {formatGBP(price)} — we’ll confirm the exact price with
+          Estimated from {formatGBP(price)}, we’ll confirm the exact price with
           your mock-up.
         </p>
       )}

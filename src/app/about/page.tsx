@@ -23,8 +23,8 @@ export default function AboutPage() {
             <em className="font-light italic text-ochre">of the Mediterranean & the cabinet of curiosities</em>
           </h1>
           <p className="mx-auto mt-6 max-w-xl leading-relaxed text-navy/70">
-            House of Merola began with the Mediterranean — lemons, saints, tiled
-            courtyards and the colours of southern Italy — and wandered into old
+            House of Merola began with the Mediterranean: lemons, saints, tiled
+            courtyards and the colours of southern Italy, and wandered into old
             botanical books, celestial imagery and the strange and beautiful.
           </p>
         </Reveal>
@@ -67,7 +67,7 @@ export default function AboutPage() {
               beautiful. Our pieces are designed in the spirit of old Sicilian
               majolica, with borders of scrollwork and blossom that echo old
               chapel floors; our study boards draw on the naturalists’ cabinets
-              of the nineteenth century — herbals, herpetology and mycology,
+              of the nineteenth century, herbals, herpetology and mycology,
               UV-printed and laser-engraved in antique gold on dark wood.
             </p>
           </div>
@@ -134,7 +134,7 @@ export default function AboutPage() {
               {
                 icon: LeafIcon,
                 title: "Mediterranean & beyond",
-                body: "Cobalt, lemon and ochre — and, beyond the coast, a cabinet of curiosities.",
+                body: "Cobalt, lemon and ochre; beyond the coast, a cabinet of curiosities.",
               },
               {
                 icon: HourglassIcon,

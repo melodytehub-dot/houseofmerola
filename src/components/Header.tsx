@@ -170,7 +170,7 @@ export default function Header({
               <div className="flex w-20 items-center justify-end gap-1.5">{actions}</div>
             </div>
 
-            {/* Desktop row — nav perfectly centred */}
+            {/* Desktop row, nav perfectly centred */}
             <div className="hidden items-center lg:grid lg:grid-cols-[1fr_auto_1fr]">
               <div className="flex justify-start">
                 <Logo />

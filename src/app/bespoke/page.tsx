@@ -40,7 +40,7 @@ export default async function BespokePage({
             Made just for you
           </h1>
           <p className="mx-auto mt-5 max-w-xl leading-relaxed text-navy/70">
-            Lots of our customers come to us with an idea of their own — a name,
+            Lots of our customers come to us with an idea of their own, a name,
             a date, a favourite photo. We design each commission and create a
             mock-up for your approval before you commit, then make it to order
             in our Liverpool studio.
@@ -77,7 +77,7 @@ export default async function BespokePage({
                   {
                     step: "02",
                     title: "We send a mock-up",
-                    body: "We design your piece and email a mock-up so you can see exactly what you’ll get — with any tweaks you’d like.",
+                    body: "We design your piece and email a mock-up so you can see exactly what you’ll get, with any tweaks you’d like.",
                   },
                   {
                     step: "03",
@@ -133,7 +133,7 @@ export default async function BespokePage({
               What we can make
             </h2>
             <p className="mt-3 max-w-xl text-sm leading-relaxed text-navy/70">
-              These are the starting points — tell us what you’d like and we’ll
+              These are the starting points, tell us what you’d like and we’ll
               shape the piece around you.
             </p>
           </Reveal>

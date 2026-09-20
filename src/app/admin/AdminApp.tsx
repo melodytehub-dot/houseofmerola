@@ -101,7 +101,7 @@ export default function AdminApp() {
     setBusy(false);
     if (ok && data.content) {
       setContent(data.content);
-      notify("Saved — live on the site.");
+      notify("Saved, live on the site.");
     } else {
       notify(data?.error ?? "Save failed.");
     }
