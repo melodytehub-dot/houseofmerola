@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { Content, Enquiry, Order } from "@/lib/site";
+import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
 import ProductsPanel from "./ProductsPanel";
 import CollectionsPanel from "./CollectionsPanel";
 import SettingsPanel from "./SettingsPanel";
@@ -39,11 +40,26 @@ export default function AdminApp() {
   const [loginError, setLoginError] = useState("");
   const [busy, setBusy] = useState(false);
   const [toast, setToast] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const closeMenu = () => setMenuOpen(false);
 
   const notify = useCallback((msg: string) => {
     setToast(msg);
     window.setTimeout(() => setToast(""), 2600);
   }, []);
+
+  useEffect(() => {
+    if (menuOpen) lockScroll();
+    else unlockScroll();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    if (menuOpen) window.addEventListener("keydown", onKey);
+    return () => {
+      unlockScroll();
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [menuOpen]);
 
   const loadDashboard = useCallback(async () => {
     const [c, e, o] = await Promise.all([
@@ -152,15 +168,39 @@ export default function AdminApp() {
             <button
               type="button"
               onClick={handleLogout}
-              className="rounded-full border border-navy/20 px-4 py-2 text-[0.65rem] font-medium uppercase tracking-[0.18em] text-navy transition hover:border-oxblood hover:text-oxblood sm:py-2.5 sm:text-[0.7rem]"
+              className="hidden rounded-full border border-navy/20 px-4 py-2 text-[0.65rem] font-medium uppercase tracking-[0.18em] text-navy transition hover:border-oxblood hover:text-oxblood sm:block sm:py-2.5 sm:text-[0.7rem]"
             >
               Log out
+            </button>
+            <button
+              type="button"
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              aria-controls="admin-menu"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-navy/15 text-navy transition hover:border-ochre hover:text-ochre sm:hidden"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              >
+                {menuOpen ? (
+                  <path d="M6 6l12 12M18 6L6 18" />
+                ) : (
+                  <path d="M4 7h16M4 12h16M4 17h10" />
+                )}
+              </svg>
             </button>
           </div>
         </div>
         <nav
           aria-label="Admin sections"
-          className="mx-auto grid max-w-6xl grid-cols-3 gap-1.5 px-4 pb-3 sm:flex sm:gap-1 sm:overflow-x-auto sm:px-6"
+          className="mx-auto hidden max-w-6xl gap-1 px-4 pb-3 sm:flex sm:gap-1 sm:overflow-x-auto sm:px-6"
         >
           {TABS.map((t) => (
             <button
@@ -168,7 +208,7 @@ export default function AdminApp() {
               type="button"
               onClick={() => setTab(t.id)}
               aria-current={tab === t.id ? "page" : undefined}
-              className={`rounded-xl px-2 py-2.5 text-center text-[0.66rem] font-medium uppercase tracking-[0.14em] transition sm:shrink-0 sm:rounded-full sm:px-4 sm:py-2 sm:tracking-[0.16em] ${
+              className={`shrink-0 rounded-full px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.16em] transition ${
                 tab === t.id
                   ? "bg-navy text-cream"
                   : "text-navy/70 hover:bg-navy/10"
@@ -199,6 +239,98 @@ export default function AdminApp() {
           <p className="py-20 text-center text-navy/60">No studio data loaded.</p>
         )}
       </div>
+
+      <div
+        onClick={closeMenu}
+        aria-hidden={!menuOpen}
+        className={`fixed inset-0 z-50 bg-navy-deep/50 backdrop-blur-sm transition-opacity duration-300 sm:hidden ${
+          menuOpen ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      />
+      <aside
+        id="admin-menu"
+        role="dialog"
+        aria-label="Admin menu"
+        aria-modal="true"
+        aria-hidden={!menuOpen}
+        inert={!menuOpen}
+        className={`fixed inset-y-0 left-0 z-50 flex w-[85%] max-w-sm flex-col bg-cream-soft shadow-2xl transition-transform duration-300 ease-out sm:hidden ${
+          menuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex items-center justify-between border-b border-navy/10 px-6 py-5">
+          <div>
+            <p className="brand-wordmark text-lg text-navy">House of Merola</p>
+            <p className="text-[0.62rem] uppercase tracking-[0.24em] text-steel">
+              Studio Admin
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={closeMenu}
+            aria-label="Close menu"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-navy/15 text-navy transition hover:border-ochre hover:text-ochre"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+            >
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </div>
+        <nav className="flex-1 overflow-y-auto px-6 py-4" aria-label="Admin sections">
+          <div className="flex flex-col divide-y divide-navy/10">
+            {TABS.map((t, index) => {
+              const isActive = tab === t.id;
+              return (
+                <button
+                  key={t.id}
+                  type="button"
+                  onClick={() => {
+                    setTab(t.id);
+                    closeMenu();
+                  }}
+                  aria-current={isActive ? "page" : undefined}
+                  className="flex items-center justify-between py-4 text-left"
+                >
+                  <span className="flex items-center gap-3">
+                    <span
+                      className={`brand-wordmark text-ochre ${isActive ? "" : "opacity-40"}`}
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span
+                      className={`text-[0.8rem] font-medium uppercase tracking-[0.2em] transition ${
+                        isActive ? "text-navy" : "text-navy/70"
+                      }`}
+                    >
+                      {t.label}
+                    </span>
+                  </span>
+                  <span
+                    className={`h-2 w-2 rounded-full ${isActive ? "bg-ochre" : "bg-navy/15"}`}
+                  />
+                </button>
+              );
+            })}
+          </div>
+        </nav>
+        <div className="border-t border-navy/10 p-6">
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="flex w-full items-center justify-center rounded-full border border-navy/20 px-6 py-3.5 text-[0.72rem] font-medium uppercase tracking-[0.22em] text-navy transition hover:border-oxblood hover:text-oxblood"
+          >
+            Log out
+          </button>
+        </div>
+      </aside>
 
       {toast && (
         <div className="fixed bottom-6 left-1/2 z-30 w-max max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-full bg-navy-deep px-6 py-3 text-center text-sm text-cream shadow-xl">
