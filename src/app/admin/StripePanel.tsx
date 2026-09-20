@@ -69,7 +69,6 @@ export default function StripePanel({
     ? "https://dashboard.stripe.com/webhooks"
     : "https://dashboard.stripe.com/test/webhooks";
   const webhooksLabel = isLive ? "live webhooks" : "test webhooks";
-  const modeName = isLive ? "live" : "sandbox (test)";
   const otherMode = isLive ? "test mode" : "live mode";
 
   return (
@@ -117,9 +116,6 @@ export default function StripePanel({
             <p className="mt-1 text-xs text-steel/70">
               {isLive ? "taking real payments." : "testing only — no real charges."}
             </p>
-            <p className="mt-0.5 text-xs text-steel/70">
-              keys pasted below are saved as {modeName} keys.
-            </p>
           </div>
         </div>
       </section>
@@ -146,7 +142,7 @@ export default function StripePanel({
                   {isLive ? (
                     <>switch <strong>off test mode</strong> so you are in <strong>live mode</strong>.</>
                   ) : (
-                    <>switch on <strong>test mode</strong> (toggle in the dashboard header).</>
+                    <>you land in <strong>test mode</strong> by default.</>
                   )}
                 </li>
                 <li>
