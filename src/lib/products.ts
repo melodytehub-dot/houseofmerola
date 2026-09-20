@@ -52,7 +52,6 @@ export interface Collection {
 /* Shared option sets so every product supports the same materials/sizes. */
 const ceramicSizes: ProductOption[] = [
   { label: "15 × 15 cm", priceDelta: 0 },
-  { label: "20 × 20 cm", priceDelta: 6 },
 ];
 
 const boardSizes: ProductOption[] = [

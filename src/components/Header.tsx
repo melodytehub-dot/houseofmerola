@@ -178,14 +178,14 @@ export default function Header({
               <nav className="flex items-center justify-center gap-7" aria-label="Main">
               <Link
                 href="/shop"
-                className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-navy transition hover:text-ochre"
+                className="text-[0.8rem] font-medium text-navy transition hover:text-ochre"
               >
                 Shop
               </Link>
 
               <Link
                 href="/bespoke"
-                className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-navy transition hover:text-ochre"
+                className="text-[0.8rem] font-medium text-navy transition hover:text-ochre"
               >
                 Bespoke
               </Link>
@@ -200,7 +200,7 @@ export default function Header({
                   type="button"
                   aria-haspopup="true"
                   aria-expanded={collectionsOpen}
-                  className="flex items-center gap-1.5 text-[0.72rem] font-medium uppercase tracking-[0.24em] text-navy transition hover:text-ochre"
+                  className="flex items-center gap-1.5 text-[0.8rem] font-medium text-navy transition hover:text-ochre"
                   onClick={() => setCollectionsOpen((v) => !v)}
                 >
                   Collections
@@ -242,13 +242,13 @@ export default function Header({
 
               <Link
                 href="/about"
-                className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-navy transition hover:text-ochre"
+                className="text-[0.8rem] font-medium text-navy transition hover:text-ochre"
               >
                 Our Story
               </Link>
               <Link
                 href="/contact"
-                className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-navy transition hover:text-ochre"
+                className="text-[0.8rem] font-medium text-navy transition hover:text-ochre"
               >
                 Contact
               </Link>
@@ -311,7 +311,7 @@ export default function Header({
                 key={link.href}
                 href={link.href}
                 onClick={closeMenu}
-                className="flex items-center justify-between py-4 text-[0.8rem] font-medium uppercase tracking-[0.24em] text-navy transition hover:text-ochre"
+                className="flex items-center justify-between py-3 text-base font-medium text-navy transition hover:text-ochre"
               >
                 {link.label}
                 <svg
@@ -332,9 +332,9 @@ export default function Header({
             <Link
               href="/wishlist"
               onClick={closeMenu}
-              className="flex items-center justify-between py-4 text-[0.8rem] font-medium uppercase tracking-[0.24em] text-navy transition hover:text-ochre"
-            >
-              Wishlist
+                className="flex items-center justify-between py-3 text-base font-medium text-navy transition hover:text-ochre"
+              >
+                Wishlist
               <HeartIcon className="h-4 w-4 text-steel/60" />
             </Link>
           </div>
@@ -347,7 +347,7 @@ export default function Header({
                   key={collection.slug}
                   href={`/collections/${collection.slug}`}
                   onClick={closeMenu}
-                  className="py-2.5 text-[0.72rem] uppercase tracking-[0.2em] text-navy/80 transition hover:text-ochre"
+                  className="py-2 text-sm text-navy/80 transition hover:text-ochre"
                 >
                   {collection.name}
                 </Link>

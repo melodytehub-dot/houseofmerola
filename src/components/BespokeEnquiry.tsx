@@ -10,8 +10,7 @@ const STORAGE_KEY = "houseofmerola-bespoke-enquiries";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const inputCls =
   "w-full rounded-lg border border-navy/15 bg-cream px-4 py-3 text-sm text-navy placeholder:text-steel/50 focus:border-ochre focus:outline-none";
-const labelCls =
-  "mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel";
+const labelCls = "mb-2 block text-sm font-medium text-steel";
 
 export default function BespokeEnquiry({
   product,
@@ -47,10 +46,22 @@ export default function BespokeEnquiry({
     return p;
   }, [piece, material, size]);
 
+  const readOriginal = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = () =>
+      setImage({ dataUrl: String(reader.result), name: file.name });
+    reader.readAsDataURL(file);
+  };
+
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) {
       setImage(null);
+      return;
+    }
+    if (!file.type.startsWith("image/")) {
+      setError("Please choose an image file.");
+      e.target.value = "";
       return;
     }
     if (file.size > 8 * 1024 * 1024) {
@@ -58,10 +69,55 @@ export default function BespokeEnquiry({
       e.target.value = "";
       return;
     }
-    const reader = new FileReader();
-    reader.onload = () =>
-      setImage({ dataUrl: String(reader.result), name: file.name });
-    reader.readAsDataURL(file);
+    if (file.size < 1_000_000) {
+      setError("");
+      readOriginal(file);
+      return;
+    }
+    const objectUrl = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, 1600 / Math.max(img.width, img.height));
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.max(1, Math.round(img.width * scale));
+      canvas.height = Math.max(1, Math.round(img.height * scale));
+      const ctx = canvas.getContext("2d");
+      URL.revokeObjectURL(objectUrl);
+      if (!ctx) {
+        setError("");
+        readOriginal(file);
+        return;
+      }
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            setError("");
+            readOriginal(file);
+            return;
+          }
+          const reader = new FileReader();
+          reader.onload = () => {
+            const dataUrl = String(reader.result);
+            if (dataUrl.length >= 1_500_000) {
+              setError("That image is still too large — please try a smaller one.");
+              return;
+            }
+            setError("");
+            setImage({ dataUrl, name: file.name });
+          };
+          reader.readAsDataURL(blob);
+        },
+        "image/jpeg",
+        0.85,
+      );
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      setError("");
+      readOriginal(file);
+    };
+    img.src = objectUrl;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

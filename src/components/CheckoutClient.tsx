@@ -197,7 +197,7 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
             <div>
               <label
                 htmlFor="co-zone"
-                className="mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel"
+                className="mb-2 block text-sm font-medium text-steel"
               >
                 Delivery destination
               </label>
@@ -218,7 +218,7 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
               <div>
                 <label
                   htmlFor="co-name"
-                  className="mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel"
+                  className="mb-2 block text-sm font-medium text-steel"
                 >
                   Full name
                 </label>
@@ -236,7 +236,7 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
               <div>
                 <label
                   htmlFor="co-email"
-                  className="mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel"
+                  className="mb-2 block text-sm font-medium text-steel"
                 >
                   Email
                 </label>
@@ -255,7 +255,7 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
             <div>
               <label
                 htmlFor="co-address"
-                className="mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel"
+                className="mb-2 block text-sm font-medium text-steel"
               >
                 Delivery address
               </label>
@@ -274,7 +274,7 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
               <div>
                 <label
                   htmlFor="co-city"
-                  className="mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel"
+                  className="mb-2 block text-sm font-medium text-steel"
                 >
                   City
                 </label>
@@ -292,7 +292,7 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
               <div>
                 <label
                   htmlFor="co-postcode"
-                  className="mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel"
+                  className="mb-2 block text-sm font-medium text-steel"
                 >
                   Postcode
                 </label>

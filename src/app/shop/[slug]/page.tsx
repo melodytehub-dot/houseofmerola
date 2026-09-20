@@ -53,7 +53,7 @@ export default async function ProductPage({ params }: PageProps) {
     <>
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
-        <nav aria-label="Breadcrumb" className="mb-6 text-xs uppercase tracking-[0.18em] text-steel">
+        <nav aria-label="Breadcrumb" className="mb-6 text-xs text-steel">
           <ol className="flex flex-wrap items-center gap-2">
             <li>
               <Link href="/shop" className="transition hover:text-ochre">
@@ -114,13 +114,13 @@ export default async function ProductPage({ params }: PageProps) {
 
             <div className="mt-8 space-y-2.5 border-t border-navy/10 pt-6">
               <p className="flex gap-3 text-sm text-navy/80">
-                <span className="w-24 shrink-0 uppercase tracking-[0.14em] text-steel">
+                <span className="w-24 shrink-0 text-steel">
                   Medium
                 </span>
                 {product.materials.join(", ")}
               </p>
               <p className="flex gap-3 text-sm text-navy/80">
-                <span className="w-24 shrink-0 uppercase tracking-[0.14em] text-steel">
+                <span className="w-24 shrink-0 text-steel">
                   {product.madeToOrder ? "Made to order" : "Dispatch"}
                 </span>
                 {product.madeToOrder
@@ -128,7 +128,7 @@ export default async function ProductPage({ params }: PageProps) {
                   : "1–3 working days"}
               </p>
               <p className="flex gap-3 text-sm text-navy/80">
-                <span className="w-24 shrink-0 uppercase tracking-[0.14em] text-steel">
+                <span className="w-24 shrink-0 text-steel">
                   Delivery
                 </span>
                 {deliverySummary(settings.commerce)}
@@ -138,7 +138,7 @@ export default async function ProductPage({ params }: PageProps) {
             {product.madeToOrder ? (
               <div className="mt-8">
                 <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-ochre/40 bg-ochre/10 px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-ochre">
-                  ✦ Designed & made to order in Liverpool
+                  ● Designed & made to order in Liverpool
                 </p>
                 <BespokeEnquiry
                   product={product}

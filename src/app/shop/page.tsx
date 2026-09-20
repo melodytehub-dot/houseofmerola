@@ -50,7 +50,7 @@ export default async function ShopPage() {
                 key={item}
                 className="flex items-center gap-2 text-[0.66rem] uppercase tracking-[0.2em]"
               >
-                <span className="text-ochre-soft">✦</span>
+                <span className="text-ochre-soft">●</span>
                 {item}
               </p>
             ))}

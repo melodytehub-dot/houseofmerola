@@ -117,7 +117,7 @@ export default function ContactPage() {
                   <div>
                     <label
                       htmlFor="name"
-                      className="mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel"
+                      className="mb-2 block text-sm font-medium text-steel"
                     >
                       Your name
                     </label>
@@ -133,7 +133,7 @@ export default function ContactPage() {
                   <div>
                     <label
                       htmlFor="email"
-                      className="mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel"
+                      className="mb-2 block text-sm font-medium text-steel"
                     >
                       Email
                     </label>
@@ -152,7 +152,7 @@ export default function ContactPage() {
                 <div>
                   <label
                     htmlFor="message"
-                    className="mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel"
+                    className="mb-2 block text-sm font-medium text-steel"
                   >
                     Message
                   </label>

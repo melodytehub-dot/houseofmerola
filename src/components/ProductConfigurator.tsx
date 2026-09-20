@@ -16,7 +16,7 @@ interface OptionGroupProps {
 function OptionGroup({ label, options, active, onChange }: OptionGroupProps) {
   return (
     <div>
-      <p className="mb-2 text-[0.68rem] font-medium uppercase tracking-[0.2em] text-steel">
+      <p className="mb-2 text-sm font-medium text-steel">
         {label}
       </p>
       <div className="flex flex-wrap gap-2">

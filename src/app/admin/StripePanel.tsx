@@ -122,7 +122,7 @@ export default function StripePanel({
 
       <section className="rounded-2xl border border-navy/10 bg-cream-soft p-6">
         <h2 className="eyebrow mb-5 text-navy">
-          {isLive ? "live keys" : "sandbox / test keys"}
+          {isLive ? "live keys" : "sandbox"}
         </h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field

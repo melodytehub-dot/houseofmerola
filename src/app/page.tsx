@@ -288,7 +288,7 @@ export default async function HomePage() {
                   className="flex items-center gap-3 text-sm text-navy/80"
                 >
                   <span className="flex h-5 w-5 items-center justify-center rounded-full bg-ochre/15 text-[0.6rem] text-ochre">
-                    ✦
+                    ●
                   </span>
                   {point}
                 </li>
