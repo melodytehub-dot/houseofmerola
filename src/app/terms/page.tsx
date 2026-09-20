@@ -58,8 +58,8 @@ export default function TermsPage() {
             <Link href="/shipping" className="text-ochre underline">
               shipping & returns
             </Link>{" "}
-            page and forms part of these terms. Commissioned pieces are
-            non-refundable unless faulty.
+            page and forms part of these terms. Personalised, custom and
+            commissioned pieces are made to order and non-refundable unless faulty.
           </p>
         </div>
         <div>

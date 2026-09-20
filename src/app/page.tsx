@@ -131,7 +131,7 @@ export default async function HomePage() {
                   lengthAdjust="spacingAndGlyphs"
                 >
                   <textPath href="#merola-badge-circle">
-                    ORIGINAL ARTWORK · MADE IN LIVERPOOL · HOUSE OF MEROLA ·
+                    HOUSE OF MEROLA DESIGN · MADE IN LIVERPOOL ·
                   </textPath>
                 </text>
               </svg>

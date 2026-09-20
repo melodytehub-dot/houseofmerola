@@ -29,12 +29,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  const collectionUrls: MetadataRoute.Sitemap = collections.map((c) => ({
-    url: `${base}/collections/${c.slug}`,
-    lastModified: now,
-    changeFrequency: "weekly",
-    priority: 0.7,
-  }));
+  const collectionUrls: MetadataRoute.Sitemap = collections
+    .filter((c) => products.some((p) => p.collection === c.slug))
+    .map((c) => ({
+      url: `${base}/collections/${c.slug}`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.7,
+    }));
 
   return [...staticPages, ...productUrls, ...collectionUrls];
 }

@@ -8,7 +8,7 @@ const faqs = [
   {
     question: "Are the pieces handmade and made to order?",
     answer:
-      "Yes. Our original artwork is UV-printed onto ceramic or wood, with some pieces laser-engraved or cut, then finished by hand in our Liverpool studio. Every piece is designed in-house and made to order, so a little variation is part of the charm.",
+      "Yes. House of Merola artwork is UV-printed onto ceramic or wood, with some pieces laser-engraved or cut, then finished by hand in our Liverpool studio. Every piece is designed in-house and made to order, so a little variation is part of the charm.",
   },
   {
     question: "How long does delivery take?",
@@ -19,6 +19,11 @@ const faqs = [
     question: "Do you take commissions?",
     answer:
       "We love them. Bespoke ceramic, wooden plaques and engraved pieces are our favourite projects. Share your idea and a reference image via our bespoke enquiry and we’ll send a mock-up before you commit.",
+  },
+  {
+    question: "Can I return a piece?",
+    answer:
+      "Standard pieces can be returned in their original condition and packaging within 14 days of delivery for a full refund. Personalised and bespoke pieces are made to order and can only be returned if faulty. See our shipping & returns page for the full policy.",
   },
   {
     question: "What if my piece arrives damaged?",

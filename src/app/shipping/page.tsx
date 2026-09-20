@@ -6,7 +6,7 @@ import { formatGBPWhole } from "@/lib/format";
 export const metadata = {
   title: "Shipping & Returns",
   description:
-    "UK and international delivery times and our 14-day returns policy for House of Merola pieces.",
+    "UK and international delivery times and our returns policy for House of Merola pieces, including personalised and bespoke exclusions.",
 };
 
 const careSections = [
@@ -20,9 +20,9 @@ const careSections = [
   {
     title: "Returns & exchanges",
     body: [
-      "Changed your mind? You have 14 days from delivery to return a piece in its original condition and packaging for a full refund.",
+      "Changed your mind? You have 14 days from delivery to return a standard piece in its original condition and packaging for a full refund.",
       "To start a return, email hello@houseofmerola.com with your order number and we’ll send a prepaid label.",
-      "Custom and commissioned pieces are made to order and cannot be returned unless faulty.",
+      "Personalised, custom and commissioned pieces are made to order and cannot be returned unless faulty.",
       "If your piece arrives damaged, send a photo within 48 hours and we’ll replace or refund it, no fuss.",
     ],
   },

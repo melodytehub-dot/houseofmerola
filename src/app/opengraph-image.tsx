@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const alt =
-  "House of Merola, original artwork on ceramic and wood, made in Liverpool";
+  "House of Merola artwork on ceramic and wood, made in Liverpool";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -39,7 +39,7 @@ export default function Image() {
         <div
           style={{ display: "flex", fontSize: 30, marginTop: 20, opacity: 0.9 }}
         >
-          Original artwork on ceramic &amp; wood, made by hand in Liverpool
+          House of Merola artwork on ceramic &amp; wood, made by hand in Liverpool
         </div>
       </div>
     ),

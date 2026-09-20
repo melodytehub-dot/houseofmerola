@@ -14,7 +14,9 @@ export default function ShopGrid({
 }) {
   const tabs = [
     { slug: "all", name: "All pieces" },
-    ...collections.map((c) => ({ slug: c.slug, name: c.name })),
+    ...collections
+      .filter((c) => products.some((p) => p.collection === c.slug))
+      .map((c) => ({ slug: c.slug, name: c.name })),
   ];
   const [active, setActive] = useState("all");
 

@@ -34,7 +34,7 @@ export default async function ShopPage() {
             Made slowly, <em className="text-ochre-soft">by hand</em>
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-cream/85">
-            Original artwork UV-printed onto ceramic and wood, engraved and
+            House of Merola artwork UV-printed onto ceramic and wood, engraved and
             finished by hand, designed and made to order in our Liverpool
             studio. Small batches only, made to be kept.
           </p>
@@ -44,7 +44,7 @@ export default async function ShopPage() {
               settings.commerce.freeShippingThreshold > 0
                 ? `Free UK delivery over ${formatGBPWhole(settings.commerce.freeShippingThreshold)}`
                 : "UK delivery",
-              "14-day returns",
+              "14-day standard returns",
             ].map((item) => (
               <p
                 key={item}
@@ -68,7 +68,7 @@ export default async function ShopPage() {
             {
               icon: BrushIcon,
               title: "Made to order, piece by piece",
-              body: "Each piece is designed in-house, UV-printed or laser-engraved, then finished by hand in our Liverpool studio, so every one is individual.",
+              body: "Every piece is designed in-house, made to order and finished by hand in our Liverpool studio, so subtle variations in print, colour and finish make each piece individual.",
             },
             {
               icon: BoxIcon,
@@ -78,7 +78,7 @@ export default async function ShopPage() {
             {
               icon: ReturnIcon,
               title: "14 days to decide",
-              body: "Changed your mind? Return any piece in its original condition within 14 days for a full refund.",
+              body: "Changed your mind? Return any standard piece in its original condition within 14 days for a full refund. Personalised and bespoke pieces are made to order and can only be returned if faulty.",
             },
           ].map((feature, index) => (
             <Reveal key={feature.title} delay={index * 120}>

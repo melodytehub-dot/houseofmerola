@@ -39,7 +39,7 @@ export default function ProductsPanel({
       price: 15,
       image: "/images/prod-madonna-sicilia.jpg",
       collection: content.collections[0]?.slug ?? "",
-      materials: ["Original artwork UV-printed onto ceramic"],
+      materials: ["House of Merola artwork UV-printed onto ceramic"],
       tagline: "",
       description: "",
       featured: false,

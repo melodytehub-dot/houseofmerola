@@ -139,7 +139,7 @@ export const products: Product[] = [
     price: 20,
     image: "/images/prod-ape-truck.jpg",
     collection: "mediterranean-italian",
-    materials: ["Original artwork UV-printed onto ceramic"],
+    materials: ["House of Merola artwork UV-printed onto ceramic"],
     tagline: "The little three-wheeler, loaded with lemons",
     description:
       "The iconic three-wheeled ‘Ape’ of the Amalfi coast, piled high with lemons and white blossom. Printed in cobalt, gold and leaf green, framed by ornate majolica scrollwork.",
@@ -154,7 +154,7 @@ export const products: Product[] = [
     price: 20,
     image: "/images/prod-melograno.jpg",
     collection: "mediterranean-italian",
-    materials: ["Original artwork UV-printed onto ceramic"],
+    materials: ["House of Merola artwork UV-printed onto ceramic"],
     tagline: "The pomegranate, fruit of abundance",
     description:
       "A two-handled urn overflowing with ripe pomegranates, printed in deep cobalt, crimson and ochre with sliced fruit resting at its base, the old symbol of abundance at the heart of Mediterranean homes.",
@@ -168,7 +168,7 @@ export const products: Product[] = [
     price: 20,
     image: "/images/prod-rosato-moon.jpg",
     collection: "mediterranean-italian",
-    materials: ["Original artwork UV-printed onto ceramic"],
+    materials: ["House of Merola artwork UV-printed onto ceramic"],
     tagline: "A dreaming sun cradled in a crescent moon",
     description:
       "A personified sun sleeping inside a crescent moon, floating among stars, clouds and white lilies in dusty navy, lavender and warm peach. A romantic piece for a gallery wall.",
@@ -183,7 +183,7 @@ export const products: Product[] = [
     price: 20,
     image: "/images/prod-lemon.jpg",
     collection: "mediterranean-italian",
-    materials: ["Original artwork UV-printed onto ceramic"],
+    materials: ["House of Merola artwork UV-printed onto ceramic"],
     tagline: "Three sun-washed lemons, framed in gold",
     description:
       "Three ripe, glossy lemons among dark leaves and delicate white citrus blossom, enclosed by a border of cobalt and golden-yellow flourish scrollwork.",
@@ -202,7 +202,7 @@ export const products: Product[] = [
       "/images/prod-la-dolce-vita-3.jpg",
     ],
     collection: "mediterranean-italian",
-    materials: ["Original artwork UV-printed onto ceramic"],
+    materials: ["House of Merola artwork UV-printed onto ceramic"],
     tagline: "A vintage Amalfi Ape, overflowing with lemons",
     description:
       "Bring a little piece of the Italian coast home with La Dolce Vita, a decorative ceramic tile inspired by the colours and charm of southern Italy. Featuring a vintage Piaggio-style Ape overflowing with lemons against a dreamy coastal backdrop, the design is surrounded by an ornate blue, yellow and floral border reminiscent of traditional Italian ceramics. Each tile is UV printed individually in our Liverpool studio, giving the artwork rich colour and beautiful detail while retaining the character of the ceramic surface. Perfect displayed on a small easel, shelf, kitchen dresser or incorporated into a Mediterranean-inspired gallery wall. Decorative item, small variations may occur as each piece is individually produced.",
@@ -220,7 +220,7 @@ export const products: Product[] = [
       "/images/prod-oliva-3.jpg",
     ],
     collection: "mediterranean-italian",
-    materials: ["Original artwork UV-printed onto ceramic"],
+    materials: ["House of Merola artwork UV-printed onto ceramic"],
     tagline: "A majolica jug with olive branches and blossom",
     description:
       "Inspired by traditional Italian majolica, Oliva features an ornate ceramic jug surrounded by olive branches, blossoms and rich botanical detailing. Deep cobalt blue, warm ochre and olive green create a beautifully aged Mediterranean palette, while the elaborate scrollwork gives the piece the feel of a vintage Italian ceramic discovered in a little market somewhere in Sicily. Individually UV printed in our Liverpool studio, this decorative tile works beautifully in kitchens, dining spaces, gallery walls or simply displayed on a shelf or small easel. Decorative item, small variations in colour and finish may occur as each piece is individually produced.",
@@ -235,7 +235,7 @@ export const products: Product[] = [
     price: 20,
     image: "/images/prod-madonna-sicilia.jpg",
     collection: "sacred-mystical",
-    materials: ["Original artwork UV-printed onto ceramic"],
+    materials: ["House of Merola artwork UV-printed onto ceramic"],
     tagline: "Our Lady of Sicily, framed in cobalt and gold",
     description:
       "A serene Madonna in prayer, framed in the spirit of old Sicilian majolica. Cobalt and gold scrollwork frames a star-scattered mantle and a gilded halo, with sprigs of lemon blossom gathered at her feet and a coastal village glowing behind her.",
@@ -254,7 +254,7 @@ export const products: Product[] = [
       "/images/prod-madonna-celeste-3.jpg",
     ],
     collection: "sacred-mystical",
-    materials: ["Original artwork UV-printed & laser-cut onto wood"],
+    materials: ["House of Merola artwork UV-printed & laser-cut onto wood"],
     tagline: "A celestial Madonna, laser cut in cobalt and ivory",
     description:
       "A striking celestial interpretation of the Madonna, surrounded by roses, stars, a crescent moon and ornate vintage-inspired detailing. Madonna Celeste combines traditional Italian sacred imagery with the darker, mystical aesthetic of House of Merola. Created from wood, the intricate silhouette is laser cut and UV printed, allowing the natural texture of the material to show through the rich cobalt-blue artwork and delicate ivory detailing. Each piece is individually made and finished in our Liverpool studio, designed as a statement piece for a gallery wall, bedroom, hallway or sacred space. Small variations in colour and finish may occur as each piece is individually made.",
@@ -269,7 +269,7 @@ export const products: Product[] = [
     price: 20,
     image: "/images/prod-madonna-blue.jpg",
     collection: "sacred-mystical",
-    materials: ["Original artwork UV-printed onto ceramic"],
+    materials: ["House of Merola artwork UV-printed onto ceramic"],
     tagline: "The Virgin in prayer beneath a cobalt canopy",
     description:
       "The Virgin Mary in prayer, her rosary in hand, framed by an arched canopy of cobalt scrollwork and ringed with bright lemons, green leaves and blue blossoms.",
@@ -283,7 +283,7 @@ export const products: Product[] = [
     price: 20,
     image: "/images/prod-sunset-madonna.jpg",
     collection: "sacred-mystical",
-    materials: ["Original artwork UV-printed onto ceramic"],
+    materials: ["House of Merola artwork UV-printed onto ceramic"],
     tagline: "A painterly Madonna at golden hour",
     description:
       "A Madonna with rosary depicted in warm, painterly light, framed by Portuguese-style cobalt-and-gold ceramic tiles with a coastal village glowing under a golden sunset.",
@@ -297,7 +297,7 @@ export const products: Product[] = [
     price: 16,
     image: "/images/prod-phases-moon.jpg",
     collection: "sacred-mystical",
-    materials: ["Original artwork laser-engraved onto wood"],
+    materials: ["House of Merola artwork laser-engraved onto wood"],
     tagline: "Eight phases, engraved in gold on black",
     description:
       "All eight phases of the moon engraved in gold on deep black, with a great moth below and a bat above, set within gothic filigree. Esoteric and quietly beautiful.",
@@ -313,7 +313,7 @@ export const products: Product[] = [
     price: 14,
     image: "/images/prod-herbolologia.jpg",
     collection: "botanical-curiosities",
-    materials: ["Original artwork laser-engraved onto wood"],
+    materials: ["House of Merola artwork laser-engraved onto wood"],
     tagline: "The study of medicinal plants, engraved in gold",
     description:
       "An apothecary’s chart of healing plants, engraved in antique gold on charcoal wood: herb portraits, pestle and mortar, and the old Sicilian remedy: ‘Let food be thy medicine.’",
@@ -328,7 +328,7 @@ export const products: Product[] = [
     price: 14,
     image: "/images/prod-snakeology.jpg",
     collection: "botanical-curiosities",
-    materials: ["Original artwork laser-engraved onto wood"],
+    materials: ["House of Merola artwork laser-engraved onto wood"],
     tagline: "A naturalist’s study of snakes",
     description:
       "Anatomy, life cycle and species plates, ball python and rattlesnake, engraved in gold on black wood beneath a sun and moon, with the motto: ‘To understand a snake is to honour life.’",
@@ -342,7 +342,7 @@ export const products: Product[] = [
     price: 14,
     image: "/images/prod-frogology.jpg",
     collection: "botanical-curiosities",
-    materials: ["Original artwork laser-engraved onto wood"],
+    materials: ["House of Merola artwork laser-engraved onto wood"],
     tagline: "A forest-green study of frogs",
     description:
       "Anatomy, life cycle, habitat and diet engraved in shimmering gold on deep forest green, surrounded by eight frog species within a leafy botanical border.",
@@ -356,7 +356,7 @@ export const products: Product[] = [
     price: 14,
     image: "/images/prod-mycology.jpg",
     collection: "botanical-curiosities",
-    materials: ["Original artwork laser-engraved onto wood"],
+    materials: ["House of Merola artwork laser-engraved onto wood"],
     tagline: "The study of fungi, from amanita to chanterelle",
     description:
       "Anatomy of a mushroom and species plates: fly agaric, chanterelle, porcini, morel and more, engraved in gold on black wood, the crown of the natural history cabinet.",
@@ -371,7 +371,7 @@ export const products: Product[] = [
     price: 25,
     image: "/images/prod-madonna-sicilia.jpg",
     collection: "bespoke-personalised",
-    materials: ["Original artwork UV-printed onto ceramic"],
+    materials: ["House of Merola artwork UV-printed onto ceramic"],
     tagline: "Your name, a date or a design on ceramic",
     description:
       "A one-of-a-kind ceramic tile printed with your artwork, name or a short message. Tell us what you’d like, send a reference image and we’ll design a mock-up before you commit.",
@@ -388,7 +388,7 @@ export const products: Product[] = [
     price: 25,
     image: "/images/prod-dolce-vita.jpg",
     collection: "bespoke-personalised",
-    materials: ["Original artwork UV-printed onto wood"],
+    materials: ["House of Merola artwork UV-printed onto wood"],
     tagline: "A wooden sign or plaque, printed with your design",
     description:
       "A wooden plaque or sign printed with your design: a name, an address, a favourite phrase. Choose a size, add a reference image and we’ll create a mock-up for your approval.",
@@ -404,7 +404,7 @@ export const products: Product[] = [
     price: 30,
     image: "/images/prod-herbolologia.jpg",
     collection: "bespoke-personalised",
-    materials: ["Original artwork laser-engraved onto wood"],
+    materials: ["House of Merola artwork laser-engraved onto wood"],
     tagline: "A name or design engraved line by line",
     description:
       "A piece engraved line by line with your name, motto or artwork. Perfect for gifts, anniversaries and keepsakes. Send your idea and a reference and we’ll draft it for you.",
@@ -421,7 +421,7 @@ export const products: Product[] = [
     price: 30,
     image: "/images/prod-mycology.jpg",
     collection: "bespoke-personalised",
-    materials: ["Original artwork UV-printed & laser-engraved, mixed"],
+    materials: ["House of Merola artwork UV-printed & laser-engraved, mixed"],
     tagline: "A combined print-and-engraved piece",
     description:
       "The best of both: a full-colour UV print combined with fine laser engraving or cutting. Ideal for a bold, layered piece made entirely to your brief.",

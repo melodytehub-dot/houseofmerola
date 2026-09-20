@@ -7,7 +7,7 @@ import { BrushIcon, HourglassIcon, LeafIcon } from "@/components/icons";
 export const metadata = {
   title: "Our Story",
   description:
-    "The story of House of Merola: original artwork UV-printed onto ceramic and wood, and laser-engraved pieces, made to order in our Liverpool studio.",
+    "The story of House of Merola: House of Merola artwork UV-printed onto ceramic and wood, and laser-engraved pieces, made to order in our Liverpool studio.",
 };
 
 export default function AboutPage() {

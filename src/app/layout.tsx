@@ -7,7 +7,7 @@ import CartDrawer from "@/components/CartDrawer";
 import ScrollToTop from "@/components/ScrollToTop";
 import { CartProvider } from "@/lib/cart";
 import { WishlistProvider } from "@/lib/wishlist";
-import { getCollections, getSettings } from "@/lib/content";
+import { getCollections, getProducts, getSettings } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
@@ -61,10 +61,14 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [settings, collections] = await Promise.all([
+  const [settings, collections, products] = await Promise.all([
     getSettings(),
     getCollections(),
+    getProducts(),
   ]);
+  const visibleCollections = collections.filter((c) =>
+    products.some((p) => p.collection === c.slug),
+  );
   const baseUrl = settings.metadata.url || "https://houseofmerola.vercel.app";
   const organizationJsonLd = {
     "@context": "https://schema.org",
@@ -89,9 +93,9 @@ export default async function RootLayout({
         <CartProvider>
           <WishlistProvider>
             <ScrollToTop />
-            <Header settings={settings} collections={collections} />
+            <Header settings={settings} collections={visibleCollections} />
             <main className="flex-1">{children}</main>
-            <Footer settings={settings} collections={collections} />
+            <Footer settings={settings} collections={visibleCollections} />
             <CartDrawer settings={settings} />
           </WishlistProvider>
         </CartProvider>

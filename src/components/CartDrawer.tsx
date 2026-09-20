@@ -86,7 +86,7 @@ export default function CartDrawer({ settings }: { settings: SiteSettings }) {
               Your cart is empty
             </p>
             <p className="text-sm text-steel">
-              Original artwork,
+              House of Merola artwork,
               <br />
               made to order, awaits.
             </p>
