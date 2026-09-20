@@ -72,8 +72,8 @@ export default function ProductsPanel({
   const active = products.find((x) => x.slug === selected) ?? null;
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
-      <aside className="space-y-3">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[280px_1fr]">
+      <aside className="min-w-0 space-y-3">
         <div className="flex items-center justify-between">
           <p className="eyebrow text-navy">Pieces</p>
           <AddButton onClick={add}>New piece</AddButton>
@@ -143,7 +143,7 @@ export default function ProductsPanel({
         </p>
       </aside>
 
-      <div className="rounded-2xl border border-navy/10 bg-cream-soft p-6">
+      <div className="min-w-0 rounded-2xl border border-navy/10 bg-cream-soft p-6">
         {active ? (
           <ProductForm
             product={active}
@@ -181,7 +181,7 @@ function ProductForm({ product, collections, onPatch, onDelete }: ProductFormPro
         </button>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Field label="Name">
           <TextInput value={product.name} onChange={(e) => onPatch({ name: e.target.value })} />
         </Field>
@@ -246,7 +246,7 @@ function ProductForm({ product, collections, onPatch, onDelete }: ProductFormPro
         <Toggle checked={Boolean(product.madeToOrder)} onChange={(v) => onPatch({ madeToOrder: v })} label="Made to order (Enquire)" />
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <OptionsEditor
           label="Material options"
           value={product.materialOptions ?? []}
@@ -371,7 +371,7 @@ function PersonalisationEditor({
           Disable
         </button>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Toggle checked={value.requiresText} onChange={(v) => onChange({ ...value, requiresText: v })} label="Require text" />
         <Toggle checked={value.allowsImage} onChange={(v) => onChange({ ...value, allowsImage: v })} label="Allow image upload" />
         <Toggle checked={value.notes} onChange={(v) => onChange({ ...value, notes: v })} label="Notes field" />
@@ -379,7 +379,7 @@ function PersonalisationEditor({
           <NumInput value={value.maxLength} onChange={(e) => onChange({ ...value, maxLength: Number(e.target.value) || 0 })} />
         </Field>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Field label="Text label">
           <TextInput value={value.textLabel} onChange={(e) => onChange({ ...value, textLabel: e.target.value })} />
         </Field>

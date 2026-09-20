@@ -27,7 +27,7 @@ export default function SettingsPanel({
   return (
     <div className="space-y-8">
       <Section title="Brand">
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label="Site name">
             <TextInput value={s.siteName} onChange={(e) => set({ siteName: e.target.value })} />
           </Field>
@@ -48,7 +48,7 @@ export default function SettingsPanel({
 
       <Section title="Homepage hero">
         <div className="space-y-4">
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label="Eyebrow">
               <TextInput value={s.hero.eyebrow} onChange={(e) => hero({ eyebrow: e.target.value })} />
             </Field>
@@ -83,7 +83,7 @@ export default function SettingsPanel({
       </Section>
 
       <Section title="Commerce">
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label="Currency code">
             <TextInput value={s.commerce.currency} onChange={(e) => comm({ currency: e.target.value })} />
           </Field>
@@ -106,7 +106,7 @@ export default function SettingsPanel({
             <Toggle checked={s.commerce.internationalEnabled} onChange={(v) => comm({ internationalEnabled: v })} label="Enable" />
           </div>
           {s.commerce.internationalEnabled && (
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Field label="International shipping fee (£)">
                 <NumInput value={s.commerce.internationalShippingFee} onChange={(e) => comm({ internationalShippingFee: Number(e.target.value) || 0 })} />
               </Field>
@@ -120,7 +120,7 @@ export default function SettingsPanel({
       </Section>
 
       <Section title="Social links">
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <Field label="Instagram">
             <TextInput value={s.social.instagram} onChange={(e) => social({ instagram: e.target.value })} />
           </Field>
@@ -134,7 +134,7 @@ export default function SettingsPanel({
       </Section>
 
       <Section title="SEO / metadata">
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label="Title">
             <TextInput value={s.metadata.title} onChange={(e) => meta({ title: e.target.value })} />
           </Field>

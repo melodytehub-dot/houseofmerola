@@ -48,8 +48,8 @@ export default function CollectionsPanel({
   const active = collections.find((x) => x.slug === selected) ?? null;
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
-      <aside className="space-y-3">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[280px_1fr]">
+      <aside className="min-w-0 space-y-3">
         <div className="flex items-center justify-between">
           <p className="eyebrow text-navy">{collections.length} Collections</p>
           <AddButton onClick={add}>New collection</AddButton>
@@ -76,7 +76,7 @@ export default function CollectionsPanel({
         </ul>
       </aside>
 
-      <div className="rounded-2xl border border-navy/10 bg-cream-soft p-6">
+      <div className="min-w-0 rounded-2xl border border-navy/10 bg-cream-soft p-6">
         {active ? (
           <div className="space-y-6">
             <div className="flex items-start justify-between gap-4">
@@ -89,7 +89,7 @@ export default function CollectionsPanel({
                 Delete
               </button>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Field label="Name">
                 <TextInput value={active.name} onChange={(e) => patch(active.slug, { name: e.target.value })} />
               </Field>

@@ -84,7 +84,7 @@ export default function EnquiriesPanel({
             </div>
           </div>
 
-          <dl className="mt-4 grid gap-2 text-sm text-navy/80">
+          <dl className="mt-4 grid grid-cols-1 gap-2 text-sm text-navy/80">
             {e.productName && (
               <div>
                 <dt className="inline tracking-[0.14em] text-steel">Piece: </dt>

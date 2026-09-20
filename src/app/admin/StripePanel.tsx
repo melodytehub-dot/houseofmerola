@@ -124,7 +124,7 @@ export default function StripePanel({
         <h2 className="eyebrow mb-5 text-navy">
           {isLive ? "Live Keys" : "Sandbox"}
         </h2>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field
             label="Publishable key"
             hint={`starts with ${pkPrefix} · stripe dashboard → developers → api keys`}
