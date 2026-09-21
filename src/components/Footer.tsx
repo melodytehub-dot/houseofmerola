@@ -14,18 +14,39 @@ export default function Footer({
 
   return (
     <footer className="grain bg-navy-deep text-cream">
-      <Reveal className="mx-auto max-w-7xl px-4 pb-10 pt-16 sm:px-6 lg:px-8">
-        <div className="grid gap-12 md:grid-cols-12">
-          {/* Brand */}
-          <div className="md:col-span-5">
-            <p className="brand-wordmark text-2xl text-cream">{settings.siteName}</p>
-            <p className="mt-2 text-xs uppercase tracking-[0.34em] text-ochre-soft">
-              {settings.tagline}
-            </p>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-cream/70">
-              {settings.footerBlurb}
-            </p>
-            <div className="mt-6 flex gap-3">
+      <Reveal className="mx-auto max-w-4xl px-4 pb-10 pt-16 text-center sm:px-6 lg:px-8">
+        <p className="brand-wordmark text-2xl text-cream">{settings.siteName}</p>
+        <p className="mx-auto mt-3 max-w-md text-sm uppercase tracking-[0.3em] text-ochre-soft">
+          {settings.tagline}
+        </p>
+        <div className="mx-auto mt-6 flex items-center justify-center gap-4" aria-hidden="true">
+          <span className="h-px w-20 bg-gradient-to-r from-transparent to-ochre-soft/60" />
+          <span className="block h-2 w-2 rotate-45 border border-ochre-soft/70" />
+          <span className="h-px w-20 bg-gradient-to-l from-transparent to-ochre-soft/60" />
+        </div>
+        <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-cream/70">
+          {settings.footerBlurb}
+        </p>
+        <nav aria-label="Footer" className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+          {[
+            { href: "/shop", label: "Shop" },
+            ...collections.map((c) => ({ href: `/collections/${c.slug}`, label: c.name })),
+            { href: "/bespoke", label: "Bespoke" },
+            { href: "/shipping", label: "Shipping & returns" },
+            { href: "/faq", label: "FAQ" },
+            { href: "/contact", label: "Contact" },
+            { href: "/about", label: "Our story" },
+          ].map((link) => (
+            <Link
+              key={link.href + link.label}
+              href={link.href}
+              className="text-sm text-cream/75 transition hover:text-ochre-soft"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+        <div className="mt-8 flex justify-center gap-3">
               {[
                 {
                   label: "Instagram",
@@ -57,69 +78,11 @@ export default function Footer({
                 </a>
               ))}
             </div>
-          </div>
-
-          {/* Collections */}
-          <div className="md:col-span-3">
-            <h3 className="eyebrow mb-5 text-ochre-soft">Collections</h3>
-            <ul className="space-y-3">
-              {collections.map((collection) => (
-                <li key={collection.slug}>
-                  <Link
-                    href={`/collections/${collection.slug}`}
-                    className="text-sm text-cream/75 transition hover:text-ochre-soft"
-                  >
-                    {collection.name}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link
-                  href="/shop"
-                  className="text-sm text-cream/75 transition hover:text-ochre-soft"
-                >
-                  All pieces
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Help */}
-          <div className="md:col-span-2">
-            <h3 className="eyebrow mb-5 text-ochre-soft">Help</h3>
-            <ul className="space-y-3">
-              {[
-                { href: "/shipping", label: "Shipping & returns" },
-                { href: "/faq", label: "FAQ" },
-                { href: "/contact", label: "Contact" },
-                { href: "/about", label: "Our story" },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-cream/75 transition hover:text-ochre-soft"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Note */}
-          <div className="md:col-span-2">
-            <h3 className="eyebrow mb-5 text-ochre-soft">Studio</h3>
-            <p className="text-sm leading-relaxed text-cream/75">
-              Made to order
-              <br />
-              in our Liverpool studio.
-              <br />
-              {settings.contactEmail}
+            <p className="mt-8 text-sm text-cream/60">
+              Made to order in our Liverpool studio · {settings.contactEmail}
             </p>
-          </div>
-        </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-cream/10 pt-6 sm:flex-row">
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-cream/10 pt-6 sm:flex-row">
           <p className="text-xs text-cream/50">
             © {year} {settings.siteName}. All rights reserved.
           </p>

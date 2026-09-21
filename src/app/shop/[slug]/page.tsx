@@ -112,27 +112,31 @@ export default async function ProductPage({ params }: PageProps) {
               {product.description}
             </p>
 
-            <div className="mt-8 space-y-2.5 border-t border-navy/10 pt-6">
-              <p className="flex gap-3 text-sm text-navy/80">
-                <span className="w-24 shrink-0 text-steel">
-                  Medium
-                </span>
-                {product.materials.join(", ")}
-              </p>
-              <p className="flex gap-3 text-sm text-navy/80">
-                <span className="w-24 shrink-0 text-steel">
-                  {product.madeToOrder ? "Made to order" : "Dispatch"}
-                </span>
-                {product.madeToOrder
-                  ? "Mock-up first, then made to order"
-                  : "1–3 working days"}
-              </p>
-              <p className="flex gap-3 text-sm text-navy/80">
-                <span className="w-24 shrink-0 text-steel">
-                  Delivery
-                </span>
-                {deliverySummary(settings.commerce)}
-              </p>
+            <div className="mt-8 border-t border-navy/15 pt-6">
+              <dl className="space-y-2.5 text-sm text-navy/80">
+                <div className="flex gap-3">
+                  <dt className="w-24 shrink-0 uppercase tracking-[0.14em] text-steel">
+                    Medium
+                  </dt>
+                  <dd>{product.materials.join(", ")}</dd>
+                </div>
+                <div className="flex gap-3">
+                  <dt className="w-24 shrink-0 uppercase tracking-[0.14em] text-steel">
+                    {product.madeToOrder ? "Made to order" : "Dispatch"}
+                  </dt>
+                  <dd>
+                    {product.madeToOrder
+                      ? "Mock-up first, then made to order"
+                      : "1–3 working days"}
+                  </dd>
+                </div>
+                <div className="flex gap-3">
+                  <dt className="w-24 shrink-0 uppercase tracking-[0.14em] text-steel">
+                    Delivery
+                  </dt>
+                  <dd>{deliverySummary(settings.commerce)}</dd>
+                </div>
+              </dl>
             </div>
 
             {product.madeToOrder ? (
@@ -154,12 +158,17 @@ export default async function ProductPage({ params }: PageProps) {
               <WishlistButton product={product} variant="inline" className="w-full" />
             </div>
 
-            <div className="mt-8 rounded-xl border border-navy/10 bg-cream-soft p-5">
-              <p className="text-sm leading-relaxed text-navy/75">
-                <span className="font-serif text-base italic text-navy">
-                  A note on handmade:
-                </span>{" "}
-                every piece is designed in-house and finished by hand in our
+            <div className="mt-10 text-center">
+              <div className="flex items-center justify-center gap-4" aria-hidden="true">
+                <span className="h-px w-16 bg-gradient-to-r from-transparent to-ochre/60" />
+                <span className="block h-2 w-2 rotate-45 border border-ochre/70" />
+                <span className="h-px w-16 bg-gradient-to-l from-transparent to-ochre/60" />
+              </div>
+              <p className="mt-4 font-serif text-xl italic leading-snug text-navy">
+                A note on handmade
+              </p>
+              <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-navy/70">
+                Every piece is designed in-house and finished by hand in our
                 Liverpool studio, and made to order, so subtle variations in
                 the print and engraving are part of the charm.
               </p>
@@ -170,13 +179,15 @@ export default async function ProductPage({ params }: PageProps) {
         {/* Related */}
         {related.length > 0 && (
           <section className="mt-20">
-            <Reveal className="mb-8">
-              <div className="section-rule">
-                <span className="eyebrow text-navy">You may also like</span>
-              </div>
-              <h2 className="mt-3 font-serif text-3xl text-navy">
+            <Reveal className="mb-8 text-center">
+              <h2 className="font-serif text-3xl tracking-tight text-navy">
                 From the same collection
               </h2>
+              <div className="mt-5 flex items-center justify-center gap-4" aria-hidden="true">
+                <span className="h-px w-16 bg-gradient-to-r from-transparent to-ochre/60" />
+                <span className="block h-2 w-2 rotate-45 border border-ochre/70" />
+                <span className="h-px w-16 bg-gradient-to-l from-transparent to-ochre/60" />
+              </div>
             </Reveal>
             <div className="product-grid">
               {related.map((product, index) => (

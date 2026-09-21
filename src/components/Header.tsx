@@ -170,26 +170,27 @@ export default function Header({
               <div className="flex w-20 items-center justify-end gap-1.5">{actions}</div>
             </div>
 
-            {/* Desktop row, nav perfectly centred */}
+            {/* Desktop row: split nav around a centered wordmark */}
             <div className="hidden items-center lg:grid lg:grid-cols-[1fr_auto_1fr]">
-              <div className="flex justify-start">
+              <nav className="flex items-center justify-end gap-8 pr-10" aria-label="Main">
+                <Link
+                  href="/shop"
+                  className="text-[0.8rem] font-medium text-navy transition hover:text-oxblood"
+                >
+                  Shop
+                </Link>
+                <Link
+                  href="/bespoke"
+                  className="text-[0.8rem] font-medium text-navy transition hover:text-oxblood"
+                >
+                  Bespoke
+                </Link>
+              </nav>
+              <div className="flex justify-center px-8">
                 <Logo />
               </div>
-              <nav className="flex items-center justify-center gap-7" aria-label="Main">
-              <Link
-                href="/shop"
-                className="text-[0.8rem] font-medium text-navy transition hover:text-ochre"
-              >
-                Shop
-              </Link>
-
-              <Link
-                href="/bespoke"
-                className="text-[0.8rem] font-medium text-navy transition hover:text-ochre"
-              >
-                Bespoke
-              </Link>
-
+              <div className="flex items-center gap-8 pl-4">
+                <nav className="flex items-center gap-8" aria-label="Secondary">
               <li
                 ref={dropdownRef}
                 className="relative list-none"
@@ -255,6 +256,7 @@ export default function Header({
             </nav>
             <div className="flex items-center justify-end gap-1.5">{actions}</div>
           </div>
+        </div>
         </div>
         </div>
       </header>

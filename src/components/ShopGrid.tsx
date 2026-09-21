@@ -40,23 +40,28 @@ export default function ShopGrid({
     <>
       {/* Sticky filter bar */}
       <div className="sticky top-[4.5rem] z-20 border-b border-navy/10 bg-cream-soft/90 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl items-center justify-center gap-2 overflow-x-auto px-4 py-3 sm:px-6 [scrollbar-width:none]">
-          {tabs.map((tab) => {
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-7 gap-y-2 px-4 py-4 sm:px-6">
+          {tabs.map((tab, i) => {
             const isActive = active === tab.slug;
             return (
-              <button
-                key={tab.slug}
-                type="button"
-                onClick={() => setActive(tab.slug)}
-                className={`flex shrink-0 items-center gap-2 rounded-full px-5 py-2 text-[0.68rem] font-medium uppercase tracking-[0.18em] transition ${
-                  isActive
-                    ? "bg-navy text-cream shadow-[0_8px_20px_rgb(14_42_77/0.2)]"
-                    : "border border-navy/15 text-navy/80 hover:border-ochre hover:text-ochre"
-                }`}
-              >
-                {tab.name}
-                <span className="text-[0.6rem] opacity-70">{countFor(tab.slug)}</span>
-              </button>
+              <span key={tab.slug} className="flex shrink-0 items-center gap-7">
+                {i > 0 && (
+                  <span className="block h-1.5 w-1.5 rotate-45 border border-ochre/60" aria-hidden="true" />
+                )}
+                <button
+                  type="button"
+                  onClick={() => setActive(tab.slug)}
+                  aria-pressed={isActive}
+                  className={`whitespace-nowrap pb-0.5 text-[0.72rem] font-medium tracking-[0.08em] transition ${
+                    isActive
+                      ? "text-oxblood underline decoration-oxblood decoration-2 underline-offset-8"
+                      : "text-navy/60 hover:text-oxblood"
+                  }`}
+                >
+                  {tab.name}{" "}
+                  <span className="text-[0.62rem] tabular-nums text-steel/70">{countFor(tab.slug)}</span>
+                </button>
+              </span>
             );
           })}
         </div>

@@ -45,10 +45,19 @@ export default async function BespokePage({
             mock-up for your approval before you commit, then make it to order
             in our Liverpool studio.
           </p>
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[0.68rem] uppercase tracking-[0.2em] text-steel">
-            <span>● UV print onto ceramic &amp; wood</span>
-            <span>● Laser engraving &amp; cutting</span>
-            <span>● Designed &amp; finished by hand</span>
+          <div className="mx-auto mt-7 flex max-w-xl flex-col items-center gap-3 border-t border-navy/15 pt-5 text-[0.68rem] uppercase tracking-[0.2em] text-steel sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-8">
+            <span className="flex items-center gap-2.5">
+              <span className="block h-1.5 w-1.5 rotate-45 bg-ochre/70" aria-hidden="true" />
+              UV print onto ceramic &amp; wood
+            </span>
+            <span className="flex items-center gap-2.5">
+              <span className="block h-1.5 w-1.5 rotate-45 bg-ochre/70" aria-hidden="true" />
+              Laser engraving &amp; cutting
+            </span>
+            <span className="flex items-center gap-2.5">
+              <span className="block h-1.5 w-1.5 rotate-45 bg-ochre/70" aria-hidden="true" />
+              Designed &amp; finished by hand
+            </span>
           </div>
         </Reveal>
       </section>

@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import ShopGrid from "@/components/ShopGrid";
 import Reveal from "@/components/Reveal";
-import { BoxIcon, BrushIcon, ReturnIcon } from "@/components/icons";
 import { getCollections, getProducts, getSettings } from "@/lib/content";
 import { deliverySummary, formatGBPWhole } from "@/lib/format";
 
@@ -38,7 +37,7 @@ export default async function ShopPage() {
             finished by hand, designed and made to order in our Liverpool
             studio. Small batches only, made to be kept.
           </p>
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 border-t border-cream/15 pt-6 text-cream/80">
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-cream/15 pt-6 text-cream/80">
             {[
               "Designed & finished in Liverpool",
               settings.commerce.freeShippingThreshold > 0
@@ -48,9 +47,9 @@ export default async function ShopPage() {
             ].map((item) => (
               <p
                 key={item}
-                className="flex items-center gap-2 text-[0.66rem] uppercase tracking-[0.2em]"
+                className="flex items-center gap-2.5 text-[0.66rem] uppercase tracking-[0.2em]"
               >
-                <span className="text-ochre-soft">●</span>
+                <span className="block h-1.5 w-1.5 rotate-45 border border-ochre-soft/80" aria-hidden="true" />
                 {item}
               </p>
             ))}
@@ -63,38 +62,38 @@ export default async function ShopPage() {
 
       {/* Craft strip */}
       <section className="border-y border-navy/10 bg-cream/60">
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:grid-cols-3 sm:px-6 lg:px-8 lg:py-16">
-          {[
-            {
-              icon: BrushIcon,
-              title: "Made to order, piece by piece",
-              body: "Every piece is designed in-house, made to order and finished by hand in our Liverpool studio, so subtle variations in print, colour and finish make each piece individual.",
-            },
-            {
-              icon: BoxIcon,
-              title: "Wrapped and shipped with care",
-              body: `Every parcel is wrapped by hand and sent with tracking. ${deliverySummary(settings.commerce)}.`,
-            },
-            {
-              icon: ReturnIcon,
-              title: "14 days to decide",
-              body: "Changed your mind? Return any standard piece in its original condition within 14 days for a full refund. Personalised and bespoke pieces are made to order and can only be returned if faulty.",
-            },
-          ].map((feature, index) => (
-            <Reveal key={feature.title} delay={index * 120}>
-              <div className="text-center">
-                <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-ochre/40 bg-ochre/10 text-ochre">
-                  <feature.icon className="h-6 w-6" />
-                </span>
-                <h3 className="brand-wordmark mt-5 text-[0.8rem] text-navy">
-                  {feature.title}
-                </h3>
-                <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-navy/70">
-                  {feature.body}
-                </p>
-              </div>
+        <div className="mx-auto max-w-4xl px-4 py-14 text-center sm:px-6 lg:py-16">
+          <Reveal>
+            <h2 className="font-serif text-2xl tracking-tight text-navy [text-wrap:balance] sm:text-3xl">
+              Made to order, piece by piece
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-navy/70">
+              Every piece is designed in-house, made to order and finished by hand in our Liverpool studio, so subtle variations in print, colour and finish make each piece individual.
+            </p>
+            <div className="mx-auto mt-6 flex items-center justify-center gap-4" aria-hidden="true">
+              <span className="h-px w-20 bg-gradient-to-r from-transparent to-ochre/60" />
+              <span className="block h-2 w-2 rotate-45 border border-ochre/70" />
+              <span className="h-px w-20 bg-gradient-to-l from-transparent to-ochre/60" />
+            </div>
+          </Reveal>
+          <div className="mx-auto mt-8 grid max-w-3xl gap-8 text-center sm:grid-cols-2 sm:gap-12 sm:text-left">
+            <Reveal delay={100} className="border-t border-navy/15 pt-6">
+              <h3 className="brand-wordmark text-[0.8rem] text-navy">
+                Wrapped and shipped with care
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-navy/70">
+                {`Every parcel is wrapped by hand and sent with tracking. ${deliverySummary(settings.commerce)}.`}
+              </p>
             </Reveal>
-          ))}
+            <Reveal delay={160} className="border-t border-navy/15 pt-6">
+              <h3 className="brand-wordmark text-[0.8rem] text-navy">
+                14 days to decide
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-navy/70">
+                Changed your mind? Return any standard piece in its original condition within 14 days for a full refund. Personalised and bespoke pieces are made to order and can only be returned if faulty.
+              </p>
+            </Reveal>
+          </div>
         </div>
       </section>
 
