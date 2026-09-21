@@ -61,8 +61,7 @@ export default async function ShippingPage() {
     <>
       <section className="border-b border-navy/10 bg-cream">
         <Reveal className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:py-24">
-          <p className="eyebrow text-ochre">Good to know</p>
-          <h1 className="mt-4 font-serif text-4xl text-navy sm:text-6xl">
+          <h1 className="font-serif text-4xl tracking-tight text-navy [text-wrap:balance] sm:text-6xl">
             Shipping & returns
           </h1>
         </Reveal>

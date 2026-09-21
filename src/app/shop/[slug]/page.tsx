@@ -101,10 +101,10 @@ export default async function ProductPage({ params }: PageProps) {
                 {collection.name}
               </Link>
             )}
-            <h1 className="mt-3 font-serif text-4xl leading-tight text-navy sm:text-5xl">
+            <h1 className="mt-3 font-serif text-4xl leading-tight tracking-tight text-navy [text-wrap:balance] sm:text-5xl">
               {product.name}
             </h1>
-            <p className="mt-3 text-2xl font-medium text-navy">
+            <p className="mt-3 text-2xl font-medium tabular-nums text-navy">
               {formatGBP(product.price)}
             </p>
 
@@ -154,12 +154,12 @@ export default async function ProductPage({ params }: PageProps) {
               <WishlistButton product={product} variant="inline" className="w-full" />
             </div>
 
-            <div className="mt-8 rounded-xl border border-navy/10 bg-cream-soft p-5">
-              <p className="text-sm leading-relaxed text-navy/75">
-                <span className="font-serif text-base italic text-navy">
-                  A note on handmade:
-                </span>{" "}
-                every piece is designed in-house and finished by hand in our
+            <div className="mt-8 border-t border-navy/15 pt-6">
+              <h2 className="text-sm font-semibold text-navy">
+                A note on handmade
+              </h2>
+              <p className="mt-2 max-w-md text-sm leading-relaxed text-navy/70">
+                Every piece is designed in-house and finished by hand in our
                 Liverpool studio, and made to order, so subtle variations in
                 the print and engraving are part of the charm.
               </p>
@@ -171,10 +171,7 @@ export default async function ProductPage({ params }: PageProps) {
         {related.length > 0 && (
           <section className="mt-20">
             <Reveal className="mb-8">
-              <div className="section-rule">
-                <span className="eyebrow text-navy">You may also like</span>
-              </div>
-              <h2 className="mt-3 font-serif text-3xl text-navy">
+              <h2 className="font-serif text-3xl tracking-tight text-navy">
                 From the same collection
               </h2>
             </Reveal>

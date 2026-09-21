@@ -70,8 +70,7 @@ export default function Newsletter() {
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy-deep/75 via-navy-deep/65 to-navy-deep/85" />
       <Reveal className="relative mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 sm:py-20">
-        <p className="eyebrow mb-4 text-ochre-soft">● Join the House ●</p>
-        <h2 className="font-serif text-3xl leading-tight text-cream sm:text-4xl">
+        <h2 className="font-serif text-3xl leading-tight tracking-tight text-cream [text-wrap:balance] sm:text-4xl">
           Welcome into the House of Merola
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-cream/75">

@@ -46,18 +46,17 @@ export default async function CollectionPage({ params }: PageProps) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/90 to-navy-deep/75" />
         </div>
-        <Reveal className="relative mx-auto max-w-4xl px-4 pb-20 pt-24 text-center sm:px-6 lg:pb-28 lg:pt-32">
-          <p className="eyebrow text-ochre-soft">House of Merola</p>
-          <h1 className="mt-4 font-serif text-4xl leading-tight text-cream sm:text-5xl lg:text-6xl">
+        <Reveal className="relative mx-auto max-w-7xl px-4 pb-20 pt-24 sm:px-6 lg:px-8 lg:pb-28 lg:pt-32">
+          <h1 className="max-w-2xl font-serif text-4xl leading-tight tracking-tight text-cream [text-wrap:balance] sm:text-5xl lg:text-6xl">
             {collection.name}
           </h1>
           <p className="mt-3 text-sm uppercase tracking-[0.3em] text-cream/70">
             {collection.tagline}
           </p>
-          <p className="mx-auto mt-6 max-w-xl leading-relaxed text-cream/85">
+          <p className="mt-6 max-w-xl leading-relaxed text-cream/85">
             {collection.description}
           </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
               href="/shop"
               className="rounded-full bg-ochre px-7 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-navy-deep transition hover:bg-ochre-soft"

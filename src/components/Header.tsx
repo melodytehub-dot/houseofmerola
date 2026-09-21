@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Logo from "./Logo";
 import { HeartIcon } from "./icons";
@@ -26,6 +27,13 @@ export default function Header({
 }) {
   const { count, openCart } = useCart();
   const { count: wishCount } = useWishlist();
+  const pathname = usePathname();
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+  const desktopLink = (href: string) =>
+    `text-[0.8rem] transition hover:text-oxblood ${
+      isActive(href) ? "font-semibold text-navy" : "font-medium text-navy/70"
+    }`;
   const [menuOpen, setMenuOpen] = useState(false);
   const [collectionsOpen, setCollectionsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -86,7 +94,7 @@ export default function Header({
       >
         <HeartIcon className="h-[18px] w-[18px]" />
         {wishCount > 0 && (
-          <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-ochre px-1 text-[0.62rem] font-semibold text-navy-deep">
+          <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-ochre px-1 text-[0.62rem] font-semibold tabular-nums text-navy-deep">
             {wishCount}
           </span>
         )}
@@ -111,7 +119,7 @@ export default function Header({
           <path d="M9 9V6a3 3 0 0 1 6 0v3" />
         </svg>
         {count > 0 && (
-          <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-oxblood px-1 text-[0.62rem] font-semibold text-cream">
+          <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-oxblood px-1 text-[0.62rem] font-semibold tabular-nums text-cream">
             {count}
           </span>
         )}
@@ -178,14 +186,16 @@ export default function Header({
               <nav className="flex items-center justify-center gap-7" aria-label="Main">
               <Link
                 href="/shop"
-                className="text-[0.8rem] font-medium text-navy transition hover:text-ochre"
+                aria-current={isActive("/shop") ? "page" : undefined}
+                className={desktopLink("/shop")}
               >
                 Shop
               </Link>
 
               <Link
                 href="/bespoke"
-                className="text-[0.8rem] font-medium text-navy transition hover:text-ochre"
+                aria-current={isActive("/bespoke") ? "page" : undefined}
+                className={desktopLink("/bespoke")}
               >
                 Bespoke
               </Link>
@@ -200,7 +210,9 @@ export default function Header({
                   type="button"
                   aria-haspopup="true"
                   aria-expanded={collectionsOpen}
-                  className="flex items-center gap-1.5 text-[0.8rem] font-medium text-navy transition hover:text-ochre"
+                  className={`flex items-center gap-1.5 text-[0.8rem] transition hover:text-oxblood ${
+                    pathname.startsWith("/collections") ? "font-semibold text-navy" : "font-medium text-navy/70"
+                  }`}
                   onClick={() => setCollectionsOpen((v) => !v)}
                 >
                   Collections
@@ -242,13 +254,15 @@ export default function Header({
 
               <Link
                 href="/about"
-                className="text-[0.8rem] font-medium text-navy transition hover:text-ochre"
+                aria-current={isActive("/about") ? "page" : undefined}
+                className={desktopLink("/about")}
               >
                 Our Story
               </Link>
               <Link
                 href="/contact"
-                className="text-[0.8rem] font-medium text-navy transition hover:text-ochre"
+                aria-current={isActive("/contact") ? "page" : undefined}
+                className={desktopLink("/contact")}
               >
                 Contact
               </Link>

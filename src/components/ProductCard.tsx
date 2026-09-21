@@ -16,7 +16,6 @@ export default function ProductCard({
   collectionName?: string;
 }) {
   const { addItem, openCart } = useCart();
-  const collection = collectionName ? { name: collectionName } : undefined;
   const isBespoke = product.madeToOrder;
 
   const handleAdd = (e: React.MouseEvent) => {
@@ -29,67 +28,45 @@ export default function ProductCard({
   return (
     <Link
       href={`/shop/${product.slug}`}
-      className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-navy/8 bg-cream-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_45px_rgb(14_42_77/0.14)]"
+      className="group flex h-full flex-col"
     >
-      {/* Image */}
-      <div className="relative aspect-square overflow-hidden bg-cream-warm">
+      <div className="relative aspect-square overflow-hidden rounded-md bg-cream-warm">
         <Image
           src={product.image}
           alt={product.name}
           fill
           sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
         />
-        {product.featured && (
-          <span className="absolute left-3 top-3 rounded-full bg-navy/85 px-3 py-1 text-[0.6rem] font-medium uppercase tracking-[0.18em] text-cream backdrop-blur-sm">
-            Featured
-          </span>
-        )}
         <WishlistButton product={product} />
       </div>
 
-      {/* Body */}
-      <div className="flex flex-1 flex-col p-3 sm:p-5">
-        {collection && (
-          <p className="eyebrow mb-1 text-[0.55rem] text-ochre sm:mb-1.5 sm:text-[0.58rem]">
-            {collection.name}
-          </p>
-        )}
-        <h3 className="font-serif text-[0.95rem] font-bold leading-snug text-navy transition group-hover:text-ochre sm:text-xl">
-          {product.name}
-        </h3>
-        <p className="mt-1 hidden text-xs leading-relaxed text-steel sm:block sm:line-clamp-2">
-          {product.tagline}
-        </p>
-        <div className="mt-auto flex items-center justify-between gap-2 pt-2 sm:pt-4">
-          <span className="text-sm font-semibold text-navy sm:text-base">
+      <div className="flex flex-1 flex-col border-t border-navy/20 pt-3">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+          <h3 className="font-serif text-[1.05rem] font-bold leading-snug tracking-tight text-navy transition group-hover:text-oxblood sm:text-lg">
+            {product.name}
+          </h3>
+          <span className="shrink-0 text-sm font-semibold tabular-nums text-navy">
             {isBespoke ? "Made to order" : formatGBP(product.price)}
           </span>
+        </div>
+        <p className="mt-1 text-xs leading-relaxed text-steel sm:line-clamp-1">
+          {collectionName ? `${collectionName} · ${product.tagline}` : product.tagline}
+        </p>
+        <div className="mt-auto flex items-center justify-end pt-3">
           {isBespoke ? (
-            <span className="flex h-9 shrink-0 items-center gap-1.5 rounded-full bg-navy px-4 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-cream">
+            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-oxblood">
               Enquire
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
             </span>
           ) : (
             <button
               type="button"
               onClick={handleAdd}
               aria-label={`Add ${product.name} to cart`}
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-navy text-cream shadow-[0_8px_18px_rgb(14_42_77/0.25)] transition hover:scale-105 hover:bg-oxblood active:scale-95"
+              className="flex h-9 items-center gap-2 rounded-full bg-navy px-5 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-cream transition hover:bg-oxblood active:scale-[0.98]"
             >
-              <BagIcon className="h-4 w-4" />
+              <BagIcon className="h-3.5 w-3.5" />
+              Add
             </button>
           )}
         </div>

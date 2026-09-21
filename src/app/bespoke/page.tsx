@@ -35,8 +35,7 @@ export default async function BespokePage({
       {/* Header */}
       <section className="border-b border-navy/10 bg-cream">
         <Reveal className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:py-24">
-          <p className="eyebrow text-ochre">Bespoke &amp; Personalised</p>
-          <h1 className="mt-4 font-serif text-4xl leading-tight text-navy sm:text-6xl">
+          <h1 className="font-serif text-4xl leading-tight tracking-tight text-navy [text-wrap:balance] sm:text-6xl">
             Made just for you
           </h1>
           <p className="mx-auto mt-5 max-w-xl leading-relaxed text-navy/70">

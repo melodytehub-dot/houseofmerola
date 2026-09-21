@@ -14,22 +14,19 @@ export default function Footer({
 
   return (
     <footer className="grain bg-navy-deep text-cream">
-      <Reveal className="mx-auto max-w-7xl px-4 pb-10 pt-16 sm:px-6 lg:px-8">
-        <div className="grid gap-12 md:grid-cols-12">
-          {/* Brand */}
-          <div className="md:col-span-5">
+      <Reveal className="mx-auto max-w-7xl px-4 pb-10 pt-14 sm:px-6 lg:px-8">
+        <div className="flex flex-col justify-between gap-8 border-b border-cream/10 pb-10 lg:flex-row lg:items-end">
+          <div className="max-w-md">
             <p className="brand-wordmark text-2xl text-cream">{settings.siteName}</p>
-            <p className="mt-2 text-xs uppercase tracking-[0.34em] text-ochre-soft">
-              {settings.tagline}
-            </p>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-cream/70">
+            <p className="mt-3 text-sm leading-relaxed text-cream/70">
               {settings.footerBlurb}
             </p>
-            <div className="mt-6 flex gap-3">
-              {[
-                {
-                  label: "Instagram",
-                  href: settings.social.instagram,
+          </div>
+          <div className="flex gap-3">
+            {[
+              {
+                label: "Instagram",
+                href: settings.social.instagram,
                   icon: "M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9-.1-1.3-.1-1.6-.1-4.8s0-3.6.1-4.8C2.4 4 4 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2Zm0 3.6a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4Zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.4-10.5a1.4 1.4 0 1 1-2.9 0 1.4 1.4 0 0 1 2.9 0Z",
                 },
                 {
@@ -59,10 +56,10 @@ export default function Footer({
             </div>
           </div>
 
-          {/* Collections */}
-          <div className="md:col-span-3">
-            <h3 className="eyebrow mb-5 text-ochre-soft">Collections</h3>
-            <ul className="space-y-3">
+        <nav aria-label="Footer" className="mt-10 grid gap-x-12 gap-y-8 border-t border-cream/10 pt-8 sm:grid-cols-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ochre-soft">Collections</p>
+            <ul className="mt-4 space-y-2.5">
               {collections.map((collection) => (
                 <li key={collection.slug}>
                   <Link
@@ -84,10 +81,9 @@ export default function Footer({
             </ul>
           </div>
 
-          {/* Help */}
-          <div className="md:col-span-2">
-            <h3 className="eyebrow mb-5 text-ochre-soft">Help</h3>
-            <ul className="space-y-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ochre-soft">Help</p>
+            <ul className="mt-4 space-y-2.5">
               {[
                 { href: "/shipping", label: "Shipping & returns" },
                 { href: "/faq", label: "FAQ" },
@@ -106,21 +102,18 @@ export default function Footer({
             </ul>
           </div>
 
-          {/* Note */}
-          <div className="md:col-span-2">
-            <h3 className="eyebrow mb-5 text-ochre-soft">Studio</h3>
-            <p className="text-sm leading-relaxed text-cream/75">
-              Made to order
-              <br />
-              in our Liverpool studio.
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ochre-soft">Studio</p>
+            <p className="mt-4 text-sm leading-relaxed text-cream/75">
+              Made to order in our Liverpool studio.
               <br />
               {settings.contactEmail}
             </p>
           </div>
-        </div>
+        </nav>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-cream/10 pt-6 sm:flex-row">
-          <p className="text-xs text-cream/50">
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-cream/10 pt-6 sm:flex-row">
+          <p className="text-xs tabular-nums text-cream/50">
             © {year} {settings.siteName}. All rights reserved.
           </p>
           <div className="flex gap-6 text-xs text-cream/50">

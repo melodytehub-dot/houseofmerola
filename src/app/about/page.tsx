@@ -16,8 +16,7 @@ export default function AboutPage() {
       {/* Header */}
       <section className="border-b border-navy/10 bg-cream">
         <Reveal className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:py-24">
-          <p className="eyebrow text-ochre">Our story</p>
-          <h1 className="mt-4 font-serif text-4xl leading-tight text-navy sm:text-6xl">
+          <h1 className="font-serif text-4xl leading-tight tracking-tight text-navy [text-wrap:balance] sm:text-6xl">
             Made in the spirit
             <br />
             <em className="font-light italic text-ochre">of the Mediterranean & the cabinet of curiosities</em>
@@ -49,10 +48,7 @@ export default function AboutPage() {
             </div>
           </div>
           <div className="order-1 lg:order-2">
-            <div className="section-rule">
-              <span className="eyebrow text-navy">The beginning</span>
-            </div>
-            <h2 className="mt-4 font-serif text-3xl text-navy sm:text-4xl">
+            <h2 className="font-serif text-3xl tracking-tight text-navy sm:text-4xl">
               From the Mediterranean to the cabinet of curiosities
             </h2>
             <p className="mt-5 leading-relaxed text-navy/70">
@@ -75,10 +71,7 @@ export default function AboutPage() {
 
         <Reveal className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div>
-            <div className="section-rule">
-              <span className="eyebrow text-navy">By hand</span>
-            </div>
-            <h2 className="mt-4 font-serif text-3xl text-navy sm:text-4xl">
+            <h2 className="font-serif text-3xl tracking-tight text-navy sm:text-4xl">
               No two pieces are identical
             </h2>
             <p className="mt-5 leading-relaxed text-navy/70">
@@ -117,10 +110,7 @@ export default function AboutPage() {
       <section className="bg-navy py-16 text-cream lg:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <Reveal className="mb-12 text-center">
-            <div className="section-rule justify-center text-ochre-soft">
-              <span className="eyebrow text-ochre-soft">What we hold dear</span>
-            </div>
-            <h2 className="mt-4 font-serif text-3xl sm:text-4xl">
+            <h2 className="font-serif text-3xl tracking-tight sm:text-4xl">
               Art for a more magical home
             </h2>
           </Reveal>
