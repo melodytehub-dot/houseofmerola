@@ -78,6 +78,11 @@ export default function OrdersPanel({
               <a href={`mailto:${o.email}`} className="break-all text-sm text-ochre">
                 {o.email}
               </a>
+              {(o.address || o.city || o.postcode) && (
+                <p className="mt-1 text-sm text-navy/70">
+                  Deliver to: {[o.address, o.city, o.postcode].filter(Boolean).join(", ")}
+                </p>
+              )}
             </div>
             <button
               type="button"

@@ -26,12 +26,17 @@ let slugs: string[] = [];
 let loaded = false;
 const listeners = new Set<() => void>();
 
+function sanitise(raw: unknown): string[] {
+  if (!Array.isArray(raw)) return [];
+  return [...new Set(raw.filter((s): s is string => typeof s === "string" && s.length > 0))].slice(0, 200);
+}
+
 function getSnapshot(): string[] {
   if (!loaded) {
     loaded = true;
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      slugs = raw ? (JSON.parse(raw) as string[]) : [];
+      slugs = sanitise(raw ? JSON.parse(raw) : []);
     } catch {
       slugs = [];
     }
@@ -69,9 +74,11 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
   const toggle = useCallback((product: Product) => {
     const current = getSnapshot();
     persist(
-      current.includes(product.slug)
-        ? current.filter((s) => s !== product.slug)
-        : [...current, product.slug],
+      sanitise(
+        current.includes(product.slug)
+          ? current.filter((s) => s !== product.slug)
+          : [...current, product.slug],
+      ),
     );
   }, []);
 

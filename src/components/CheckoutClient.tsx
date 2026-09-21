@@ -74,6 +74,11 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
         variant: i.variant,
       })),
       zone: form.zone,
+      name: form.name.trim(),
+      email: form.email.trim(),
+      address: form.address.trim(),
+      city: form.city.trim(),
+      postcode: form.postcode.trim(),
     };
     try {
       const res = await fetch("/api/checkout", {

@@ -63,12 +63,20 @@ export default function EnquiriesPanel({
             </div>
             <div className="flex items-center gap-2">
               {e.reference?.dataUrl && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={e.reference.dataUrl}
-                  alt="Reference"
-                  className="h-14 w-14 rounded-lg border border-navy/10 object-cover"
-                />
+                <a
+                  href={e.reference.dataUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  title={`Open full image: ${e.reference.name}`}
+                  className="shrink-0"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={e.reference.dataUrl}
+                    alt="Reference"
+                    className="h-14 w-14 rounded-lg border border-navy/10 object-cover transition hover:opacity-80"
+                  />
+                </a>
               )}
               <button
                 type="button"

@@ -73,12 +73,18 @@ async function handleCheckoutCompleted(
   const currency = expanded.currency ?? "gbp";
   const zone =
     expanded.metadata?.delivery_zone === "international" ? "international" : "uk";
+  const meta = expanded.metadata ?? {};
+  const text = (v: unknown, max: number) =>
+    typeof v === "string" && v.trim() ? v.trim().slice(0, max) : undefined;
 
   await saveOrder({
     id: expanded.id,
     createdAt: new Date().toISOString(),
-    email: expanded.customer_details?.email || "unknown",
-    name: expanded.customer_details?.name ?? undefined,
+    email: expanded.customer_details?.email || expanded.customer_email || "unknown",
+    name: text(meta.contact_name, 120) ?? expanded.customer_details?.name ?? undefined,
+    address: text(meta.contact_address, 200),
+    city: text(meta.contact_city, 120),
+    postcode: text(meta.contact_postcode, 40),
     deliveryZone: zone,
     currency,
     subtotal,

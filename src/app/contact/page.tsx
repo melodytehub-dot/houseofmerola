@@ -11,6 +11,7 @@ export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
+  const [failed, setFailed] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,8 +24,10 @@ export default function ContactPage() {
       return;
     }
     setError("");
+    setFailed(false);
+    let posted = false;
     try {
-      await fetch("/api/enquiries", {
+      const res = await fetch("/api/enquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -34,8 +37,14 @@ export default function ContactPage() {
           text: form.message,
         }),
       });
+      posted = res.ok;
     } catch {
-      /* message still acknowledged locally */
+      posted = false;
+    }
+    if (!posted) {
+      setError("Your message could not be sent. Please try again or email us directly.");
+      setFailed(true);
+      return;
     }
     setSent(true);
   };
@@ -168,6 +177,14 @@ export default function ContactPage() {
                   />
                 </div>
                 {error && <p className="text-sm text-oxblood">{error}</p>}
+                {failed && (
+                  <a
+                    href={`mailto:hello@houseofmerola.com?subject=${encodeURIComponent("Website enquiry")}&body=${encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)}`}
+                    className="inline-block text-sm text-ochre underline"
+                  >
+                    Email us directly instead
+                  </a>
+                )}
                 <button
                   type="submit"
                   className="rounded-full bg-oxblood px-9 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-cream transition hover:bg-oxblood-deep"

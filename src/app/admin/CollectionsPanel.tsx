@@ -16,14 +16,35 @@ export default function CollectionsPanel({
   const { collections } = content;
   const [selected, setSelected] = useState<string | null>(collections[0]?.slug ?? null);
 
-  const patch = (slug: string, p: Partial<Collection>) =>
+  const patch = (slug: string, p: Partial<Collection>) => {
+    let next = p.slug?.trim() ? p.slug.trim() : undefined;
+    if (next && collections.some((x) => x.slug !== slug && x.slug === next)) {
+      let n = 2;
+      while (collections.some((x) => x.slug !== slug && x.slug === `${next}-${n}`)) n += 1;
+      next = `${next}-${n}`;
+    }
     onChange({
       ...content,
-      collections: collections.map((x) => (x.slug === slug ? { ...x, ...p } : x)),
+      collections: collections.map((x) =>
+        x.slug === slug ? { ...x, ...p, ...(next ? { slug: next } : {}) } : x,
+      ),
+      products:
+        next && next !== slug
+          ? content.products.map((prod) =>
+              prod.collection === slug ? { ...prod, collection: next } : prod,
+            )
+          : content.products,
     });
+    if (next && selected === slug) setSelected(next);
+  };
 
   const add = () => {
-    const slug = `new-collection-${collections.length + 1}`;
+    let n = collections.length + 1;
+    let slug = `new-collection-${n}`;
+    while (collections.some((x) => x.slug === slug)) {
+      n += 1;
+      slug = `new-collection-${n}`;
+    }
     const c: Collection = {
       slug,
       name: "New collection",

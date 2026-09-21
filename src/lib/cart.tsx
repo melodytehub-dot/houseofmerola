@@ -57,11 +57,24 @@ function readStorage(): CartSnapshot {
   try {
     const rawItems = window.localStorage.getItem(STORAGE_KEY);
     const stored: CartItem[] = rawItems ? JSON.parse(rawItems) : [];
-    // Normalise pre-variant carts so the dedupe key always exists.
-    const items: CartItem[] = stored.map((item) => ({
-      ...item,
-      key: item.key ?? item.slug,
-    }));
+    if (!Array.isArray(stored)) return EMPTY_SNAPSHOT;
+    // Normalise pre-variant carts so the dedupe key always exists,
+    // drop malformed lines and cap the cart so storage can't grow forever.
+    const items: CartItem[] = stored
+      .filter(
+        (item) =>
+          item &&
+          typeof item.slug === "string" &&
+          typeof item.name === "string" &&
+          typeof item.price === "number" &&
+          Number.isFinite(item.price),
+      )
+      .map((item) => ({
+        ...item,
+        key: item.key ?? item.slug,
+        qty: Math.min(99, Math.max(1, Math.floor(item.qty) || 1)),
+      }))
+      .slice(0, 50);
     return { items };
   } catch {
     return EMPTY_SNAPSHOT;
@@ -100,9 +113,10 @@ function subscribe(listener: () => void): () => void {
 }
 
 function persist(next: CartSnapshot) {
-  snapshot = next;
+  const capped = { ...next, items: next.items.slice(0, 50) };
+  snapshot = capped;
   try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next.items));
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(capped.items));
   } catch {
     /* storage unavailable */
   }

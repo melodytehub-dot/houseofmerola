@@ -12,7 +12,7 @@ export default function ProductGallery({
   alt: string;
 }) {
   const [index, setIndex] = useState(0);
-  const active = sources[index] ?? sources[0];
+  const active = sources[index] || sources.find((s) => s) || "/images/hero.jpg";
 
   return (
     <div className="space-y-3">

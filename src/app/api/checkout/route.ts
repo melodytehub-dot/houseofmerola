@@ -15,10 +15,23 @@ export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as {
     items?: Line[];
     zone?: "uk" | "international";
+    name?: string;
+    email?: string;
+    address?: string;
+    city?: string;
+    postcode?: string;
   } | null;
   const items = Array.isArray(body?.items) ? body.items : [];
   if (items.length === 0) {
     return NextResponse.json({ error: "Cart is empty." }, { status: 400 });
+  }
+  const name = String(body?.name ?? "").trim().slice(0, 120);
+  const email = String(body?.email ?? "").trim().slice(0, 200);
+  const address = String(body?.address ?? "").trim().slice(0, 200);
+  const city = String(body?.city ?? "").trim().slice(0, 120);
+  const postcode = String(body?.postcode ?? "").trim().slice(0, 40);
+  if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !address) {
+    return NextResponse.json({ error: "Name, a valid email and a delivery address are required." }, { status: 400 });
   }
 
   const settings = await getSettings();
@@ -66,6 +79,7 @@ export async function POST(request: Request) {
   try {
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
+      customer_email: email,
       line_items: lineItems,
       ...(shipping > 0
         ? {
@@ -86,6 +100,10 @@ export async function POST(request: Request) {
         source: "houseofmerola",
         ...(isInternational ? { delivery_zone: "international" } : { delivery_zone: "uk" }),
         ...(settings.metadata.url ? { site: settings.metadata.url } : {}),
+        contact_name: name,
+        contact_address: address,
+        ...(city ? { contact_city: city } : {}),
+        ...(postcode ? { contact_postcode: postcode } : {}),
       },
     });
 

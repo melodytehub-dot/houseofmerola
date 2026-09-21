@@ -138,6 +138,13 @@ export default async function BespokePage({
             </p>
           </Reveal>
           <div className="product-grid">
+            {bespoke.length === 0 && (
+              <p className="text-sm leading-relaxed text-navy/70">
+                Every bespoke piece is made from scratch, so there are no
+                starting points to show right now. Send your idea through the
+                form above and we’ll design it with you.
+              </p>
+            )}
             {bespoke.map((product, index) => (
               <Reveal
                 key={product.slug}

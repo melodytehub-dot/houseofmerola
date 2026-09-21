@@ -157,7 +157,7 @@ export default function BespokeEnquiry({
       .filter((l) => l.length)
       .join("\n");
 
-    // Persist a local backup of the enquiry.
+    // Persist a local backup of the enquiry (capped so it can't grow forever).
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
       const arr = raw ? JSON.parse(raw) : [];
@@ -173,7 +173,7 @@ export default function BespokeEnquiry({
         image:
           image && image.dataUrl.length < 1_500_000 ? image.dataUrl : null,
       });
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(arr.slice(-20)));
     } catch {
       /* storage unavailable, the backend still receives the enquiry */
     }
@@ -262,6 +262,7 @@ export default function BespokeEnquiry({
             }}
             className={inputCls}
           >
+            {products.length === 0 && <option value="">A made-to-order piece</option>}
             {products.map((p) => (
               <option key={p.slug} value={p.slug}>
                 {p.name}

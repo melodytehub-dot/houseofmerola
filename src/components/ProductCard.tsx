@@ -34,7 +34,7 @@ export default function ProductCard({
       {/* Image */}
       <div className="relative aspect-square overflow-hidden bg-cream-warm">
         <Image
-          src={product.image}
+          src={product.image || "/images/hero.jpg"}
           alt={product.name}
           fill
           sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"

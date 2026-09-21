@@ -31,14 +31,29 @@ export default function ProductsPanel({
   const current = Math.min(page, pageCount - 1);
   const visible = products.slice(current * PAGE_SIZE, current * PAGE_SIZE + PAGE_SIZE);
 
-  const patch = (slug: string, p: Partial<Product>) =>
+  const patch = (slug: string, p: Partial<Product>) => {
+    let next = p.slug?.trim() ? p.slug.trim() : undefined;
+    if (next && products.some((x) => x.slug !== slug && x.slug === next)) {
+      let n = 2;
+      while (products.some((x) => x.slug !== slug && x.slug === `${next}-${n}`)) n += 1;
+      next = `${next}-${n}`;
+    }
     onChange({
       ...content,
-      products: products.map((x) => (x.slug === slug ? { ...x, ...p } : x)),
+      products: products.map((x) =>
+        x.slug === slug ? { ...x, ...p, ...(next ? { slug: next } : {}) } : x,
+      ),
     });
+    if (next && selected === slug) setSelected(next);
+  };
 
   const add = () => {
-    const base = `new-piece-${products.length + 1}`;
+    let n = products.length + 1;
+    let base = `new-piece-${n}`;
+    while (products.some((x) => x.slug === base)) {
+      n += 1;
+      base = `new-piece-${n}`;
+    }
     const product: Product = {
       id: base,
       slug: base,

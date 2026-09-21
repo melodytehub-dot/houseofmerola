@@ -102,6 +102,9 @@ export interface Order {
   createdAt: string;
   email: string;
   name?: string;
+  address?: string;
+  city?: string;
+  postcode?: string;
   deliveryZone: "uk" | "international";
   currency: string;
   /** Sum of line items before shipping, in major currency units. */
