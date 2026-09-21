@@ -54,7 +54,7 @@ export default async function HomePage() {
               {settings.hero.subheading}
             </p>
 
-            <div className="mt-8 flex animate-fade-up delay-4 flex-wrap items-center justify-center gap-3 sm:justify-start sm:gap-4">
+            <div className="mt-8 flex animate-fade-up delay-4 flex-wrap items-center gap-3 sm:gap-4">
               <Link
                 href="/shop"
                 className="group flex items-center gap-2 rounded-full bg-oxblood px-6 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-cream shadow-[0_14px_30px_rgb(107_15_26/0.35)] transition hover:bg-oxblood-deep sm:px-8 sm:py-4"
@@ -154,54 +154,71 @@ export default async function HomePage() {
       </section>
 
       <section id="collections" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <Reveal className="mb-10 text-center">
-          <div className="section-rule justify-center">
-            <span className="eyebrow text-navy">The Collections</span>
-          </div>
-          <h2 className="mt-4 font-serif text-3xl text-navy sm:text-4xl lg:text-5xl">
+        <Reveal className="mb-8 max-w-2xl">
+          <h2 className="font-serif text-3xl text-navy sm:text-4xl lg:text-5xl">
             Four houses, one spirit
           </h2>
+          <p className="mt-4 max-w-xl leading-relaxed text-navy/70">
+            Four rooms of the same house. Wander from the coast to the chapel
+            to the cabinet, or commission something made only for you.
+          </p>
         </Reveal>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {mainCollections.map((collection, index) => (
-            <Reveal key={collection.slug} className="h-full" delay={index * 120}>
-            <Link
-              href={`/collections/${collection.slug}`}
-              className="group relative block aspect-[16/10] overflow-hidden rounded-xl border border-navy/10"
-            >
-              <Image
-                src={collection.bannerImage}
-                alt={collection.name}
-                fill
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/90 to-navy-deep/70" />
-              <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-                <p className="eyebrow text-ochre-soft">{collection.tagline}</p>
-                <h3 className="mt-2 font-serif text-2xl text-cream sm:text-3xl">
-                  {collection.name}
-                </h3>
-                <span className="mt-3 inline-flex items-center gap-2 text-[0.7rem] font-medium uppercase tracking-[0.2em] text-cream/85 transition group-hover:gap-3 group-hover:text-ochre-soft">
-                  Explore
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M5 12h14M13 6l6 6-6 6" />
-                  </svg>
-                </span>
-              </div>
-            </Link>
-            </Reveal>
-          ))}
+        <div className="border-t border-navy/15">
+          {mainCollections.map((collection, index) => {
+            const count = products.filter((p) => p.collection === collection.slug).length;
+            return (
+              <Reveal key={collection.slug} delay={index * 80}>
+                <Link
+                  href={`/collections/${collection.slug}`}
+                  className="group grid items-center gap-4 border-b border-navy/15 py-6 sm:grid-cols-12 sm:gap-6 sm:py-7"
+                >
+                  <div className="sm:col-span-6 lg:col-span-5">
+                    <p className="text-[0.68rem] font-medium uppercase tracking-[0.22em] text-steel">
+                      {collection.tagline}
+                    </p>
+                    <h3 className="mt-2 font-serif text-3xl leading-tight text-navy transition group-hover:text-oxblood sm:text-4xl">
+                      {collection.name}
+                    </h3>
+                    <p className="mt-2 text-xs tabular-nums text-steel/80">
+                      {count} {count === 1 ? "piece" : "pieces"}
+                    </p>
+                  </div>
+                  <p className="max-w-md text-sm leading-relaxed text-navy/70 sm:col-span-4 lg:col-span-4">
+                    {collection.description}
+                  </p>
+                  <div className="flex items-center gap-5 sm:col-span-2 sm:justify-end lg:col-span-3">
+                    <span className="relative hidden h-20 w-20 shrink-0 overflow-hidden rounded-md border border-navy/10 md:block lg:h-24 lg:w-24">
+                      <Image
+                        src={collection.bannerImage}
+                        alt=""
+                        fill
+                        sizes="120px"
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-navy/20 text-navy transition group-hover:border-oxblood group-hover:text-oxblood"
+                    >
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M5 12h14M13 6l6 6-6 6" />
+                      </svg>
+                    </span>
+                  </div>
+                </Link>
+              </Reveal>
+            );
+          })}
         </div>
       </section>
 
@@ -209,12 +226,13 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal className="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
             <div>
-              <div className="section-rule">
-                <span className="eyebrow text-navy">From the studio</span>
-              </div>
-              <h2 className="mt-4 font-serif text-3xl text-navy sm:text-4xl">
+              <h2 className="font-serif text-3xl text-navy sm:text-4xl">
                 Featured pieces
               </h2>
+              <p className="mt-3 max-w-md text-sm leading-relaxed text-navy/70">
+                A rotating shelf from the studio. Recent favourites and pieces
+                that found their walls quickly.
+              </p>
             </div>
             <Link
               href="/shop"
@@ -239,7 +257,7 @@ export default async function HomePage() {
 
           <div className="product-grid">
             {featured.map((product, index) => (
-              <Reveal key={product.slug} className="h-full" delay={Math.min(index, 5) * 70}>
+              <Reveal key={product.slug} className={`h-full ${index === 0 ? "col-span-2" : ""}`} delay={Math.min(index, 5) * 70}>
                 <ProductCard
                   product={product}
                   collectionName={collectionName(product.collection)}
@@ -265,10 +283,7 @@ export default async function HomePage() {
             </div>
           </div>
           <div className="order-1 lg:order-2">
-            <div className="section-rule">
-              <span className="eyebrow text-navy">Our story</span>
-            </div>
-            <h2 className="mt-4 font-serif text-3xl leading-tight text-navy sm:text-4xl">
+            <h2 className="font-serif text-3xl leading-tight text-navy sm:text-4xl">
               {settings.aboutIntro.heading}
             </h2>
             {settings.aboutIntro.body.map((para, i) => (

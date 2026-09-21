@@ -15,17 +15,16 @@ export default function Footer({
   return (
     <footer className="grain bg-navy-deep text-cream">
       <Reveal className="mx-auto max-w-7xl px-4 pb-10 pt-16 sm:px-6 lg:px-8">
-        <div className="grid gap-12 md:grid-cols-12">
-          {/* Brand */}
-          <div className="md:col-span-5">
-            <p className="brand-wordmark text-2xl text-cream">{settings.siteName}</p>
-            <p className="mt-2 text-xs uppercase tracking-[0.34em] text-ochre-soft">
-              {settings.tagline}
-            </p>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-cream/70">
-              {settings.footerBlurb}
-            </p>
-            <div className="mt-6 flex gap-3">
+        <p className="max-w-3xl font-serif text-3xl leading-tight text-cream sm:text-4xl">
+          {settings.tagline}
+        </p>
+        <p className="mt-4 max-w-xl text-sm leading-relaxed text-cream/70">
+          {settings.footerBlurb}
+        </p>
+        <div className="mt-10 grid gap-10 border-t border-cream/10 pt-10 sm:grid-cols-2 md:grid-cols-12">
+          <div className="md:col-span-4">
+            <p className="brand-wordmark text-xl text-cream">{settings.siteName}</p>
+            <div className="mt-5 flex gap-3">
               {[
                 {
                   label: "Instagram",

@@ -92,7 +92,7 @@ export default async function ProductPage({ params }: PageProps) {
           </Reveal>
 
           {/* Details */}
-          <Reveal delay={150}>
+          <Reveal delay={150} className="lg:sticky lg:top-28 lg:self-start">
             {collection && (
               <Link
                 href={`/collections/${collection.slug}`}
@@ -154,12 +154,12 @@ export default async function ProductPage({ params }: PageProps) {
               <WishlistButton product={product} variant="inline" className="w-full" />
             </div>
 
-            <div className="mt-8 rounded-xl border border-navy/10 bg-cream-soft p-5">
-              <p className="text-sm leading-relaxed text-navy/75">
-                <span className="font-serif text-base italic text-navy">
-                  A note on handmade:
-                </span>{" "}
-                every piece is designed in-house and finished by hand in our
+            <div className="mt-10 py-2">
+              <p className="font-serif text-2xl italic leading-snug text-navy">
+                A note on handmade
+              </p>
+              <p className="mt-3 max-w-md text-sm leading-relaxed text-navy/70">
+                Every piece is designed in-house and finished by hand in our
                 Liverpool studio, and made to order, so subtle variations in
                 the print and engraving are part of the charm.
               </p>
@@ -171,10 +171,7 @@ export default async function ProductPage({ params }: PageProps) {
         {related.length > 0 && (
           <section className="mt-20">
             <Reveal className="mb-8">
-              <div className="section-rule">
-                <span className="eyebrow text-navy">You may also like</span>
-              </div>
-              <h2 className="mt-3 font-serif text-3xl text-navy">
+              <h2 className="font-serif text-3xl text-navy">
                 From the same collection
               </h2>
             </Reveal>

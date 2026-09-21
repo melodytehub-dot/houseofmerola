@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Logo from "./Logo";
 import { HeartIcon } from "./icons";
@@ -26,6 +27,13 @@ export default function Header({
 }) {
   const { count, openCart } = useCart();
   const { count: wishCount } = useWishlist();
+  const pathname = usePathname();
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+  const desktopLink = (href: string) =>
+    `relative pb-1 text-[0.8rem] font-medium transition hover:text-ochre ${
+      isActive(href) ? "text-oxblood" : "text-navy"
+    }`;
   const [menuOpen, setMenuOpen] = useState(false);
   const [collectionsOpen, setCollectionsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -178,16 +186,24 @@ export default function Header({
               <nav className="flex items-center justify-center gap-7" aria-label="Main">
               <Link
                 href="/shop"
-                className="text-[0.8rem] font-medium text-navy transition hover:text-ochre"
+                aria-current={isActive("/shop") ? "page" : undefined}
+                className={desktopLink("/shop")}
               >
                 Shop
+                {isActive("/shop") && (
+                  <span className="absolute inset-x-0 -bottom-[2px] h-[2px] bg-oxblood" />
+                )}
               </Link>
 
               <Link
                 href="/bespoke"
-                className="text-[0.8rem] font-medium text-navy transition hover:text-ochre"
+                aria-current={isActive("/bespoke") ? "page" : undefined}
+                className={desktopLink("/bespoke")}
               >
                 Bespoke
+                {isActive("/bespoke") && (
+                  <span className="absolute inset-x-0 -bottom-[2px] h-[2px] bg-oxblood" />
+                )}
               </Link>
 
               <li
@@ -200,10 +216,15 @@ export default function Header({
                   type="button"
                   aria-haspopup="true"
                   aria-expanded={collectionsOpen}
-                  className="flex items-center gap-1.5 text-[0.8rem] font-medium text-navy transition hover:text-ochre"
+                  className={`relative flex items-center gap-1.5 pb-1 text-[0.8rem] font-medium transition hover:text-ochre ${
+                    pathname.startsWith("/collections") ? "text-oxblood" : "text-navy"
+                  }`}
                   onClick={() => setCollectionsOpen((v) => !v)}
                 >
                   Collections
+                  {pathname.startsWith("/collections") && (
+                    <span className="absolute inset-x-0 -bottom-[2px] h-[2px] bg-oxblood" />
+                  )}
                   <svg
                     width="10"
                     height="10"
@@ -242,15 +263,23 @@ export default function Header({
 
               <Link
                 href="/about"
-                className="text-[0.8rem] font-medium text-navy transition hover:text-ochre"
+                aria-current={isActive("/about") ? "page" : undefined}
+                className={desktopLink("/about")}
               >
                 Our Story
+                {isActive("/about") && (
+                  <span className="absolute inset-x-0 -bottom-[2px] h-[2px] bg-oxblood" />
+                )}
               </Link>
               <Link
                 href="/contact"
-                className="text-[0.8rem] font-medium text-navy transition hover:text-ochre"
+                aria-current={isActive("/contact") ? "page" : undefined}
+                className={desktopLink("/contact")}
               >
                 Contact
+                {isActive("/contact") && (
+                  <span className="absolute inset-x-0 -bottom-[2px] h-[2px] bg-oxblood" />
+                )}
               </Link>
             </nav>
             <div className="flex items-center justify-end gap-1.5">{actions}</div>
@@ -311,7 +340,10 @@ export default function Header({
                 key={link.href}
                 href={link.href}
                 onClick={closeMenu}
-                className="flex items-center justify-between py-3 text-base font-medium text-navy transition hover:text-ochre"
+                aria-current={isActive(link.href) ? "page" : undefined}
+                className={`flex items-center justify-between py-3 text-base font-medium transition hover:text-ochre ${
+                  isActive(link.href) ? "text-oxblood" : "text-navy"
+                }`}
               >
                 {link.label}
                 <svg

@@ -16,7 +16,6 @@ export default function ProductCard({
   collectionName?: string;
 }) {
   const { addItem, openCart } = useCart();
-  const collection = collectionName ? { name: collectionName } : undefined;
   const isBespoke = product.madeToOrder;
 
   const handleAdd = (e: React.MouseEvent) => {
@@ -29,71 +28,61 @@ export default function ProductCard({
   return (
     <Link
       href={`/shop/${product.slug}`}
-      className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-navy/8 bg-cream-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_45px_rgb(14_42_77/0.14)]"
+      className="group flex h-full flex-col"
     >
-      {/* Image */}
-      <div className="relative aspect-square overflow-hidden bg-cream-warm">
+      <div className="relative aspect-square overflow-hidden rounded-md bg-cream-warm">
         <Image
           src={product.image}
           alt={product.name}
           fill
           sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
         />
-        {product.featured && (
-          <span className="absolute left-3 top-3 rounded-full bg-navy/85 px-3 py-1 text-[0.6rem] font-medium uppercase tracking-[0.18em] text-cream backdrop-blur-sm">
-            Featured
-          </span>
-        )}
         <WishlistButton product={product} />
       </div>
 
-      {/* Body */}
-      <div className="flex flex-1 flex-col p-3 sm:p-5">
-        {collection && (
-          <p className="eyebrow mb-1 text-[0.55rem] text-ochre sm:mb-1.5 sm:text-[0.58rem]">
-            {collection.name}
-          </p>
-        )}
-        <h3 className="font-serif text-[0.95rem] font-bold leading-snug text-navy transition group-hover:text-ochre sm:text-xl">
+      <div className="flex flex-1 flex-col pt-3 sm:pt-4">
+        <div className="flex items-baseline justify-between gap-2">
+          {collectionName ? (
+            <p className="text-[0.62rem] font-medium uppercase tracking-[0.22em] text-steel">
+              {collectionName}
+            </p>
+          ) : (
+            <span />
+          )}
+          {product.featured && (
+            <p className="shrink-0 font-serif text-[0.8rem] italic text-ochre">
+              Featured
+            </p>
+          )}
+        </div>
+        <h3 className="mt-1 font-serif text-[0.95rem] font-bold leading-snug text-navy underline-offset-4 transition group-hover:text-oxblood group-hover:underline sm:text-xl">
           {product.name}
         </h3>
         <p className="mt-1 hidden text-xs leading-relaxed text-steel sm:block sm:line-clamp-2">
           {product.tagline}
         </p>
         <div className="mt-auto flex items-center justify-between gap-2 pt-2 sm:pt-4">
-          <span className="text-sm font-semibold text-navy sm:text-base">
+          <span className="text-sm font-semibold tabular-nums text-navy sm:text-base">
             {isBespoke ? "Made to order" : formatGBP(product.price)}
           </span>
           {isBespoke ? (
-            <span className="flex h-9 shrink-0 items-center gap-1.5 rounded-full bg-navy px-4 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-cream">
+            <span className="shrink-0 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-oxblood underline-offset-4 transition group-hover:underline">
               Enquire
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
             </span>
           ) : (
             <button
               type="button"
               onClick={handleAdd}
               aria-label={`Add ${product.name} to cart`}
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-navy text-cream shadow-[0_8px_18px_rgb(14_42_77/0.25)] transition hover:scale-105 hover:bg-oxblood active:scale-95"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-navy text-cream transition hover:bg-oxblood active:scale-95"
             >
               <BagIcon className="h-4 w-4" />
             </button>
           )}
         </div>
       </div>
+      <span className="mt-3 block h-px w-full origin-left scale-x-0 bg-ochre/60 transition-transform duration-500 ease-out group-hover:scale-x-100" />
     </Link>
   );
 }
