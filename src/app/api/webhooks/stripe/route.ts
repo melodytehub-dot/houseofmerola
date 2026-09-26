@@ -57,19 +57,21 @@ async function handleCheckoutCompleted(
   }
 
   const items: OrderItem[] = (expanded.line_items?.data ?? []).map((li) => {
-    // `price` is a live Price object once expanded; its `product` holds our name.
+    // `price` is a live Price object once expanded; its `product` holds the
+    // name we set, and `description` holds the variant line.
     const price = typeof li.price === "object" && li.price ? li.price : null;
-    const productName =
-      price && typeof price.product === "object" && price.product && "name" in price.product
-        ? price.product.name
-        : null;
+    const rawProduct =
+      price && typeof price.product === "object" && price.product ? price.product : null;
+    const product = rawProduct && "name" in rawProduct ? rawProduct : null;
+    const productName = product?.name ?? null;
+    const variant = product?.description || undefined;
     const unitAmount =
       price?.unit_amount ?? (li.quantity ? li.amount_subtotal / li.quantity : 0);
     return {
       name: productName ?? li.description ?? "Item",
       unitPrice: unitAmount / 100,
       qty: li.quantity ?? 1,
-      variant: li.description || undefined,
+      variant,
     };
   });
 
