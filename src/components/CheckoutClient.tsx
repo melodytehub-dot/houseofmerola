@@ -56,8 +56,8 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.email.trim() || !form.address.trim()) {
-      setError("Please complete your name, email and delivery address.");
+    if (!form.name.trim() || !form.address.trim() || !form.city.trim() || !form.postcode.trim()) {
+      setError("Please complete your name and full delivery address, including city and postcode.");
       return;
     }
     if (!EMAIL_RE.test(form.email.trim())) {
@@ -68,6 +68,7 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
     setBusy(true);
     const payload = {
       items: items.map((i) => ({
+        slug: i.slug,
         name: i.name,
         price: i.price,
         qty: i.qty,

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getStripe, saveOrder } from "@/lib/content";
-import type { OrderItem } from "@/lib/site";
+import type { Order, OrderItem } from "@/lib/site";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -91,7 +91,7 @@ async function handleCheckoutCompleted(
   const text = (v: unknown, max: number) =>
     typeof v === "string" && v.trim() ? v.trim().slice(0, max) : undefined;
 
-  await saveOrder({
+  const order: Order = {
     id: expanded.id,
     createdAt: new Date().toISOString(),
     email: expanded.customer_details?.email || expanded.customer_email || "unknown",
@@ -107,5 +107,96 @@ async function handleCheckoutCompleted(
     items,
     status: "new",
     paymentStatus: "paid",
-  });
+  };
+  await saveOrder(order);
+
+  // Notify both sides by email; failures must never fail the webhook itself
+  // (Stripe would retry a completed order, and the order is already saved).
+  await sendOrderEmails(order);
+}
+
+/** Order confirmation to the customer plus a new-order alert to the studio. */
+async function sendOrderEmails(order: Order) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return;
+  const from =
+    process.env.ORDER_FROM_EMAIL ||
+    process.env.ENQUIRY_FROM_EMAIL ||
+    "House of Merola <hello@houseofmerola.co.uk>";
+  const merchant =
+    process.env.ORDER_NOTIFY_EMAIL || process.env.ENQUIRY_TO_EMAIL || "";
+  const money = (n: number) => `£${n.toFixed(2)}`;
+  const lines = order.items
+    .map(
+      (i) =>
+        `• ${i.name}${i.variant ? ` (${i.variant})` : ""} × ${i.qty} — ${money(i.unitPrice * i.qty)}`,
+    )
+    .join("\n");
+  const deliverTo = [order.address, order.city, order.postcode]
+    .filter(Boolean)
+    .join(", ");
+
+  const send = async (body: Record<string, unknown>) => {
+    try {
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+    } catch {
+      /* email is best-effort; the order is already persisted */
+    }
+  };
+
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(order.email)) {
+    await send({
+      from,
+      to: order.email,
+      ...(merchant ? { reply_to: merchant } : {}),
+      subject: "Your House of Merola order is confirmed",
+      text: [
+        `Grazie${order.name ? `, ${order.name.split(" ")[0]}` : ""}! Your payment was successful and your order will be processed shortly.`,
+        "",
+        "Your order:",
+        lines,
+        "",
+        `Subtotal: ${money(order.subtotal)}`,
+        `Delivery (${order.deliveryZone === "international" ? "International" : "UK"}): ${
+          order.shipping === 0 ? "Free" : money(order.shipping)
+        }`,
+        `Total paid: ${money(order.total)}`,
+        "",
+        deliverTo ? `Delivering to: ${deliverTo}` : "",
+      ]
+        .filter(Boolean)
+        .join("\n"),
+    });
+  }
+
+  if (merchant) {
+    await send({
+      from,
+      to: merchant,
+      reply_to: order.email,
+      subject: `New order: ${order.name || order.email} — ${money(order.total)}`,
+      text: [
+        `A new ${order.deliveryZone === "international" ? "international" : "UK"} order just completed.`,
+        "",
+        lines,
+        "",
+        `Subtotal: ${money(order.subtotal)}`,
+        `Delivery: ${order.shipping === 0 ? "Free" : money(order.shipping)}`,
+        `Total: ${money(order.total)} (${order.currency.toUpperCase()})`,
+        "",
+        `Customer: ${order.name || "—"} <${order.email}>`,
+        deliverTo ? `Deliver to: ${deliverTo}` : "",
+        `Session: ${order.id}`,
+      ]
+        .filter(Boolean)
+        .join("\n"),
+    });
+  }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Reveal from "@/components/Reveal";
 import { OliveIcon } from "./icons";
 
@@ -44,6 +44,7 @@ export default function Newsletter() {
     getSubSnapshot,
     () => false,
   );
+  const [error, setError] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,9 +53,11 @@ export default function Newsletter() {
     ) as HTMLInputElement;
     const email = input.value.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("Please enter a valid email address.");
       input.focus();
       return;
     }
+    setError("");
     markSubscribed();
   };
 
@@ -112,6 +115,9 @@ export default function Newsletter() {
               Subscribe
             </button>
           </form>
+        )}
+        {error && (
+          <p className="mx-auto mt-3 max-w-md text-sm text-ochre-soft">{error}</p>
         )}
 
         <p className="mt-6 text-[0.68rem] tracking-wide text-cream/50">

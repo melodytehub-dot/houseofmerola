@@ -289,7 +289,7 @@ export default function StripePanel({
               in <strong>live mode</strong>.
             </li>
             <li>
-              use your public site url (e.g. <code>https://houseofmerola.vercel.app/api/webhooks/stripe</code>
+               use your public site url (e.g. <code>https://houseofmerola.co.uk/api/webhooks/stripe</code>
               ), not <code>localhost</code>.
             </li>
             <li>

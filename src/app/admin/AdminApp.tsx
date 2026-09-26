@@ -392,6 +392,8 @@ function LoginForm({
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           autoFocus
+          required
+          minLength={1}
           className="w-full rounded-lg border border-navy/15 bg-cream px-4 py-3 text-sm text-navy focus:border-ochre focus:outline-none"
           placeholder="••••••••"
         />

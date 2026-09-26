@@ -3,7 +3,7 @@ import { getSettings } from "@/lib/content";
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
   const settings = await getSettings();
-  const base = settings.metadata.url || "https://houseofmerola.vercel.app";
+  const base = settings.metadata.url || "https://houseofmerola.co.uk";
   return {
     rules: {
       userAgent: "*",

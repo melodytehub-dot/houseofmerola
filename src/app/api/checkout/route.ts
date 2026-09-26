@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { getSettings, getStripe } from "@/lib/content";
+import { getProducts, getSettings, getStripe } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
 interface Line {
+  slug: string;
   name: string;
-  price: number; // GBP
+  price: number; // GBP, client-claimed; always re-priced from the catalogue below
   qty: number;
   variant?: string;
 }
@@ -30,9 +31,38 @@ export async function POST(request: Request) {
   const address = String(body?.address ?? "").trim().slice(0, 200);
   const city = String(body?.city ?? "").trim().slice(0, 120);
   const postcode = String(body?.postcode ?? "").trim().slice(0, 40);
-  if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !address) {
-    return NextResponse.json({ error: "Name, a valid email and a delivery address are required." }, { status: 400 });
+  if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !address || !city || !postcode) {
+    return NextResponse.json({ error: "Name, a valid email and a full delivery address (street, city and postcode) are required." }, { status: 400 });
   }
+
+  // Never trust client-sent prices: re-price every line from the live
+  // catalogue so tampered totals are rejected before touching Stripe.
+  const catalogue = new Map((await getProducts()).map((p) => [p.slug, p]));
+  const priced = items.map((item) => {
+    const slug = String(item.slug ?? "");
+    const product = catalogue.get(slug);
+    const qty = Math.floor(Number(item.qty));
+    if (!product || !Number.isInteger(qty) || qty < 1 || qty > 99) return null;
+    let unit = product.price;
+    const variant = typeof item.variant === "string" ? item.variant.slice(0, 200) : undefined;
+    if (variant) {
+      for (const part of variant.split("·").map((s) => s.trim()).filter(Boolean)) {
+        const material = (product.materialOptions ?? []).find((o) => o.label === part);
+        const size = (product.sizeOptions ?? []).find((o) => o.label === part);
+        if (material) unit += material.priceDelta;
+        else if (size) unit += size.priceDelta;
+        // Unrecognised parts (e.g. base material names) add nothing.
+      }
+    }
+    if (!Number.isFinite(item.price) || Math.round(item.price * 100) !== Math.round(unit * 100)) {
+      return null;
+    }
+    return { product, qty, unit, variant };
+  });
+  if (priced.some((p) => p === null)) {
+    return NextResponse.json({ error: "Your basket contains items or prices we no longer recognise. Please review your basket and try again." }, { status: 400 });
+  }
+  const lines = priced as NonNullable<(typeof priced)[number]>[];
 
   const settings = await getSettings();
   const stripeCfg = await getStripe();
@@ -52,13 +82,13 @@ export async function POST(request: Request) {
 
   const origin = new URL(request.url).origin;
 
-  const lineItems = items.map((item) => ({
-    quantity: Math.max(1, Math.min(99, item.qty)),
+  const lineItems = lines.map((item) => ({
+    quantity: item.qty,
     price_data: {
       currency: settings.commerce.currency?.toLowerCase() || "gbp",
-      unit_amount: Math.round(item.price * 100),
+      unit_amount: Math.round(item.unit * 100),
       product_data: {
-        name: item.name,
+        name: item.product.name,
         description: item.variant || undefined,
       },
     },
@@ -72,7 +102,7 @@ export async function POST(request: Request) {
   const shippingFee = isInternational
     ? settings.commerce.internationalShippingFee
     : settings.commerce.shippingFee;
-  const subtotal = items.reduce((sum, i) => sum + i.price * i.qty, 0);
+  const subtotal = lines.reduce((sum, i) => sum + i.unit * i.qty, 0);
   const shipping = freeThreshold > 0 && subtotal >= freeThreshold ? 0 : shippingFee;
   const displayName = isInternational ? "International delivery" : "UK delivery";
 

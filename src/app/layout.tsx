@@ -29,7 +29,7 @@ const montserrat = Montserrat({
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
-  const base = new URL(settings.metadata.url || "https://houseofmerola.vercel.app");
+  const base = new URL(settings.metadata.url || "https://houseofmerola.co.uk");
   return {
     metadataBase: base,
     title: {
@@ -70,7 +70,7 @@ export default async function RootLayout({
   const visibleCollections = collections.filter((c) =>
     products.some((p) => p.collection === c.slug),
   );
-  const baseUrl = settings.metadata.url || "https://houseofmerola.vercel.app";
+  const baseUrl = settings.metadata.url || "https://houseofmerola.co.uk";
   const organizationJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",

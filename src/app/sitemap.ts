@@ -7,7 +7,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getProducts(),
     getCollections(),
   ]);
-  const base = settings.metadata.url || "https://houseofmerola.vercel.app";
+  const base = settings.metadata.url || "https://houseofmerola.co.uk";
   const now = new Date();
 
   const staticPages: MetadataRoute.Sitemap = [

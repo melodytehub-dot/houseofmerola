@@ -41,7 +41,7 @@ export async function POST(request: Request) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: process.env.ENQUIRY_FROM_EMAIL || "House of Merola <onboarding@resend.dev>",
+          from: process.env.ENQUIRY_FROM_EMAIL || "House of Merola <hello@houseofmerola.co.uk>",
           to: process.env.ENQUIRY_TO_EMAIL,
           reply_to: enquiry.email,
           subject: `New ${enquiry.kind} enquiry: ${enquiry.name}`,

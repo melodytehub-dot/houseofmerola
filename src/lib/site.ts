@@ -184,7 +184,7 @@ export const defaultSettings: SiteSettings = {
       "mystical wall art",
       "celestial art tiles",
     ],
-    url: "https://houseofmerola.vercel.app",
+    url: "https://houseofmerola.co.uk",
   },
 };
 
