@@ -159,6 +159,14 @@ export async function setOrderStatus(id: string, status: Order["status"]): Promi
   );
 }
 
+export async function removeOrder(id: string): Promise<void> {
+  const list = await getOrders();
+  await writeJson<Order[]>(
+    ORDERS_KEY,
+    list.filter((o) => o.id !== id),
+  );
+}
+
 /* ── Stripe masking / merging ────────────────────────────────── */
 
 function maskKey(v: string): string {

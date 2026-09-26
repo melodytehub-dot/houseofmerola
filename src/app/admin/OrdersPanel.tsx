@@ -33,6 +33,17 @@ export default function OrdersPanel({
     notify(next === "fulfilled" ? "Marked as fulfilled." : "Reopened.");
   };
 
+  const remove = async (o: Order) => {
+    if (!window.confirm("Delete this order permanently?")) return;
+    onChange(orders.filter((x) => x.id !== o.id));
+    await fetch("/api/admin/orders", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: o.id }),
+    });
+    notify("Order deleted.");
+  };
+
   if (orders.length === 0) {
     return (
       <div className="rounded-2xl border border-navy/10 bg-cream-soft p-16 text-center">
@@ -94,6 +105,13 @@ export default function OrdersPanel({
               }`}
             >
               {o.status === "new" ? "Mark fulfilled" : "Reopen"}
+            </button>
+            <button
+              type="button"
+              onClick={() => remove(o)}
+              className="rounded-full border border-oxblood/40 px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] text-oxblood transition hover:bg-oxblood hover:text-cream"
+            >
+              Delete
             </button>
           </div>
 

@@ -8,8 +8,9 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   const cfg = await getStripe();
-  const secret = cfg.mode === "live" ? cfg.live.webhookSecret : cfg.sandbox.webhookSecret;
-  if (!secret) {
+  const mode = cfg.mode === "live" ? cfg.live : cfg.sandbox;
+  const webhookSecret = mode.webhookSecret;
+  if (!webhookSecret) {
     return NextResponse.json({ received: true });
   }
   const signature = req.headers.get("stripe-signature") || "";
@@ -17,15 +18,18 @@ export async function POST(req: Request) {
 
   let event: Stripe.Event;
   try {
-    const stripe = new Stripe(secret, { apiVersion: "2025-02-24.acacia" });
-    event = stripe.webhooks.constructEvent(rawBody, signature, secret);
+    const stripe = new Stripe(webhookSecret, { apiVersion: "2025-02-24.acacia" });
+    event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
   } catch {
     return new NextResponse("Invalid signature", { status: 400 });
   }
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
-    await handleCheckoutCompleted(session, secret);
+    // The signing secret authenticates the event; the API secret key is what
+    // allows us to call the Stripe API and expand line items. They are not
+    // interchangeable, so pass the API key here.
+    await handleCheckoutCompleted(session, mode.secretKey);
   }
 
   return NextResponse.json({ received: true });
@@ -38,16 +42,18 @@ export async function POST(req: Request) {
  */
 async function handleCheckoutCompleted(
   session: Stripe.Checkout.Session,
-  secret: string,
+  apiKey: string,
 ) {
-  const stripe = new Stripe(secret, { apiVersion: "2025-02-24.acacia" });
   let expanded = session;
-  try {
-    expanded = await stripe.checkout.sessions.retrieve(session.id, {
-      expand: ["line_items", "line_items.data.price.product"],
-    });
-  } catch {
-    /* Fall back to the session object delivered with the event. */
+  if (apiKey) {
+    try {
+      const stripe = new Stripe(apiKey, { apiVersion: "2025-02-24.acacia" });
+      expanded = await stripe.checkout.sessions.retrieve(session.id, {
+        expand: ["line_items", "line_items.data.price.product"],
+      });
+    } catch {
+      /* Fall back to the session object delivered with the event. */
+    }
   }
 
   const items: OrderItem[] = (expanded.line_items?.data ?? []).map((li) => {
@@ -69,7 +75,13 @@ async function handleCheckoutCompleted(
 
   const subtotal = items.reduce((sum, i) => sum + i.unitPrice * i.qty, 0);
   const total = (expanded.amount_total ?? 0) / 100;
-  const shipping = Math.max(0, total - subtotal);
+  // Prefer Stripe's own shipping breakdown; fall back to the difference when
+  // line items weren't available (e.g. the API key was missing).
+  const statedShipping = expanded.total_details?.amount_shipping;
+  const shipping =
+    typeof statedShipping === "number"
+      ? statedShipping / 100
+      : Math.max(0, total - subtotal);
   const currency = expanded.currency ?? "gbp";
   const zone =
     expanded.metadata?.delivery_zone === "international" ? "international" : "uk";

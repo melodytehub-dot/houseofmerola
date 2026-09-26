@@ -86,13 +86,30 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const data = (await res.json().catch(() => ({}))) as { url?: string };
+      const data = (await res.json().catch(() => ({}))) as {
+        url?: string;
+        fallback?: boolean;
+        error?: string;
+      };
       if (data.url) {
         window.location.href = data.url;
         return;
       }
+      if (!res.ok || data.error) {
+        setError(
+          data.error ||
+            "We couldn’t start the payment. Please try again in a moment.",
+        );
+        setBusy(false);
+        return;
+      }
+      // No Stripe configured (`fallback`): record the order manually.
     } catch {
-      /* fall through to the confirmation screen */
+      setError(
+        "We couldn’t reach the payment service. Please check your connection and try again.",
+      );
+      setBusy(false);
+      return;
     }
     setPlaced(true);
     clearCart();
