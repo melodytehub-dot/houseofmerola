@@ -21,7 +21,7 @@ const careSections = [
     title: "Returns & exchanges",
     body: [
       "Changed your mind? You have 14 days from delivery to return a standard piece in its original condition and packaging for a full refund.",
-      "To start a return, email hello@houseofmerola.com with your order number and we’ll send a prepaid label.",
+      "To start a return, email hello@houseofmerola.co.uk with your order number and we’ll send a prepaid label.",
       "Personalised, custom and commissioned pieces are made to order and cannot be returned unless faulty.",
       "If your piece arrives damaged, send a photo within 48 hours and we’ll replace or refund it, no fuss.",
     ],

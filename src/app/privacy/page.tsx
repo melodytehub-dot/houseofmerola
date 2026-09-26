@@ -65,10 +65,10 @@ export default function PrivacyPage() {
             You may request a copy of the data we hold about you, ask us to
             correct it, or ask us to delete it at any time by emailing{" "}
             <a
-              href="mailto:hello@houseofmerola.com"
+              href="mailto:hello@houseofmerola.co.uk"
               className="text-ochre underline"
             >
-              hello@houseofmerola.com
+              hello@houseofmerola.co.uk
             </a>
             .
           </p>

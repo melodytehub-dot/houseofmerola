@@ -110,11 +110,15 @@ export interface Order {
   /** Sum of line items before shipping, in major currency units. */
   subtotal: number;
   shipping: number;
-  /** amount_total from Stripe (includes shipping), in major currency units. */
+  /** amount_total from Stripe (includes shipping and discounts), in major currency units. */
   total: number;
   items: OrderItem[];
   status: OrderStatus;
   paymentStatus?: "paid";
+  /** Promo code redeemed on this order, if any. */
+  promoCode?: string;
+  /** Discount granted by the promo code, in major currency units. */
+  discount?: number;
 }
 
 export interface Content {
@@ -124,11 +128,41 @@ export interface Content {
   stripe: StripeConfig;
 }
 
+/** Someone who joined the mailing list, e.g. via the discount banner. */
+export interface Subscriber {
+  id: string;
+  email: string;
+  /** Where the address came from: the discount banner or the newsletter form. */
+  source: "discount" | "newsletter";
+  verified: boolean;
+  /** Pending email-verification token, cleared once verified. */
+  verifyToken?: string;
+  /** ISO expiry of the pending verification token. */
+  tokenExpiresAt?: string;
+  createdAt: string;
+  verifiedAt?: string;
+}
+
+/** A single-use, per-email percent-off code issued by the studio. */
+export interface PromoCode {
+  id: string;
+  code: string;
+  /** The one checkout email this code is valid for. */
+  email: string;
+  percentOff: number;
+  active: boolean;
+  createdAt: string;
+  /** ISO expiry; the code stops working after this. */
+  expiresAt: string;
+  usedAt?: string;
+  usedBySession?: string;
+}
+
 export const defaultSettings: SiteSettings = {
   siteName: "House of Merola",
   tagline: "Art for a more magical home.",
   announcement: "",
-  contactEmail: "hello@houseofmerola.com",
+  contactEmail: "hello@houseofmerola.co.uk",
   footerBlurb:
     "House of Merola artwork UV-printed onto ceramic and wood, engraved and finished by hand in our Liverpool studio, for walls that carry a little magic, somewhere between a Mediterranean house, an old apothecary and a cabinet of curiosities.",
   hero: {
@@ -156,8 +190,8 @@ export const defaultSettings: SiteSettings = {
   },
   commerce: {
     currency: "GBP",
-    shippingFee: 3.95,
-    freeShippingThreshold: 50,
+    shippingFee: 5.5,
+    freeShippingThreshold: 60,
     internationalEnabled: false,
     internationalShippingFee: 15,
     internationalFreeShippingThreshold: 0,

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { getSettings, getStripe, saveOrder } from "@/lib/content";
+import { getSettings, getStripe, markPromoUsed, saveOrder } from "@/lib/content";
 import {
   customerHtml,
   customerSubject,
@@ -98,6 +98,12 @@ async function handleCheckoutCompleted(
   const meta = expanded.metadata ?? {};
   const text = (v: unknown, max: number) =>
     typeof v === "string" && v.trim() ? v.trim().slice(0, max) : undefined;
+  const promoCode = text(meta.promo_code, 24)?.toUpperCase();
+  const statedDiscount = expanded.total_details?.amount_discount;
+  const discount =
+    typeof statedDiscount === "number" && statedDiscount > 0
+      ? statedDiscount / 100
+      : 0;
 
   const order: Order = {
     id: expanded.id,
@@ -115,8 +121,15 @@ async function handleCheckoutCompleted(
     items,
     status: "new",
     paymentStatus: "paid",
+    ...(promoCode ? { promoCode } : {}),
+    ...(discount > 0 ? { discount } : {}),
   };
   await saveOrder(order);
+
+  // Single-use codes burn on payment so they cannot be reused.
+  if (promoCode) {
+    await markPromoUsed(promoCode, expanded.id).catch(() => {});
+  }
 
   // Notify both sides by email; failures must never fail the webhook itself
   // (Stripe would retry a completed order, and the order is already saved).

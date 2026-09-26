@@ -3,18 +3,20 @@ import type { Order } from "./site";
 /* ────────────────────────────────────────────────────────────────
  * Branded order emails (customer confirmation + studio alert).
  * Table-based with inline styles so they render in Gmail, Apple
- * Mail and Outlook. Serif stacks fall back to Georgia; no webfonts.
+ * Mail and Outlook. Headings use Cormorant Garamond with a Georgia
+ * fallback and body uses Montserrat with a Helvetica fallback,
+ * matching the site; a Google Fonts link is included for clients
+ * that render webfonts.
  * ──────────────────────────────────────────────────────────────── */
 
 const NAVY = "#0e2a4d";
-const NAVY_DEEP = "#081b33";
 const OXBLOOD = "#6b0f1a";
 const OCHRE = "#c6932b";
 const STEEL = "#4d6b8a";
 const CREAM = "#f3e6d2";
 const CREAM_SOFT = "#faf4e8";
-const SERIF = "Georgia,'Times New Roman',serif";
-const SANS = "Helvetica,Arial,sans-serif";
+const SERIF = "'Cormorant Garamond',Georgia,'Times New Roman',serif";
+const SANS = "Montserrat,Helvetica,Arial,sans-serif";
 
 function esc(value: string | undefined): string {
   return String(value ?? "")
@@ -54,33 +56,44 @@ function itemRows(order: Order): string {
 
 function totals(order: Order, totalLabel = "Total paid"): string {
   const zone = order.deliveryZone === "international" ? "International" : "UK";
+  const discount = typeof order.discount === "number" && order.discount > 0 ? order.discount : 0;
   return `
       <tr>
-        <td style="padding:8px 0 0;font-family:${SANS};font-size:14px;color:${STEEL};">Subtotal</td>
-        <td align="right" style="padding:8px 0 0;font-family:${SANS};font-size:14px;color:${STEEL};">${money(order.subtotal)}</td>
+        <td style="padding:8px 0 0;font-family:${SANS};font-size:13px;color:${STEEL};">Subtotal</td>
+        <td align="right" style="padding:8px 0 0;font-family:${SANS};font-size:13px;color:${STEEL};">${money(order.subtotal)}</td>
+      </tr>
+      ${
+        discount > 0
+          ? `
+      <tr>
+        <td style="padding:4px 0 0;font-family:${SANS};font-size:13px;color:${OXBLOOD};">Discount${order.promoCode ? ` · ${esc(order.promoCode)}` : ""}</td>
+        <td align="right" style="padding:4px 0 0;font-family:${SANS};font-size:13px;color:${OXBLOOD};">−${money(discount)}</td>
+      </tr>`
+          : ""
+      }
+      <tr>
+        <td style="padding:4px 0 0;font-family:${SANS};font-size:13px;color:${STEEL};">Delivery · ${zone}</td>
+        <td align="right" style="padding:4px 0 0;font-family:${SANS};font-size:13px;color:${STEEL};">${order.shipping === 0 ? "Free" : money(order.shipping)}</td>
       </tr>
       <tr>
-        <td style="padding:4px 0 0;font-family:${SANS};font-size:14px;color:${STEEL};">Delivery · ${zone}</td>
-        <td align="right" style="padding:4px 0 0;font-family:${SANS};font-size:14px;color:${STEEL};">${order.shipping === 0 ? "Free" : money(order.shipping)}</td>
-      </tr>
-      <tr>
-        <td style="padding:10px 0 0;font-family:${SERIF};font-size:18px;font-weight:bold;color:${NAVY};">${totalLabel}</td>
-        <td align="right" style="padding:10px 0 0;font-family:${SERIF};font-size:18px;font-weight:bold;color:${NAVY};">${money(order.total)}</td>
+        <td style="padding:10px 0 0;font-family:${SERIF};font-size:17px;font-weight:bold;color:${NAVY};">${totalLabel}</td>
+        <td align="right" style="padding:10px 0 0;font-family:${SERIF};font-size:17px;font-weight:bold;color:${NAVY};">${money(order.total)}</td>
       </tr>`;
 }
 
 function shell(preheader: string, inner: string, siteUrl: string): string {
-  return `<!DOCTYPE html><html><body style="margin:0;padding:0;background-color:${CREAM};">
+  const logo = `${siteUrl}/images/logo.png`;
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet"></head><body style="margin:0;padding:0;background-color:${CREAM};">
   <span style="display:none;max-height:0;overflow:hidden;opacity:0;">${esc(preheader)}</span>
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${CREAM};">
-    <tr><td align="center" style="padding:32px 16px;">
+    <tr><td align="center" style="padding:28px 16px;">
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:${CREAM_SOFT};border-radius:12px;overflow:hidden;">
-        <tr><td style="background-color:${NAVY_DEEP};padding:26px 32px;text-align:center;">
-          <div style="font-family:${SANS};font-size:15px;letter-spacing:4px;color:#ffffff;">HOUSE OF MEROLA</div>
-          <div style="font-family:${SANS};font-size:10px;letter-spacing:3px;color:${OCHRE};padding-top:6px;">ART FOR A MORE MAGICAL HOME</div>
+        <tr><td style="background-color:${CREAM_SOFT};padding:26px 32px 6px;text-align:center;border-bottom:1px solid #e9d9be;">
+          <img src="${logo}" alt="House of Merola" width="190" style="display:block;margin:0 auto;max-width:190px;height:auto;border:0;">
+          <div style="font-family:${SANS};font-size:10px;letter-spacing:3px;color:${OCHRE};padding:10px 0 4px;">ART FOR A MORE MAGICAL HOME</div>
         </td></tr>
-        <tr><td style="padding:32px 32px 8px;">${inner}</td></tr>
-        <tr><td style="padding:24px 32px 32px;text-align:center;font-family:${SANS};font-size:12px;line-height:1.7;color:${STEEL};">
+        <tr><td style="padding:26px 32px 8px;">${inner}</td></tr>
+        <tr><td style="padding:20px 32px 28px;text-align:center;font-family:${SANS};font-size:11px;line-height:1.7;color:${STEEL};">
           Handmade in our Liverpool studio · <a href="${siteUrl}" style="color:${OCHRE};text-decoration:underline;">houseofmerola.co.uk</a><br>
           Questions? Just reply to this email.
         </td></tr>
@@ -92,7 +105,7 @@ function shell(preheader: string, inner: string, siteUrl: string): string {
 
 function button(href: string, label: string, bg: string): string {
   return `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:20px auto 4px;"><tr><td align="center" bgcolor="${bg}" style="border-radius:999px;">
-    <a href="${href}" style="display:inline-block;padding:14px 36px;font-family:${SANS};font-size:12px;font-weight:bold;letter-spacing:2px;color:#ffffff;text-decoration:none;">${esc(label)}</a>
+    <a href="${href}" style="display:inline-block;padding:12px 34px;font-family:${SANS};font-size:11px;font-weight:600;letter-spacing:2px;color:#ffffff;text-decoration:none;">${esc(label)}</a>
   </td></tr></table>`;
 }
 
@@ -106,6 +119,7 @@ export function merchantSubject(order: Order): string {
 
 export function customerText(order: Order): string {
   const greet = firstName(order.name);
+  const discount = typeof order.discount === "number" && order.discount > 0 ? order.discount : 0;
   return [
     `Grazie${greet ? `, ${greet}` : ""}! Your payment was successful and your order will be processed shortly.`,
     "",
@@ -115,6 +129,7 @@ export function customerText(order: Order): string {
     ),
     "",
     `Subtotal: ${money(order.subtotal)}`,
+    ...(discount > 0 ? [`Discount${order.promoCode ? ` (${order.promoCode})` : ""}: −${money(discount)}`] : []),
     `Delivery (${order.deliveryZone === "international" ? "International" : "UK"}): ${
       order.shipping === 0 ? "Free" : money(order.shipping)
     }`,
@@ -127,6 +142,7 @@ export function customerText(order: Order): string {
 }
 
 export function merchantText(order: Order): string {
+  const discount = typeof order.discount === "number" && order.discount > 0 ? order.discount : 0;
   return [
     `A new ${order.deliveryZone === "international" ? "international" : "UK"} order just completed.`,
     "",
@@ -135,6 +151,7 @@ export function merchantText(order: Order): string {
     ),
     "",
     `Subtotal: ${money(order.subtotal)}`,
+    ...(discount > 0 ? [`Discount${order.promoCode ? ` (${order.promoCode})` : ""}: −${money(discount)}`] : []),
     `Delivery: ${order.shipping === 0 ? "Free" : money(order.shipping)}`,
     `Total: ${money(order.total)} (${order.currency.toUpperCase()})`,
     "",
@@ -152,13 +169,13 @@ export function customerHtml(order: Order, siteUrl: string): string {
   return shell(
     `Your House of Merola order is confirmed and will be processed shortly. Total ${money(order.total)}.`,
     `
-      <div style="font-family:${SANS};font-size:11px;letter-spacing:3px;color:${OCHRE};">● ORDER CONFIRMED</div>
-      <h1 style="font-family:${SERIF};font-size:34px;line-height:1.2;color:${NAVY};margin:10px 0 6px;">Grazie${greet ? `, ${esc(greet)}` : ""}!</h1>
-      <p style="font-family:${SANS};font-size:14px;line-height:1.7;color:${STEEL};margin:0 0 20px;">Your payment was successful and your order will be processed shortly. Here is what you ordered:</p>
+      <div style="font-family:${SANS};font-size:10px;letter-spacing:3px;color:${OCHRE};">● ORDER CONFIRMED</div>
+      <h1 style="font-family:${SERIF};font-size:27px;line-height:1.25;color:${NAVY};margin:10px 0 6px;">Grazie${greet ? `, ${esc(greet)}` : ""}!</h1>
+      <p style="font-family:${SANS};font-size:13px;line-height:1.7;color:${STEEL};margin:0 0 20px;">Your payment was successful and your order will be processed shortly. Here is what you ordered:</p>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${itemRows(order)}${totals(order)}</table>
       ${
         deliverTo
-          ? `<div style="margin-top:20px;background-color:${CREAM};border-radius:8px;padding:14px 16px;font-family:${SANS};font-size:13px;line-height:1.6;color:${NAVY};"><span style="font-size:11px;letter-spacing:2px;color:${STEEL};">DELIVERING TO</span><br>${esc(deliverTo)}</div>`
+          ? `<div style="margin-top:20px;background-color:${CREAM};border-radius:8px;padding:14px 16px;font-family:${SANS};font-size:12px;line-height:1.6;color:${NAVY};"><span style="font-size:10px;letter-spacing:2px;color:${STEEL};">DELIVERING TO</span><br>${esc(deliverTo)}</div>`
           : ""
       }
       ${button(`${siteUrl}/shop`, "CONTINUE SHOPPING", OXBLOOD)}
@@ -172,12 +189,13 @@ export function merchantHtml(order: Order, siteUrl: string): string {
   return shell(
     `New ${order.deliveryZone} order from ${order.name || order.email} — ${money(order.total)}.`,
     `
-      <div style="font-family:${SANS};font-size:11px;letter-spacing:3px;color:${OCHRE};">● NEW ORDER · ${order.deliveryZone === "international" ? "INTERNATIONAL" : "UK"} · ${money(order.total).toUpperCase()}</div>
-      <h1 style="font-family:${SERIF};font-size:30px;line-height:1.2;color:${NAVY};margin:10px 0 6px;">${esc(order.name || "New order")}</h1>
-      <p style="font-family:${SANS};font-size:14px;line-height:1.7;color:${STEEL};margin:0 0 20px;">
+      <div style="font-family:${SANS};font-size:10px;letter-spacing:3px;color:${OCHRE};">● NEW ORDER · ${order.deliveryZone === "international" ? "INTERNATIONAL" : "UK"} · ${money(order.total).toUpperCase()}</div>
+      <h1 style="font-family:${SERIF};font-size:24px;line-height:1.25;color:${NAVY};margin:10px 0 6px;">${esc(order.name || "New order")}</h1>
+      <p style="font-family:${SANS};font-size:13px;line-height:1.7;color:${STEEL};margin:0 0 20px;">
         <a href="mailto:${esc(order.email)}" style="color:${OCHRE};">${esc(order.email)}</a>
+        ${order.promoCode ? `<br>Promo code: <strong style="color:${NAVY};">${esc(order.promoCode)}</strong>` : ""}
         ${deliverTo ? `<br>Deliver to: ${esc(deliverTo)}` : ""}
-        <br><span style="font-size:12px;">Session ${esc(order.id)}</span>
+        <br><span style="font-size:11px;">Session ${esc(order.id)}</span>
       </p>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${itemRows(order)}${totals(order, "Total")}</table>
       ${button(`${siteUrl}/admin`, "OPEN ORDERS IN ADMIN", NAVY)}

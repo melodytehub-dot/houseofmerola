@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { getProducts, getSettings, getStripe } from "@/lib/content";
+import { getProducts, getPromos, getSettings, getStripe } from "@/lib/content";
+import { checkPromoForEmail } from "@/lib/promos";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +22,7 @@ export async function POST(request: Request) {
     address?: string;
     city?: string;
     postcode?: string;
+    promoCode?: string;
   } | null;
   const items = Array.isArray(body?.items) ? body.items : [];
   if (items.length === 0) {
@@ -66,6 +68,19 @@ export async function POST(request: Request) {
 
   const settings = await getSettings();
   const stripeCfg = await getStripe();
+
+  // Promo codes are single-use and bound to one email: always re-check the
+  // code here (the client also pre-checks), even on the manual path below.
+  const promoInput = String(body?.promoCode ?? "").trim();
+  let promo: { code: string; percentOff: number } | null = null;
+  if (promoInput) {
+    const checked = checkPromoForEmail(await getPromos(), promoInput, email);
+    if (!checked.ok) {
+      return NextResponse.json({ error: checked.error }, { status: 400 });
+    }
+    promo = { code: checked.promo.code, percentOff: checked.promo.percentOff };
+  }
+
   const secret = stripeCfg.mode === "live" ? stripeCfg.live.secretKey : stripeCfg.sandbox.secretKey;
   const publishable = stripeCfg.mode === "live" ? stripeCfg.live.publishableKey : stripeCfg.sandbox.publishableKey;
 
@@ -107,10 +122,20 @@ export async function POST(request: Request) {
   const displayName = isInternational ? "International delivery" : "UK delivery";
 
   try {
+    let discounts: Stripe.Checkout.SessionCreateParams.Discount[] | undefined;
+    if (promo) {
+      const coupon = await stripe.coupons.create({
+        percent_off: promo.percentOff,
+        duration: "once",
+        name: `House of Merola ${promo.code}`,
+      });
+      discounts = [{ coupon: coupon.id }];
+    }
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       customer_email: email,
       line_items: lineItems,
+      ...(discounts ? { discounts } : {}),
       ...(shipping > 0
         ? {
             shipping_options: [
@@ -134,6 +159,9 @@ export async function POST(request: Request) {
         contact_address: address,
         ...(city ? { contact_city: city } : {}),
         ...(postcode ? { contact_postcode: postcode } : {}),
+        ...(promo
+          ? { promo_code: promo.code, promo_percent: String(promo.percentOff) }
+          : {}),
       },
     });
 

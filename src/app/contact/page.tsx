@@ -79,10 +79,10 @@ export default function ContactPage() {
               <p className="flex items-center gap-3 text-navy/80">
                 <MailIcon className="h-4 w-4 text-ochre" />
                 <a
-                  href="mailto:hello@houseofmerola.com"
+                  href="mailto:hello@houseofmerola.co.uk"
                   className="transition hover:text-ochre"
                 >
-                  hello@houseofmerola.com
+                  hello@houseofmerola.co.uk
                 </a>
               </p>
             </div>
@@ -179,7 +179,7 @@ export default function ContactPage() {
                 {error && <p className="text-sm text-oxblood">{error}</p>}
                 {failed && (
                   <a
-                    href={`mailto:hello@houseofmerola.com?subject=${encodeURIComponent("Website enquiry")}&body=${encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)}`}
+                    href={`mailto:hello@houseofmerola.co.uk?subject=${encodeURIComponent("Website enquiry")}&body=${encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)}`}
                     className="inline-block text-sm text-ochre underline"
                   >
                     Email us directly instead

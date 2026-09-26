@@ -46,7 +46,7 @@ export default function Newsletter() {
   );
   const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const input = e.currentTarget.elements.namedItem(
       "newsletter-email",
@@ -58,6 +58,17 @@ export default function Newsletter() {
       return;
     }
     setError("");
+    // Record the address on the studio list (no verification email for the
+    // newsletter form); the local flag keeps the success state instant.
+    try {
+      await fetch("/api/discount/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, source: "newsletter", sendVerification: false }),
+      });
+    } catch {
+      /* offline: the local success state still applies */
+    }
     markSubscribed();
   };
 

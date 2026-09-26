@@ -43,6 +43,53 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
   const [stripeState, setStripeState] = useState<"success" | "cancelled" | null>(
     null,
   );
+  const [promoInput, setPromoInput] = useState("");
+  const [appliedPromo, setAppliedPromo] = useState<{ code: string; percentOff: number } | null>(null);
+  const [promoError, setPromoError] = useState("");
+  const [promoBusy, setPromoBusy] = useState(false);
+
+  // Promo estimate (Stripe computes the exact pence per line at payment).
+  const promoDiscount = appliedPromo
+    ? Math.round(((subtotal * appliedPromo.percentOff) / 100) * 100) / 100
+    : 0;
+  const estimatedTotal = grandTotal - promoDiscount;
+
+  const applyPromo = async () => {
+    const code = promoInput.trim();
+    if (!code) {
+      setPromoError("Please enter your promo code.");
+      return;
+    }
+    if (!EMAIL_RE.test(form.email.trim())) {
+      setPromoError("Please enter your checkout email first — codes only work with the email they were sent to.");
+      return;
+    }
+    setPromoError("");
+    setPromoBusy(true);
+    try {
+      const res = await fetch("/api/discount/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code, email: form.email.trim() }),
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        valid?: boolean;
+        code?: string;
+        percentOff?: number;
+        error?: string;
+      };
+      if (!res.ok || !data.valid || !data.code || typeof data.percentOff !== "number") {
+        setPromoError(data.error || "That code didn’t work. Please check it and try again.");
+        return;
+      }
+      setAppliedPromo({ code: data.code, percentOff: data.percentOff });
+      setPromoInput("");
+    } catch {
+      setPromoError("We couldn’t check that code. Please try again in a moment.");
+    } finally {
+      setPromoBusy(false);
+    }
+  };
 
   // Handle Stripe's redirects back to this page: `?success=1` or `?cancelled=1`.
   useEffect(() => {
@@ -80,6 +127,7 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
       address: form.address.trim(),
       city: form.city.trim(),
       postcode: form.postcode.trim(),
+      ...(appliedPromo ? { promoCode: appliedPromo.code } : {}),
     };
     try {
       const res = await fetch("/api/checkout", {
@@ -373,6 +421,61 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
                   <span>Subtotal</span>
                   <span>{formatGBP(subtotal)}</span>
                 </div>
+                {appliedPromo ? (
+                  <>
+                    <div className="flex items-center justify-between text-oxblood">
+                      <span>
+                        Discount · {appliedPromo.code} ({appliedPromo.percentOff}%)
+                      </span>
+                      <span className="flex items-center gap-2">
+                        −{formatGBP(promoDiscount)}
+                        <button
+                          type="button"
+                          onClick={() => setAppliedPromo(null)}
+                          aria-label="Remove promo code"
+                          className="rounded-full border border-oxblood/40 px-2 py-0.5 text-[0.62rem] uppercase tracking-[0.14em] transition hover:bg-oxblood hover:text-cream"
+                        >
+                          Remove
+                        </button>
+                      </span>
+                    </div>
+                    <p className="text-xs text-steel">
+                      Tied to {form.email.trim() || "your checkout email"} — keep that email above.
+                    </p>
+                  </>
+                ) : (
+                  <div>
+                    <label
+                      htmlFor="co-promo"
+                      className="mb-1.5 block text-xs font-medium uppercase tracking-[0.14em] text-steel"
+                    >
+                      Promo code
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        id="co-promo"
+                        name="promo"
+                        type="text"
+                        value={promoInput}
+                        onChange={(e) => setPromoInput(e.target.value.toUpperCase())}
+                        placeholder="e.g. MEROLA-K7Q2XD"
+                        className="min-w-0 flex-1 rounded-lg border border-navy/15 bg-cream px-3 py-2.5 text-sm uppercase tracking-wider text-navy placeholder:normal-case placeholder:tracking-normal placeholder:text-steel/50 focus:border-ochre focus:outline-none"
+                      />
+                      <button
+                        type="button"
+                        onClick={applyPromo}
+                        disabled={promoBusy}
+                        className="shrink-0 rounded-full border border-navy/25 px-5 py-2.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-navy transition hover:border-ochre hover:text-ochre disabled:opacity-60"
+                      >
+                        {promoBusy ? "…" : "Apply"}
+                      </button>
+                    </div>
+                    {promoError && <p className="mt-1.5 text-xs text-oxblood">{promoError}</p>}
+                    <p className="mt-1.5 text-xs text-steel">
+                      Codes are issued per email — use the address your code was sent to.
+                    </p>
+                  </div>
+                )}
                 <div className="flex justify-between">
                   <span>Shipping · {zoneLabel}</span>
                   <span>{shipping === 0 ? "Free" : formatGBP(shipping)}</span>
@@ -384,8 +487,8 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
                   </p>
                 )}
                 <div className="flex justify-between border-t border-navy/10 pt-3 text-base font-semibold text-navy">
-                  <span>Total</span>
-                  <span>{formatGBP(grandTotal)}</span>
+                  <span>Total{appliedPromo ? " (with code)" : ""}</span>
+                  <span>{formatGBP(appliedPromo ? estimatedTotal : grandTotal)}</span>
                 </div>
               </div>
 

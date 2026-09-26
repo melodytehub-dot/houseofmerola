@@ -141,6 +141,12 @@ export default function OrdersPanel({
               <dt className="text-steel">Subtotal</dt>
               <dd>{money(o.subtotal, o.currency)}</dd>
             </div>
+            {typeof o.discount === "number" && o.discount > 0 && (
+              <div className="flex justify-between text-oxblood">
+                <dt>Discount{o.promoCode ? ` · ${o.promoCode}` : ""}</dt>
+                <dd>−{money(o.discount, o.currency)}</dd>
+              </div>
+            )}
             <div className="flex justify-between">
               <dt className="text-steel">Shipping</dt>
               <dd>{o.shipping === 0 ? "Free" : money(o.shipping, o.currency)}</dd>

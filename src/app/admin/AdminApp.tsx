@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import type { Content, Enquiry, Order } from "@/lib/site";
+import type { Content, Enquiry, Order, PromoCode, Subscriber } from "@/lib/site";
 import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
 import ProductsPanel from "./ProductsPanel";
 import CollectionsPanel from "./CollectionsPanel";
@@ -9,8 +9,9 @@ import SettingsPanel from "./SettingsPanel";
 import StripePanel from "./StripePanel";
 import EnquiriesPanel from "./EnquiriesPanel";
 import OrdersPanel from "./OrdersPanel";
+import PromosPanel from "./PromosPanel";
 
-type Tab = "products" | "collections" | "settings" | "stripe" | "enquiries" | "orders";
+type Tab = "products" | "collections" | "settings" | "stripe" | "enquiries" | "orders" | "promos";
 type Phase = "loading" | "login" | "dashboard";
 
 const TABS: { id: Tab; label: string }[] = [
@@ -20,6 +21,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "stripe", label: "Stripe" },
   { id: "enquiries", label: "Enquiries" },
   { id: "orders", label: "Orders" },
+  { id: "promos", label: "Promos" },
 ];
 
 /** Remember the active tab so a refresh returns to it instead of Products. */
@@ -39,6 +41,8 @@ export default function AdminApp() {
   const [content, setContent] = useState<Content | null>(null);
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
+  const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
+  const [promos, setPromos] = useState<PromoCode[]>([]);
   const [tab, setTab] = useState<Tab>(() => {
     if (typeof window === "undefined") return "products";
     try {
@@ -82,14 +86,18 @@ export default function AdminApp() {
   }, [tab]);
 
   const loadDashboard = useCallback(async () => {
-    const [c, e, o] = await Promise.all([
+    const [c, e, o, s, p] = await Promise.all([
       jsonFetch("/api/admin/content"),
       jsonFetch("/api/admin/enquiries"),
       jsonFetch("/api/admin/orders"),
+      jsonFetch("/api/admin/subscribers"),
+      jsonFetch("/api/admin/promos"),
     ]);
     if (c.ok) setContent(c.data);
     if (e.ok) setEnquiries(e.data.enquiries ?? []);
     if (o.ok) setOrders(o.data.orders ?? []);
+    if (s.ok) setSubscribers(s.data.subscribers ?? []);
+    if (p.ok) setPromos(p.data.promos ?? []);
     setPhase("dashboard");
   }, []);
 
@@ -252,6 +260,14 @@ export default function AdminApp() {
             <StripePanel content={content} onChange={setContent} />
           ) : tab === "enquiries" ? (
             <EnquiriesPanel enquiries={enquiries} onChange={setEnquiries} notify={notify} />
+          ) : tab === "promos" ? (
+            <PromosPanel
+              subscribers={subscribers}
+              promos={promos}
+              onSubscribers={setSubscribers}
+              onPromos={setPromos}
+              notify={notify}
+            />
           ) : (
             <OrdersPanel orders={orders} onChange={setOrders} notify={notify} />
           )

@@ -76,10 +76,10 @@ export default function TermsPage() {
           <p>
             For anything related to these terms, email{" "}
             <a
-              href="mailto:hello@houseofmerola.com"
+              href="mailto:hello@houseofmerola.co.uk"
               className="text-ochre underline"
             >
-              hello@houseofmerola.com
+              hello@houseofmerola.co.uk
             </a>
             .
           </p>

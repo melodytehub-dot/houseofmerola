@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
+import DiscountBanner from "@/components/DiscountBanner";
 import Newsletter from "@/components/Newsletter";
 import Reveal from "@/components/Reveal";
 import { getCollections, getProducts, getSettings } from "@/lib/content";
@@ -152,6 +153,10 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      <div id="discount" className="scroll-mt-20">
+        <DiscountBanner />
+      </div>
 
       <section id="collections" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <Reveal className="mb-10 text-center">
