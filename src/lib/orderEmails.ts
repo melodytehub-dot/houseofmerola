@@ -3,10 +3,11 @@ import type { Order } from "./site";
 /* ────────────────────────────────────────────────────────────────
  * Branded order emails (customer confirmation + studio alert).
  * Table-based with inline styles so they render in Gmail, Apple
- * Mail and Outlook. Headings use Cormorant Garamond with a Georgia
- * fallback and body uses Montserrat with a Helvetica fallback,
- * matching the site; a Google Fonts link is included for clients
- * that render webfonts.
+ * Mail and Outlook. All type is Montserrat with a Helvetica
+ * fallback; a Google Fonts link is included for clients that render
+ * webfonts. A `prefers-color-scheme` style block (+ Outlook.com
+ * `[data-ogsc]` fallbacks) keeps the design legible in dark mode,
+ * with the logo kept on a light pill so the crest stays crisp.
  * ──────────────────────────────────────────────────────────────── */
 
 const NAVY = "#0e2a4d";
@@ -15,8 +16,33 @@ const OCHRE = "#c6932b";
 const STEEL = "#4d6b8a";
 const CREAM = "#f3e6d2";
 const CREAM_SOFT = "#faf4e8";
-const SERIF = "'Cormorant Garamond',Georgia,'Times New Roman',serif";
 const SANS = "Montserrat,Helvetica,Arial,sans-serif";
+
+const DARK_BG = "#0b1526";
+const DARK_CARD = "#14213a";
+const DARK_LINE = "#2c3f5c";
+const DARK_BOX = "#1d2f4d";
+const DARK_HEADING = "#f3e6d2";
+const DARK_TEXT = "#c3cfdd";
+const DARK_MUTED = "#9fb0c3";
+
+const DARK_CSS = `
+:root { color-scheme: light dark; supported-color-schemes: light dark; }
+@media (prefers-color-scheme: dark) {
+  .dm-body { background-color: ${DARK_BG} !important; }
+  .dm-card { background-color: ${DARK_CARD} !important; }
+  .dm-head { background-color: ${DARK_CARD} !important; border-bottom-color: ${DARK_LINE} !important; }
+  .dm-logo { background-color: #ffffff !important; }
+  .dm-h { color: ${DARK_HEADING} !important; }
+  .dm-n { color: ${DARK_HEADING} !important; }
+  .dm-t { color: ${DARK_TEXT} !important; }
+  .dm-card strong { color: ${DARK_HEADING} !important; }
+  .dm-row { border-bottom-color: ${DARK_LINE} !important; }
+  .dm-box { background-color: ${DARK_BOX} !important; }
+  .dm-codebox { background-color: ${DARK_BOX} !important; }
+  .dm-off { color: #e8a0a8 !important; }
+  .dm-foot { color: ${DARK_MUTED} !important; }
+}`;
 
 function esc(value: string | undefined): string {
   return String(value ?? "")
@@ -43,12 +69,12 @@ function itemRows(order: Order): string {
     .map(
       (i) => `
       <tr>
-        <td style="padding:10px 0;border-bottom:1px solid #e9d9be;font-family:${SANS};font-size:14px;color:${NAVY};">
+        <td class="dm-row dm-n" style="padding:10px 0;border-bottom:1px solid #e9d9be;font-family:${SANS};font-size:14px;color:${NAVY};">
           <span style="font-weight:bold;">${esc(i.name)}</span>
-          ${i.variant ? `<br><span style="font-size:12px;color:${STEEL};">${esc(i.variant)}</span>` : ""}
-          <br><span style="font-size:12px;color:${STEEL};">Qty ${i.qty}</span>
+          ${i.variant ? `<br><span class="dm-t" style="font-size:12px;color:${STEEL};">${esc(i.variant)}</span>` : ""}
+          <br><span class="dm-t" style="font-size:12px;color:${STEEL};">Qty ${i.qty}</span>
         </td>
-        <td align="right" valign="top" style="padding:10px 0 10px 12px;border-bottom:1px solid #e9d9be;font-family:${SANS};font-size:14px;color:${NAVY};white-space:nowrap;">${money(i.unitPrice * i.qty)}</td>
+        <td class="dm-row dm-n" align="right" valign="top" style="padding:10px 0 10px 12px;border-bottom:1px solid #e9d9be;font-family:${SANS};font-size:14px;color:${NAVY};white-space:nowrap;">${money(i.unitPrice * i.qty)}</td>
       </tr>`,
     )
     .join("");
@@ -59,41 +85,43 @@ function totals(order: Order, totalLabel = "Total paid"): string {
   const discount = typeof order.discount === "number" && order.discount > 0 ? order.discount : 0;
   return `
       <tr>
-        <td style="padding:8px 0 0;font-family:${SANS};font-size:13px;color:${STEEL};">Subtotal</td>
-        <td align="right" style="padding:8px 0 0;font-family:${SANS};font-size:13px;color:${STEEL};">${money(order.subtotal)}</td>
+        <td class="dm-t" style="padding:8px 0 0;font-family:${SANS};font-size:13px;color:${STEEL};">Subtotal</td>
+        <td class="dm-t" align="right" style="padding:8px 0 0;font-family:${SANS};font-size:13px;color:${STEEL};">${money(order.subtotal)}</td>
       </tr>
       ${
         discount > 0
           ? `
       <tr>
-        <td style="padding:4px 0 0;font-family:${SANS};font-size:13px;color:${OXBLOOD};">Discount${order.promoCode ? ` · ${esc(order.promoCode)}` : ""}</td>
-        <td align="right" style="padding:4px 0 0;font-family:${SANS};font-size:13px;color:${OXBLOOD};">−${money(discount)}</td>
+        <td class="dm-off" style="padding:4px 0 0;font-family:${SANS};font-size:13px;color:${OXBLOOD};">Discount${order.promoCode ? ` · ${esc(order.promoCode)}` : ""}</td>
+        <td class="dm-off" align="right" style="padding:4px 0 0;font-family:${SANS};font-size:13px;color:${OXBLOOD};">−${money(discount)}</td>
       </tr>`
           : ""
       }
       <tr>
-        <td style="padding:4px 0 0;font-family:${SANS};font-size:13px;color:${STEEL};">Delivery · ${zone}</td>
-        <td align="right" style="padding:4px 0 0;font-family:${SANS};font-size:13px;color:${STEEL};">${order.shipping === 0 ? "Free" : money(order.shipping)}</td>
+        <td class="dm-t" style="padding:4px 0 0;font-family:${SANS};font-size:13px;color:${STEEL};">Delivery · ${zone}</td>
+        <td class="dm-t" align="right" style="padding:4px 0 0;font-family:${SANS};font-size:13px;color:${STEEL};">${order.shipping === 0 ? "Free" : money(order.shipping)}</td>
       </tr>
       <tr>
-        <td style="padding:10px 0 0;font-family:${SERIF};font-size:17px;font-weight:bold;color:${NAVY};">${totalLabel}</td>
-        <td align="right" style="padding:10px 0 0;font-family:${SERIF};font-size:17px;font-weight:bold;color:${NAVY};">${money(order.total)}</td>
+        <td class="dm-h" style="padding:10px 0 0;font-family:${SANS};font-size:16px;font-weight:700;color:${NAVY};">${totalLabel}</td>
+        <td class="dm-h" align="right" style="padding:10px 0 0;font-family:${SANS};font-size:16px;font-weight:700;color:${NAVY};">${money(order.total)}</td>
       </tr>`;
 }
 
 function shell(preheader: string, inner: string, siteUrl: string): string {
   const logo = `${siteUrl}/images/logo.png`;
-  return `<!DOCTYPE html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet"></head><body style="margin:0;padding:0;background-color:${CREAM};">
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="color-scheme" content="light dark"><meta name="supported-color-schemes" content="light dark"><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"><style>${DARK_CSS}</style></head><body class="dm-body" style="margin:0;padding:0;background-color:${CREAM};">
   <span style="display:none;max-height:0;overflow:hidden;opacity:0;">${esc(preheader)}</span>
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:${CREAM};">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="dm-body" style="background-color:${CREAM};">
     <tr><td align="center" style="padding:28px 16px;">
-      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:${CREAM_SOFT};border-radius:12px;overflow:hidden;">
-        <tr><td style="background-color:${CREAM_SOFT};padding:26px 32px 6px;text-align:center;border-bottom:1px solid #e9d9be;">
-          <img src="${logo}" alt="House of Merola" width="190" style="display:block;margin:0 auto;max-width:190px;height:auto;border:0;">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" class="dm-card" style="max-width:600px;width:100%;background-color:${CREAM_SOFT};border-radius:12px;overflow:hidden;">
+        <tr><td class="dm-head" style="background-color:${CREAM_SOFT};padding:22px 32px 6px;text-align:center;border-bottom:1px solid #e9d9be;">
+          <div class="dm-logo" style="display:inline-block;background-color:#ffffff;border-radius:12px;padding:8px 20px;">
+            <img src="${logo}" alt="House of Merola" width="140" style="display:block;margin:0 auto;max-width:140px;height:auto;border:0;">
+          </div>
           <div style="font-family:${SANS};font-size:10px;letter-spacing:3px;color:${OCHRE};padding:10px 0 4px;">ART FOR A MORE MAGICAL HOME</div>
         </td></tr>
         <tr><td style="padding:26px 32px 8px;">${inner}</td></tr>
-        <tr><td style="padding:20px 32px 28px;text-align:center;font-family:${SANS};font-size:11px;line-height:1.7;color:${STEEL};">
+        <tr><td class="dm-foot" style="padding:20px 32px 28px;text-align:center;font-family:${SANS};font-size:11px;line-height:1.7;color:${STEEL};">
           Handmade in our Liverpool studio · <a href="${siteUrl}" style="color:${OCHRE};text-decoration:underline;">houseofmerola.co.uk</a><br>
           Questions? Just reply to this email.
         </td></tr>
@@ -170,12 +198,12 @@ export function customerHtml(order: Order, siteUrl: string): string {
     `Your House of Merola order is confirmed and will be processed shortly. Total ${money(order.total)}.`,
     `
       <div style="font-family:${SANS};font-size:10px;letter-spacing:3px;color:${OCHRE};">● ORDER CONFIRMED</div>
-      <h1 style="font-family:${SERIF};font-size:27px;line-height:1.25;color:${NAVY};margin:10px 0 6px;">Grazie${greet ? `, ${esc(greet)}` : ""}!</h1>
-      <p style="font-family:${SANS};font-size:13px;line-height:1.7;color:${STEEL};margin:0 0 20px;">Your payment was successful and your order will be processed shortly. Here is what you ordered:</p>
+      <h1 class="dm-h" style="font-family:${SANS};font-size:24px;font-weight:700;line-height:1.3;color:${NAVY};margin:10px 0 6px;">Grazie${greet ? `, ${esc(greet)}` : ""}!</h1>
+      <p class="dm-t" style="font-family:${SANS};font-size:13px;line-height:1.7;color:${STEEL};margin:0 0 20px;">Your payment was successful and your order will be processed shortly. Here is what you ordered:</p>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${itemRows(order)}${totals(order)}</table>
       ${
         deliverTo
-          ? `<div style="margin-top:20px;background-color:${CREAM};border-radius:8px;padding:14px 16px;font-family:${SANS};font-size:12px;line-height:1.6;color:${NAVY};"><span style="font-size:10px;letter-spacing:2px;color:${STEEL};">DELIVERING TO</span><br>${esc(deliverTo)}</div>`
+          ? `<div class="dm-box dm-n" style="margin-top:20px;background-color:${CREAM};border-radius:8px;padding:14px 16px;font-family:${SANS};font-size:12px;line-height:1.6;color:${NAVY};"><span class="dm-t" style="font-size:10px;letter-spacing:2px;color:${STEEL};">DELIVERING TO</span><br>${esc(deliverTo)}</div>`
           : ""
       }
       ${button(`${siteUrl}/shop`, "CONTINUE SHOPPING", OXBLOOD)}
@@ -190,8 +218,8 @@ export function merchantHtml(order: Order, siteUrl: string): string {
     `New ${order.deliveryZone} order from ${order.name || order.email} — ${money(order.total)}.`,
     `
       <div style="font-family:${SANS};font-size:10px;letter-spacing:3px;color:${OCHRE};">● NEW ORDER · ${order.deliveryZone === "international" ? "INTERNATIONAL" : "UK"} · ${money(order.total).toUpperCase()}</div>
-      <h1 style="font-family:${SERIF};font-size:24px;line-height:1.25;color:${NAVY};margin:10px 0 6px;">${esc(order.name || "New order")}</h1>
-      <p style="font-family:${SANS};font-size:13px;line-height:1.7;color:${STEEL};margin:0 0 20px;">
+      <h1 class="dm-h" style="font-family:${SANS};font-size:22px;font-weight:700;line-height:1.3;color:${NAVY};margin:10px 0 6px;">${esc(order.name || "New order")}</h1>
+      <p class="dm-t" style="font-family:${SANS};font-size:13px;line-height:1.7;color:${STEEL};margin:0 0 20px;">
         <a href="mailto:${esc(order.email)}" style="color:${OCHRE};">${esc(order.email)}</a>
         ${order.promoCode ? `<br>Promo code: <strong style="color:${NAVY};">${esc(order.promoCode)}</strong>` : ""}
         ${deliverTo ? `<br>Deliver to: ${esc(deliverTo)}` : ""}

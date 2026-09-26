@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
-import { verifySubscriberByToken } from "@/lib/content";
+import { getSettings, verifySubscriberByToken } from "@/lib/content";
+import { sendEmail, siteUrlFrom } from "@/lib/resend";
+import {
+  verifiedNotifyHtml,
+  verifiedNotifySubject,
+  verifiedNotifyText,
+} from "@/lib/discountEmails";
 
 export const dynamic = "force-dynamic";
 
@@ -15,6 +21,23 @@ export async function GET(request: Request) {
       { error: "This link has expired or was already used. Please join again and we’ll send a fresh one." },
       { status: 400 },
     );
+  }
+  // Tell the studio someone is ready for a code; never fail verification itself.
+  try {
+    const merchant = process.env.ORDER_NOTIFY_EMAIL || process.env.ENQUIRY_TO_EMAIL || "";
+    if (merchant) {
+      const settings = await getSettings().catch(() => null);
+      const siteUrl = settings?.metadata.url || siteUrlFrom(request);
+      await sendEmail({
+        to: merchant,
+        replyTo: sub.email,
+        subject: verifiedNotifySubject(sub.email),
+        html: verifiedNotifyHtml(sub.email, sub.source, sub.verifiedAt || sub.createdAt, siteUrl),
+        text: verifiedNotifyText(sub.email, sub.source, sub.verifiedAt || sub.createdAt),
+      });
+    }
+  } catch (e) {
+    console.error(`[discount] verification notify failed: ${e instanceof Error ? e.message : "unknown error"}`);
   }
   return NextResponse.json({ ok: true, email: sub.email });
 }

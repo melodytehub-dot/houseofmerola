@@ -62,6 +62,8 @@ export default function PromosPanel({
   const [busy, setBusy] = useState(false);
   const [formError, setFormError] = useState("");
   const [filter, setFilter] = useState("");
+  const [selected, setSelected] = useState<string[]>([]);
+  const [historyEmail, setHistoryEmail] = useState<string | null>(null);
 
   const now = useMemo(() => new Date(), []);
   const verified = useMemo(
@@ -91,6 +93,19 @@ export default function PromosPanel({
     ? promos.filter((p) => p.code.toLowerCase().includes(q) || p.email.includes(q))
     : promos;
 
+  const toggleSelect = (address: string) => {
+    const key = address.toLowerCase();
+    setSelected((prev) => (prev.includes(key) ? prev.filter((e) => e !== key) : [...prev, key]));
+  };
+  const selectShown = () =>
+    setSelected((prev) => Array.from(new Set([...prev, ...shownVerified.map((s) => s.email.toLowerCase())])));
+
+  const historyPromos = historyEmail
+    ? promos
+        .filter((p) => p.email.toLowerCase() === historyEmail.toLowerCase())
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+    : [];
+
   const refresh = async () => {
     const [s, p] = await Promise.all([
       jsonFetch("/api/admin/subscribers"),
@@ -103,6 +118,30 @@ export default function PromosPanel({
   const issue = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError("");
+    // Bulk: every selected address gets its own generated code in one go.
+    if (selected.length > 0) {
+      setBusy(true);
+      const { ok, data } = await jsonFetch("/api/admin/promos", {
+        method: "POST",
+        body: JSON.stringify({ emails: selected, percentOff: percent, daysValid: days }),
+      });
+      setBusy(false);
+      if (!ok || !data.ok) {
+        setFormError(data?.error ?? "Could not issue the codes.");
+        return;
+      }
+      const sent = data.emailed ?? 0;
+      const failed = data.failed ?? [];
+      setSelected([]);
+      setCustomCode("");
+      await refresh();
+      notify(
+        failed.length === 0
+          ? `${data.promos.length} code${data.promos.length === 1 ? "" : "s"} issued and emailed.`
+          : `${sent} emailed, ${failed.length} email${failed.length === 1 ? "" : "s"} failed — use Re-send to retry.`,
+      );
+      return;
+    }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       setFormError("Please enter a valid email address.");
       return;
@@ -186,7 +225,38 @@ export default function PromosPanel({
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-navy/70">
           Codes are percent-off, single-use, and only work with the checkout email
           they were issued to. Issuing emails the code to the customer automatically.
+          Tick several verified emails below to send to them all together.
         </p>
+        {selected.length > 0 && (
+          <div className="mt-3 flex flex-wrap items-center gap-2 rounded-xl bg-ochre/10 px-4 py-3">
+            <span className="text-xs font-medium text-navy">
+              Sending to {selected.length}:
+            </span>
+            {selected.map((address) => (
+              <span
+                key={address}
+                className="inline-flex items-center gap-1.5 rounded-full bg-navy px-3 py-1 text-[0.68rem] text-cream"
+              >
+                <span className="max-w-[12rem] truncate">{address}</span>
+                <button
+                  type="button"
+                  onClick={() => toggleSelect(address)}
+                  aria-label={`Remove ${address}`}
+                  className="text-cream/70 transition hover:text-cream"
+                >
+                  ✕
+                </button>
+              </span>
+            ))}
+            <button
+              type="button"
+              onClick={() => setSelected([])}
+              className="text-[0.68rem] tracking-[0.14em] text-steel underline transition hover:text-oxblood"
+            >
+              Clear all
+            </button>
+          </div>
+        )}
         <form onSubmit={issue} className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div className="sm:col-span-2">
             <Field label="Customer email" hint="Verified addresses are suggested as you type.">
@@ -212,12 +282,16 @@ export default function PromosPanel({
             <NumInput id="promo-days" value={days} min={1} max={365} step={1} onChange={(e) => setDays(Number(e.currentTarget.value))} />
           </Field>
           <div className="sm:col-span-2 lg:col-span-3">
-            <Field label="Custom code (optional)" hint="Blank generates one like MEROLA-K7Q2XD.">
+            <Field
+              label="Custom code (optional)"
+              hint={selected.length > 0 ? "Bulk sends always generate a fresh code per address." : "Blank generates one like MEROLA-K7Q2XD."}
+            >
               <TextInput
                 id="promo-code"
                 value={customCode}
                 onChange={(e) => setCustomCode(e.target.value.toUpperCase())}
                 placeholder="Auto-generate"
+                disabled={selected.length > 0}
               />
             </Field>
           </div>
@@ -227,12 +301,71 @@ export default function PromosPanel({
               disabled={busy}
               className="w-full rounded-full bg-oxblood px-6 py-3 text-[0.7rem] font-semibold tracking-[0.18em] text-cream transition hover:bg-oxblood-deep disabled:opacity-60"
             >
-              {busy ? "Issuing…" : "Issue & send"}
+              {busy ? "Issuing…" : selected.length > 0 ? `Issue & send to ${selected.length}` : "Issue & send"}
             </button>
           </div>
         </form>
         {formError && <p className="mt-3 text-sm text-oxblood">{formError}</p>}
       </section>
+
+      {/* Per-email code history */}
+      {historyEmail && (
+        <section className="min-w-0 rounded-2xl border border-navy/25 bg-navy/[0.04] p-5 sm:p-6">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div className="min-w-0">
+              <p className="eyebrow text-ochre">Code history</p>
+              <h2 className="mt-1 break-all font-serif text-2xl text-navy">{historyEmail}</h2>
+              <p className="mt-1 text-sm text-navy/70">
+                {historyPromos.length} code{historyPromos.length === 1 ? "" : "s"} sent
+                {historyPromos.some((p) => p.usedAt)
+                  ? ` · ${historyPromos.filter((p) => p.usedAt).length} used`
+                  : ""}
+                .
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setHistoryEmail(null)}
+              className="shrink-0 rounded-full border border-navy/20 px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] text-navy transition hover:border-oxblood hover:text-oxblood"
+            >
+              Close
+            </button>
+          </div>
+          {historyPromos.length === 0 ? (
+            <p className="mt-4 rounded-xl bg-cream px-4 py-6 text-center text-sm text-steel">
+              No codes have been sent to this address yet.
+            </p>
+          ) : (
+            <ul className="mt-4 space-y-2">
+              {historyPromos.map((p) => {
+                const status = promoStatus(p, now);
+                return (
+                  <li
+                    key={p.id}
+                    className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-navy/10 bg-cream px-4 py-3"
+                  >
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-mono text-sm font-semibold tracking-wider text-navy">
+                        {p.code}
+                      </span>
+                      <span className="rounded-full bg-navy px-2.5 py-0.5 text-[0.62rem] font-semibold tracking-[0.14em] text-cream">
+                        {p.percentOff}% OFF
+                      </span>
+                      <span className={`rounded-full px-2.5 py-0.5 text-[0.62rem] font-medium tracking-[0.14em] ${STATUS_CLS[status]}`}>
+                        {status}
+                      </span>
+                    </div>
+                    <p className="text-xs text-steel">
+                      Issued {fmtDate(p.createdAt)} ·{" "}
+                      {p.usedAt ? `used ${fmtDate(p.usedAt)}` : `expires ${fmtDate(p.expiresAt)}`}
+                    </p>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </section>
+      )}
 
       {/* Search */}
       <div className="min-w-0">
@@ -248,10 +381,34 @@ export default function PromosPanel({
 
       {/* Verified list */}
       <section className="min-w-0 rounded-2xl border border-navy/10 bg-cream-soft p-5 sm:p-6">
-        <h2 className="font-serif text-2xl text-navy">Ready to reward</h2>
-        <p className="mt-1 text-sm text-navy/70">
-          Verified emails — pick one to issue a code. New verifications pop up here automatically.
-        </p>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h2 className="font-serif text-2xl text-navy">Ready to reward</h2>
+            <p className="mt-1 text-sm text-navy/70">
+              Verified emails — tick several to send codes together, or pick one. New verifications pop up here automatically.
+            </p>
+          </div>
+          {shownVerified.length > 0 && (
+            <div className="flex shrink-0 items-center gap-2">
+              <button
+                type="button"
+                onClick={selectShown}
+                className="rounded-full border border-navy/20 px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] text-navy transition hover:bg-navy hover:text-cream"
+              >
+                Select all
+              </button>
+              {selected.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setSelected([])}
+                  className="rounded-full border border-navy/20 px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] text-navy transition hover:border-oxblood hover:text-oxblood"
+                >
+                  Clear ({selected.length})
+                </button>
+              )}
+            </div>
+          )}
+        </div>
         {shownVerified.length === 0 ? (
           <p className="mt-4 rounded-xl bg-cream px-4 py-6 text-center text-sm text-steel">
             {verified.length === 0
@@ -262,20 +419,48 @@ export default function PromosPanel({
           <ul className="mt-4 space-y-2">
             {shownVerified.map((s) => {
               const active = activeCodeByEmail.get(s.email.toLowerCase());
+              const isSelected = selected.includes(s.email.toLowerCase());
+              const sentCount = promos.filter((p) => p.email.toLowerCase() === s.email.toLowerCase()).length;
               return (
                 <li
                   key={s.id}
-                  className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-navy/10 bg-cream px-4 py-3"
+                  className={`flex flex-wrap items-center justify-between gap-3 rounded-xl border bg-cream px-4 py-3 transition ${
+                    isSelected ? "border-ochre bg-ochre/10" : "border-navy/10"
+                  }`}
                 >
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-navy">{s.email}</p>
-                    <p className="mt-0.5 text-xs text-steel">
-                      Verified {fmtDate(s.verifiedAt)}
-                      {s.source === "newsletter" ? " · via newsletter" : " · via discount banner"}
-                      {active ? ` · active code ${active.code} (${active.percentOff}%)` : " · no active code"}
-                    </p>
+                  <div className="flex min-w-0 flex-1 items-start gap-3">
+                    <input
+                      type="checkbox"
+                      checked={isSelected}
+                      onChange={() => toggleSelect(s.email)}
+                      aria-label={`Select ${s.email} for bulk send`}
+                      className="mt-1 h-4 w-4 shrink-0 accent-[#c6932b]"
+                    />
+                    <div className="min-w-0">
+                      <button
+                        type="button"
+                        onClick={() => setHistoryEmail(s.email)}
+                        title="View code history"
+                        className="block max-w-full truncate text-left text-sm font-medium text-navy underline decoration-ochre/50 decoration-dotted underline-offset-4 transition hover:text-ochre"
+                      >
+                        {s.email}
+                      </button>
+                      <p className="mt-0.5 text-xs text-steel">
+                        Verified {fmtDate(s.verifiedAt)}
+                        {s.source === "newsletter" ? " · via newsletter" : " · via discount banner"}
+                        {active ? ` · active code ${active.code} (${active.percentOff}%)` : " · no active code"}
+                        {sentCount > 0 ? ` · ${sentCount} sent total` : ""}
+                      </p>
+                    </div>
                   </div>
                   <div className="flex shrink-0 items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setHistoryEmail(s.email)}
+                      className="rounded-full border border-navy/20 px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] text-navy transition hover:bg-navy hover:text-cream"
+                    >
+                      History
+                    </button>
                     <button
                       type="button"
                       onClick={() => {
@@ -330,7 +515,14 @@ export default function PromosPanel({
                         </span>
                       </div>
                       <p className="mt-1.5 break-all text-sm text-navy/75">
-                        <a href={`mailto:${p.email}`} className="text-ochre">{p.email}</a>
+                        <button
+                          type="button"
+                          onClick={() => setHistoryEmail(p.email)}
+                          title="View code history for this email"
+                          className="text-left text-ochre underline decoration-ochre/50 decoration-dotted underline-offset-4 transition hover:text-navy"
+                        >
+                          {p.email}
+                        </button>
                       </p>
                       <p className="mt-0.5 text-xs text-steel">
                         Issued {fmtDate(p.createdAt)} ·{" "}
