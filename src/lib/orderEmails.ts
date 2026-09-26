@@ -52,7 +52,7 @@ function itemRows(order: Order): string {
     .join("");
 }
 
-function totals(order: Order): string {
+function totals(order: Order, totalLabel = "Total paid"): string {
   const zone = order.deliveryZone === "international" ? "International" : "UK";
   return `
       <tr>
@@ -64,7 +64,7 @@ function totals(order: Order): string {
         <td align="right" style="padding:4px 0 0;font-family:${SANS};font-size:14px;color:${STEEL};">${order.shipping === 0 ? "Free" : money(order.shipping)}</td>
       </tr>
       <tr>
-        <td style="padding:10px 0 0;font-family:${SERIF};font-size:18px;font-weight:bold;color:${NAVY};">Total paid</td>
+        <td style="padding:10px 0 0;font-family:${SERIF};font-size:18px;font-weight:bold;color:${NAVY};">${totalLabel}</td>
         <td align="right" style="padding:10px 0 0;font-family:${SERIF};font-size:18px;font-weight:bold;color:${NAVY};">${money(order.total)}</td>
       </tr>`;
 }
@@ -179,7 +179,7 @@ export function merchantHtml(order: Order, siteUrl: string): string {
         ${deliverTo ? `<br>Deliver to: ${esc(deliverTo)}` : ""}
         <br><span style="font-size:12px;">Session ${esc(order.id)}</span>
       </p>
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${itemRows(order)}${totals(order)}</table>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${itemRows(order)}${totals(order, "Total")}</table>
       ${button(`${siteUrl}/admin`, "OPEN ORDERS IN ADMIN", NAVY)}
     `,
     siteUrl,
