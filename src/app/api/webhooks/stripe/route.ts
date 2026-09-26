@@ -138,7 +138,7 @@ async function sendOrderEmails(order: Order) {
 
   const send = async (body: Record<string, unknown>) => {
     try {
-      await fetch("https://api.resend.com/emails", {
+      const res = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${apiKey}`,
@@ -146,8 +146,14 @@ async function sendOrderEmails(order: Order) {
         },
         body: JSON.stringify(body),
       });
-    } catch {
-      /* email is best-effort; the order is already persisted */
+      if (!res.ok) {
+        const detail = await res.text().catch(() => "");
+        console.error(
+          `[orders] resend rejected email to ${String(body.to)} (${res.status}): ${detail.slice(0, 200)}`,
+        );
+      }
+    } catch (e) {
+      console.error(`[orders] resend send failed to ${String(body.to)}: ${e instanceof Error ? e.message : "unknown error"}`);
     }
   };
 
