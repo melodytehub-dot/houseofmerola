@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSettings, upsertSubscriber } from "@/lib/content";
 import { EMAIL_RE, newVerifyToken } from "@/lib/promos";
-import { sendEmail, siteUrlFrom } from "@/lib/resend";
+import { merchantEmail, sendEmail, siteUrlFrom } from "@/lib/resend";
 import { verifyHtml, verifySubject, verifyText } from "@/lib/discountEmails";
 
 export const dynamic = "force-dynamic";
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
   const settings = await getSettings().catch(() => null);
   const siteUrl = settings?.metadata.url || siteUrlFrom(request);
   const link = `${siteUrl}/discount/verify?token=${token}`;
-  const merchant = process.env.ORDER_NOTIFY_EMAIL || process.env.ENQUIRY_TO_EMAIL || "";
+  const merchant = merchantEmail();
   const { sent } = await sendEmail(
     {
       to: email,

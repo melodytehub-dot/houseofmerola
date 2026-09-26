@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { addEnquiry, slugify } from "@/lib/content";
+import { STUDIO_EMAIL } from "@/lib/resend";
 import type { Enquiry } from "@/lib/site";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -32,7 +33,8 @@ export async function POST(request: Request) {
   });
 
   // Optional: forward the enquiry to a transactional email provider if configured.
-  if (process.env.RESEND_API_KEY && process.env.ENQUIRY_TO_EMAIL) {
+  const studio = process.env.ENQUIRY_TO_EMAIL?.trim() || STUDIO_EMAIL;
+  if (process.env.RESEND_API_KEY) {
     try {
       await fetch("https://api.resend.com/emails", {
         method: "POST",
@@ -42,7 +44,7 @@ export async function POST(request: Request) {
         },
         body: JSON.stringify({
           from: process.env.ENQUIRY_FROM_EMAIL || "House of Merola <hello@houseofmerola.co.uk>",
-          to: process.env.ENQUIRY_TO_EMAIL,
+          to: studio,
           reply_to: enquiry.email,
           subject: `New ${enquiry.kind} enquiry: ${enquiry.name}`,
           text: [

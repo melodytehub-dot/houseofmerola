@@ -1,5 +1,17 @@
 /** Minimal Resend client shared by the discount flows. */
 
+/** The studio inbox that receives customer-facing notifications. Falls back
+ * to the live studio address so mail still lands if an env var is unset/blank. */
+export const STUDIO_EMAIL = "hello@houseofmerola.co.uk";
+
+export function merchantEmail(): string {
+  return (
+    process.env.ORDER_NOTIFY_EMAIL?.trim() ||
+    process.env.ENQUIRY_TO_EMAIL?.trim() ||
+    STUDIO_EMAIL
+  );
+}
+
 export interface EmailPayload {
   to: string;
   subject: string;

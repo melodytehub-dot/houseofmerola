@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getSettings, getStripe, markPromoUsed, saveOrder } from "@/lib/content";
+import { merchantEmail } from "@/lib/resend";
 import {
   customerHtml,
   customerSubject,
@@ -147,8 +148,7 @@ async function sendOrderEmails(order: Order, siteUrl: string) {
     process.env.ORDER_FROM_EMAIL ||
     process.env.ENQUIRY_FROM_EMAIL ||
     "House of Merola <hello@houseofmerola.co.uk>";
-  const merchant =
-    process.env.ORDER_NOTIFY_EMAIL || process.env.ENQUIRY_TO_EMAIL || "";
+  const merchant = merchantEmail();
 
   const send = async (body: Record<string, unknown>) => {
     try {

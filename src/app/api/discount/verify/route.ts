@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSettings, verifySubscriberByToken } from "@/lib/content";
-import { sendEmail, siteUrlFrom } from "@/lib/resend";
+import { merchantEmail, sendEmail, siteUrlFrom } from "@/lib/resend";
 import {
   verifiedNotifyHtml,
   verifiedNotifySubject,
@@ -24,7 +24,7 @@ export async function GET(request: Request) {
   }
   // Tell the studio someone is ready for a code; never fail verification itself.
   try {
-    const merchant = process.env.ORDER_NOTIFY_EMAIL || process.env.ENQUIRY_TO_EMAIL || "";
+    const merchant = merchantEmail();
     if (merchant) {
       const settings = await getSettings().catch(() => null);
       const siteUrl = settings?.metadata.url || siteUrlFrom(request);

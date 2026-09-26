@@ -9,7 +9,7 @@ import {
   setPromoActive,
 } from "@/lib/content";
 import { EMAIL_RE, generatePromoCode } from "@/lib/promos";
-import { sendEmail, siteUrlFrom } from "@/lib/resend";
+import { merchantEmail, sendEmail, siteUrlFrom } from "@/lib/resend";
 import { promoCodeHtml, promoCodeSubject, promoCodeText } from "@/lib/discountEmails";
 
 export const dynamic = "force-dynamic";
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
   }
   const settings = await getSettings().catch(() => null);
   const siteUrl = settings?.metadata.url || siteUrlFrom(request);
-  const merchant = process.env.ORDER_NOTIFY_EMAIL || process.env.ENQUIRY_TO_EMAIL || "";
+  const merchant = merchantEmail();
 
   const issueOne = async (email: string, customCode?: string) => {
     let code = (customCode ?? "").trim().toUpperCase();
@@ -140,7 +140,7 @@ export async function PATCH(request: Request) {
     }
     const settings = await getSettings().catch(() => null);
     const siteUrl = settings?.metadata.url || siteUrlFrom(request);
-    const merchant = process.env.ORDER_NOTIFY_EMAIL || process.env.ENQUIRY_TO_EMAIL || "";
+    const merchant = merchantEmail();
     const { sent, error } = await sendEmail({
       to: promo.email,
       ...(merchant ? { replyTo: merchant } : {}),
