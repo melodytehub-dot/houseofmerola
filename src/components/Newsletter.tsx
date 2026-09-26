@@ -1,79 +1,16 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
 import Reveal from "@/components/Reveal";
-import { OliveIcon } from "./icons";
+import DiscountSignupForm from "./DiscountSignupForm";
 
-const SUB_KEY = "houseofmerola-subscribed";
-
-/* Module-level store for the subscription flag */
-let subscribed = false;
-let subLoaded = false;
-const subListeners = new Set<() => void>();
-
-function getSubSnapshot(): boolean {
-  if (!subLoaded) {
-    subLoaded = true;
-    try {
-      subscribed = window.localStorage.getItem(SUB_KEY) === "1";
-    } catch {
-      /* storage unavailable */
-    }
-  }
-  return subscribed;
-}
-
-function subscribeSub(listener: () => void): () => void {
-  subListeners.add(listener);
-  return () => subListeners.delete(listener);
-}
-
-function markSubscribed() {
-  subscribed = true;
-  try {
-    window.localStorage.setItem(SUB_KEY, "1");
-  } catch {
-    /* storage unavailable */
-  }
-  subListeners.forEach((l) => l());
-}
-
+/**
+ * Pre-footer House-list signup: studio news and early access plus, via the
+ * verification link, a personal discount code — the same signup as the
+ * first-visit popup.
+ */
 export default function Newsletter() {
-  const isSubscribed = useSyncExternalStore(
-    subscribeSub,
-    getSubSnapshot,
-    () => false,
-  );
-  const [error, setError] = useState("");
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const input = e.currentTarget.elements.namedItem(
-      "newsletter-email",
-    ) as HTMLInputElement;
-    const email = input.value.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("Please enter a valid email address.");
-      input.focus();
-      return;
-    }
-    setError("");
-    // Record the address on the studio list (no verification email for the
-    // newsletter form); the local flag keeps the success state instant.
-    try {
-      await fetch("/api/discount/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source: "newsletter", sendVerification: false }),
-      });
-    } catch {
-      /* offline: the local success state still applies */
-    }
-    markSubscribed();
-  };
-
   return (
-    <section className="grain relative overflow-hidden bg-navy text-cream">
+    <section id="newsletter" className="grain relative scroll-mt-20 overflow-hidden bg-navy text-cream">
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.06]"
         style={{
@@ -84,56 +21,19 @@ export default function Newsletter() {
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy-deep/75 via-navy-deep/65 to-navy-deep/85" />
       <Reveal className="relative mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 sm:py-20">
-        <p className="eyebrow mb-4 text-ochre-soft">● Join the House ●</p>
+        <p className="eyebrow mb-4 text-ochre-soft">Join the House</p>
         <h2 className="font-serif text-3xl leading-tight text-cream sm:text-4xl">
-          Welcome into the House of Merola
+          News, early access &amp; up to 20% off
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-cream/75">
-          New collections, studio notes and early access, delivered straight to
-          your inbox.
+          Subscribe for studio notes and first looks at new collections — and
+          we’ll email you a verification link so you can claim a personal
+          discount code for your first piece.
         </p>
 
-        {isSubscribed ? (
-          <div className="mx-auto mt-8 max-w-md rounded-xl border border-ochre/50 bg-navy-deep/60 px-6 py-6 backdrop-blur-sm">
-            <p className="flex items-center justify-center gap-2 text-lg">
-              <OliveIcon className="h-5 w-5 text-ochre-soft" />
-              Benvenuti!
-            </p>
-            <p className="mt-2 text-sm text-cream/80">
-              You’re on the list. We’ll be in touch with everything new.
-            </p>
-          </div>
-        ) : (
-          <form
-            onSubmit={handleSubmit}
-            className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row"
-            noValidate
-          >
-            <label htmlFor="newsletter-email" className="sr-only">
-              Email address
-            </label>
-            <input
-              id="newsletter-email"
-              name="newsletter-email"
-              type="email"
-              placeholder="Your email address"
-              className="min-w-0 flex-1 rounded-full border border-cream/25 bg-cream/10 px-5 py-3.5 text-sm text-cream placeholder:text-cream/50 focus:border-ochre focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="rounded-full bg-ochre px-7 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-navy-deep transition hover:bg-ochre-soft"
-            >
-              Subscribe
-            </button>
-          </form>
-        )}
-        {error && (
-          <p className="mx-auto mt-3 max-w-md text-sm text-ochre-soft">{error}</p>
-        )}
-
-        <p className="mt-6 text-[0.68rem] tracking-wide text-cream/50">
-          No spam. Only beautiful things. Unsubscribe anytime.
-        </p>
+        <div className="mx-auto mt-8 max-w-md text-left">
+          <DiscountSignupForm tone="dark" idPrefix="newsletter" />
+        </div>
       </Reveal>
     </section>
   );

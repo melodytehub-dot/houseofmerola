@@ -1,8 +1,19 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { PromoCode, Subscriber } from "@/lib/site";
-import { Field, TextInput, NumInput } from "./ui";
+import { Field, TextArea, TextInput, NumInput } from "./ui";
+
+const CODE_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+
+/** Client-side twin of the server code generator (MEROLA-XXXXXX). */
+function randomPromoCode(): string {
+  const buf = new Uint32Array(6);
+  crypto.getRandomValues(buf);
+  let suffix = "";
+  for (const n of buf) suffix += CODE_ALPHABET[n % CODE_ALPHABET.length];
+  return `MEROLA-${suffix}`;
+}
 
 function fmtDate(iso?: string): string {
   if (!iso) return "—";
@@ -64,6 +75,24 @@ export default function PromosPanel({
   const [filter, setFilter] = useState("");
   const [selected, setSelected] = useState<string[]>([]);
   const [historyEmail, setHistoryEmail] = useState<string | null>(null);
+  const [view, setView] = useState<"emails" | "history">("emails");
+  // Broadcast composer
+  const [audience, setAudience] = useState<"all" | "selected">("all");
+  const [bcSubject, setBcSubject] = useState("");
+  const [bcHeading, setBcHeading] = useState("");
+  const [bcMessage, setBcMessage] = useState("");
+  const [bcCtaLabel, setBcCtaLabel] = useState("");
+  const [bcCtaUrl, setBcCtaUrl] = useState("");
+  const [bcBusy, setBcBusy] = useState(false);
+  const [bcError, setBcError] = useState("");
+
+  // Pre-fill a fresh random code so the field is never empty; clearing it
+  // falls back to a server-generated code on issue.
+  useEffect(() => {
+    // Mount-only initialisation.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCustomCode(randomPromoCode());
+  }, []);
 
   const now = useMemo(() => new Date(), []);
   const verified = useMemo(
@@ -71,10 +100,6 @@ export default function PromosPanel({
       subscribers
         .filter((s) => s.verified)
         .sort((a, b) => (b.verifiedAt || b.createdAt).localeCompare(a.verifiedAt || a.createdAt)),
-    [subscribers],
-  );
-  const pending = useMemo(
-    () => subscribers.filter((s) => !s.verified).sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
     [subscribers],
   );
   const activeCodeByEmail = useMemo(() => {
@@ -133,7 +158,7 @@ export default function PromosPanel({
       const sent = data.emailed ?? 0;
       const failed = data.failed ?? [];
       setSelected([]);
-      setCustomCode("");
+      setCustomCode(randomPromoCode());
       await refresh();
       notify(
         failed.length === 0
@@ -162,7 +187,7 @@ export default function PromosPanel({
       return;
     }
     setEmail("");
-    setCustomCode("");
+    setCustomCode(randomPromoCode());
     await refresh();
     notify(
       data.emailSent
@@ -209,6 +234,45 @@ export default function PromosPanel({
     notify("Subscriber removed.");
   };
 
+  const sendBroadcast = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setBcError("");
+    const count = audience === "all" ? verified.length : selected.length;
+    if (count === 0) {
+      setBcError(
+        audience === "all"
+          ? "There are no verified emails yet."
+          : "Tick at least one verified email below first.",
+      );
+      return;
+    }
+    if (!window.confirm(`Send this email to ${count} verified address${count === 1 ? "" : "es"}?`)) return;
+    setBcBusy(true);
+    const { ok, data } = await jsonFetch("/api/admin/broadcast", {
+      method: "POST",
+      body: JSON.stringify({
+        audience,
+        ...(audience === "selected" ? { emails: selected } : {}),
+        subject: bcSubject.trim(),
+        heading: bcHeading.trim(),
+        message: bcMessage.trim(),
+        ctaLabel: bcCtaLabel.trim(),
+        ctaUrl: bcCtaUrl.trim(),
+      }),
+    });
+    setBcBusy(false);
+    if (!ok || !data.ok) {
+      setBcError(data?.error ?? "Could not send the email.");
+      return;
+    }
+    const failed = data.failed ?? [];
+    notify(
+      failed.length === 0
+        ? `Sent to ${data.sent} address${data.sent === 1 ? "" : "es"}.`
+        : `Sent to ${data.sent}, ${failed.length} failed.`,
+    );
+  };
+
   return (
     <div className="grid grid-cols-1 gap-6">
       {/* Issue a code */}
@@ -219,7 +283,7 @@ export default function PromosPanel({
             <h2 className="mt-1 font-serif text-2xl text-navy">Issue a discount code</h2>
           </div>
           <p className="text-xs text-steel">
-            {verified.length} verified · {pending.length} awaiting verification · {promos.length} codes
+            {verified.length} verified · {promos.length} codes
           </p>
         </div>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-navy/70">
@@ -284,15 +348,27 @@ export default function PromosPanel({
           <div className="sm:col-span-2 lg:col-span-3">
             <Field
               label="Custom code (optional)"
-              hint={selected.length > 0 ? "Bulk sends always generate a fresh code per address." : "Blank generates one like MEROLA-K7Q2XD."}
+              hint={selected.length > 0 ? "Bulk sends always generate a fresh code per address." : "A random code is filled in — edit it or clear it to auto-generate."}
             >
-              <TextInput
-                id="promo-code"
-                value={customCode}
-                onChange={(e) => setCustomCode(e.target.value.toUpperCase())}
-                placeholder="Auto-generate"
-                disabled={selected.length > 0}
-              />
+              <div className="flex gap-2">
+                <TextInput
+                  id="promo-code"
+                  value={customCode}
+                  onChange={(e) => setCustomCode(e.target.value.toUpperCase())}
+                  placeholder="Auto-generate"
+                  disabled={selected.length > 0}
+                />
+                <button
+                  type="button"
+                  onClick={() => setCustomCode(randomPromoCode())}
+                  disabled={selected.length > 0}
+                  aria-label="Generate a new random code"
+                  title="Generate a new random code"
+                  className="shrink-0 rounded-full border border-navy/20 px-4 text-lg text-navy transition hover:border-ochre hover:text-ochre disabled:opacity-40"
+                >
+                  ⟳
+                </button>
+              </div>
             </Field>
           </div>
           <div className="flex items-end sm:col-span-2 lg:col-span-1">
@@ -308,7 +384,128 @@ export default function PromosPanel({
         {formError && <p className="mt-3 text-sm text-oxblood">{formError}</p>}
       </section>
 
-      {/* Per-email code history */}
+      {/* Sub-tabs */}
+      <div role="tablist" aria-label="Promos views" className="flex min-w-0 flex-wrap gap-2">
+        {(
+          [
+            { id: "emails", label: "Verified emails" },
+            { id: "history", label: "Code issued history" },
+          ] as const
+        ).map((t) => (
+          <button
+            key={t.id}
+            type="button"
+            role="tab"
+            aria-selected={view === t.id}
+            onClick={() => setView(t.id)}
+            className={`rounded-full px-5 py-2.5 text-[0.7rem] font-medium tracking-[0.16em] transition ${
+              view === t.id ? "bg-navy text-cream" : "border border-navy/20 text-navy/70 hover:border-navy/40"
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {view === "emails" && (
+        <>
+          {/* Broadcast composer */}
+          <section className="min-w-0 rounded-2xl border border-navy/10 bg-cream-soft p-5 sm:p-6">
+            <p className="eyebrow text-ochre">Studio mail</p>
+            <h2 className="mt-1 font-serif text-2xl text-navy">Send a promotional email</h2>
+            <p className="mt-1 text-sm text-navy/70">
+              Compose once — it goes out with the House template, logo included.
+            </p>
+            <form onSubmit={sendBroadcast} className="mt-4 grid grid-cols-1 gap-4">
+              <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Recipients">
+                <button
+                  type="button"
+                  onClick={() => setAudience("all")}
+                  aria-pressed={audience === "all"}
+                  className={`rounded-full px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] transition ${
+                    audience === "all" ? "bg-navy text-cream" : "border border-navy/20 text-navy/70 hover:border-navy/40"
+                  }`}
+                >
+                  All verified ({verified.length})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setAudience("selected")}
+                  aria-pressed={audience === "selected"}
+                  className={`rounded-full px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] transition ${
+                    audience === "selected" ? "bg-navy text-cream" : "border border-navy/20 text-navy/70 hover:border-navy/40"
+                  }`}
+                >
+                  Selected ticked ({selected.length})
+                </button>
+              </div>
+              <Field label="Subject">
+                <TextInput
+                  id="bc-subject"
+                  value={bcSubject}
+                  onChange={(e) => setBcSubject(e.target.value)}
+                  placeholder="e.g. New collection has landed"
+                  maxLength={140}
+                />
+              </Field>
+              <Field label="Headline">
+                <TextInput
+                  id="bc-heading"
+                  value={bcHeading}
+                  onChange={(e) => setBcHeading(e.target.value)}
+                  placeholder="e.g. The Autumn Edit is here"
+                  maxLength={140}
+                />
+              </Field>
+              <Field label="Message" hint="Blank lines start a new paragraph.">
+                <TextArea
+                  id="bc-message"
+                  rows={5}
+                  value={bcMessage}
+                  onChange={(e) => setBcMessage(e.target.value)}
+                  placeholder="Write your news, offers and stories…"
+                />
+              </Field>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <Field label="Button label (optional)">
+                  <TextInput
+                    id="bc-cta-label"
+                    value={bcCtaLabel}
+                    onChange={(e) => setBcCtaLabel(e.target.value)}
+                    placeholder="e.g. Shop new arrivals"
+                    maxLength={40}
+                  />
+                </Field>
+                <Field label="Button link (optional)" hint="A page like /shop or a full https:// link.">
+                  <TextInput
+                    id="bc-cta-url"
+                    value={bcCtaUrl}
+                    onChange={(e) => setBcCtaUrl(e.target.value)}
+                    placeholder="/shop"
+                    maxLength={500}
+                  />
+                </Field>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  disabled={bcBusy}
+                  className="rounded-full bg-navy px-8 py-3 text-[0.7rem] font-semibold tracking-[0.18em] text-cream transition hover:bg-oxblood disabled:opacity-60"
+                >
+                  {bcBusy
+                    ? "Sending…"
+                    : `Send to ${audience === "all" ? verified.length : selected.length} address${(audience === "all" ? verified.length : selected.length) === 1 ? "" : "es"}`}
+                </button>
+              </div>
+            </form>
+            {bcError && <p className="mt-3 text-sm text-oxblood">{bcError}</p>}
+          </section>
+        </>
+      )}
+
+      {view === "history" && (
+        <>
+          {/* Per-email code history */}
       {historyEmail && (
         <section className="min-w-0 rounded-2xl border border-navy/25 bg-navy/[0.04] p-5 sm:p-6">
           <div className="flex flex-wrap items-start justify-between gap-3">
@@ -378,8 +575,12 @@ export default function PromosPanel({
           />
         </Field>
       </div>
+        </>
+      )}
 
-      {/* Verified list */}
+      {view === "emails" && (
+        <>
+          {/* Verified list */}
       <section className="min-w-0 rounded-2xl border border-navy/10 bg-cream-soft p-5 sm:p-6">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
@@ -487,7 +688,12 @@ export default function PromosPanel({
         )}
       </section>
 
-      {/* Codes */}
+        </>
+      )}
+
+      {view === "history" && (
+        <>
+          {/* Codes */}
       <section className="min-w-0 rounded-2xl border border-navy/10 bg-cream-soft p-5 sm:p-6">
         <h2 className="font-serif text-2xl text-navy">Issued codes</h2>
         <p className="mt-1 text-sm text-navy/70">Single-use — a code burns itself the moment it pays for an order.</p>
@@ -563,42 +769,8 @@ export default function PromosPanel({
         )}
       </section>
 
-      {/* Awaiting verification */}
-      <section className="min-w-0 rounded-2xl border border-navy/10 bg-cream-soft p-5 sm:p-6">
-        <h2 className="font-serif text-2xl text-navy">Awaiting verification</h2>
-        <p className="mt-1 text-sm text-navy/70">
-          Joined but haven’t tapped their link yet (links last 48 hours). Codes can still be issued manually above.
-        </p>
-        {pending.length === 0 ? (
-          <p className="mt-4 rounded-xl bg-cream px-4 py-6 text-center text-sm text-steel">
-            Nobody waiting — every subscriber is verified.
-          </p>
-        ) : (
-          <ul className="mt-4 space-y-2">
-            {pending.map((s) => (
-              <li
-                key={s.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-navy/10 bg-cream px-4 py-3 opacity-80"
-              >
-                <div className="min-w-0">
-                  <p className="truncate text-sm text-navy/80">{s.email}</p>
-                  <p className="mt-0.5 text-xs text-steel">
-                    Joined {fmtDate(s.createdAt)}{s.source === "newsletter" ? " · via newsletter" : ""}
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => removeSubscriber(s)}
-                  aria-label={`Remove ${s.email}`}
-                  className="shrink-0 rounded-full border border-navy/15 px-3 py-2 text-[0.68rem] text-steel transition hover:border-oxblood hover:text-oxblood"
-                >
-                  ✕
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+        </>
+      )}
     </div>
   );
 }

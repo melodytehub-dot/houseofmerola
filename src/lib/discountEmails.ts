@@ -145,7 +145,50 @@ export function verifiedNotifySubject(email: string): string {
   return `New verified subscriber: ${email}`;
 }
 
-export function verifiedNotifyText(email: string, source: string, verifiedAt: string): string {
+export function broadcastText(heading: string, message: string, ctaLabel?: string, ctaUrl?: string): string {
+  return [
+    heading,
+    "",
+    ...message.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean),
+    "",
+    ...(ctaLabel && ctaUrl ? [`${ctaLabel}: ${ctaUrl}`] : []),
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+export function broadcastHtml(
+  heading: string,
+  message: string,
+  ctaLabel: string | undefined,
+  ctaUrl: string | undefined,
+  siteUrl: string,
+): string {
+  const paras = message
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean)
+    .map(
+      (p) =>
+        `<p class="dm-t" style="font-family:${SANS};font-size:13px;line-height:1.8;color:${STEEL};margin:0 0 12px;">${esc(p).replace(/\n/g, "<br>")}</p>`,
+    )
+    .join("");
+  const href = ctaUrl
+    ? ctaUrl.startsWith("/")
+      ? `${siteUrl}${ctaUrl}`
+      : ctaUrl
+    : "";
+  return shell(
+    `${heading} — news from House of Merola.`,
+    `
+      <div style="font-family:${SANS};font-size:10px;letter-spacing:3px;color:${OCHRE};">● NEWS FROM THE HOUSE</div>
+      <h1 class="dm-h" style="font-family:${SANS};font-size:24px;font-weight:700;line-height:1.3;color:${NAVY};margin:10px 0 12px;">${esc(heading)}</h1>
+      ${paras}
+      ${ctaLabel && href ? button(href, ctaLabel.toUpperCase(), OXBLOOD) : ""}
+    `,
+    siteUrl,
+  );
+}export function verifiedNotifyText(email: string, source: string, verifiedAt: string): string {
   return [
     "A visitor just verified their email on the House list.",
     "",

@@ -81,7 +81,7 @@ function VerifyResult() {
             <p className="mx-auto mt-4 max-w-md leading-relaxed text-navy/70">{error}</p>
             <div className="mt-8">
               <Link
-                href="/#discount"
+                href="/#newsletter"
                 className="rounded-full bg-navy px-8 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-cream transition hover:bg-oxblood"
               >
                 Join again

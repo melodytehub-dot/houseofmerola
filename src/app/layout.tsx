@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
+import DiscountPopup from "@/components/DiscountPopup";
 import ScrollToTop from "@/components/ScrollToTop";
 import { CartProvider } from "@/lib/cart";
 import { WishlistProvider } from "@/lib/wishlist";
@@ -98,6 +99,7 @@ export default async function RootLayout({
             <main className="flex-1">{children}</main>
             {!isAdmin && <Footer settings={settings} collections={visibleCollections} />}
             {!isAdmin && <CartDrawer settings={settings} />}
+            {!isAdmin && <DiscountPopup />}
           </WishlistProvider>
         </CartProvider>
         <script
