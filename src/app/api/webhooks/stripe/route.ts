@@ -1,6 +1,14 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { getStripe, saveOrder } from "@/lib/content";
+import { getSettings, getStripe, saveOrder } from "@/lib/content";
+import {
+  customerHtml,
+  customerSubject,
+  customerText,
+  merchantHtml,
+  merchantSubject,
+  merchantText,
+} from "@/lib/orderEmails";
 import type { Order, OrderItem } from "@/lib/site";
 
 export const runtime = "nodejs";
@@ -112,11 +120,14 @@ async function handleCheckoutCompleted(
 
   // Notify both sides by email; failures must never fail the webhook itself
   // (Stripe would retry a completed order, and the order is already saved).
-  await sendOrderEmails(order);
+  const siteUrl =
+    (await getSettings().catch(() => null))?.metadata.url ||
+    "https://houseofmerola.co.uk";
+  await sendOrderEmails(order, siteUrl);
 }
 
 /** Order confirmation to the customer plus a new-order alert to the studio. */
-async function sendOrderEmails(order: Order) {
+async function sendOrderEmails(order: Order, siteUrl: string) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return;
   const from =
@@ -125,16 +136,6 @@ async function sendOrderEmails(order: Order) {
     "House of Merola <hello@houseofmerola.co.uk>";
   const merchant =
     process.env.ORDER_NOTIFY_EMAIL || process.env.ENQUIRY_TO_EMAIL || "";
-  const money = (n: number) => `£${n.toFixed(2)}`;
-  const lines = order.items
-    .map(
-      (i) =>
-        `• ${i.name}${i.variant ? ` (${i.variant})` : ""} × ${i.qty} — ${money(i.unitPrice * i.qty)}`,
-    )
-    .join("\n");
-  const deliverTo = [order.address, order.city, order.postcode]
-    .filter(Boolean)
-    .join(", ");
 
   const send = async (body: Record<string, unknown>) => {
     try {
@@ -162,23 +163,9 @@ async function sendOrderEmails(order: Order) {
       from,
       to: order.email,
       ...(merchant ? { reply_to: merchant } : {}),
-      subject: "Your House of Merola order is confirmed",
-      text: [
-        `Grazie${order.name ? `, ${order.name.split(" ")[0]}` : ""}! Your payment was successful and your order will be processed shortly.`,
-        "",
-        "Your order:",
-        lines,
-        "",
-        `Subtotal: ${money(order.subtotal)}`,
-        `Delivery (${order.deliveryZone === "international" ? "International" : "UK"}): ${
-          order.shipping === 0 ? "Free" : money(order.shipping)
-        }`,
-        `Total paid: ${money(order.total)}`,
-        "",
-        deliverTo ? `Delivering to: ${deliverTo}` : "",
-      ]
-        .filter(Boolean)
-        .join("\n"),
+      subject: customerSubject(),
+      html: customerHtml(order, siteUrl),
+      text: customerText(order),
     });
   }
 
@@ -187,22 +174,9 @@ async function sendOrderEmails(order: Order) {
       from,
       to: merchant,
       reply_to: order.email,
-      subject: `New order: ${order.name || order.email} — ${money(order.total)}`,
-      text: [
-        `A new ${order.deliveryZone === "international" ? "international" : "UK"} order just completed.`,
-        "",
-        lines,
-        "",
-        `Subtotal: ${money(order.subtotal)}`,
-        `Delivery: ${order.shipping === 0 ? "Free" : money(order.shipping)}`,
-        `Total: ${money(order.total)} (${order.currency.toUpperCase()})`,
-        "",
-        `Customer: ${order.name || "—"} <${order.email}>`,
-        deliverTo ? `Deliver to: ${deliverTo}` : "",
-        `Session: ${order.id}`,
-      ]
-        .filter(Boolean)
-        .join("\n"),
+      subject: merchantSubject(order),
+      html: merchantHtml(order, siteUrl),
+      text: merchantText(order),
     });
   }
 }
