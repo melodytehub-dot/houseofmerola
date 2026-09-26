@@ -5,38 +5,20 @@ import Image from "next/image";
 import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
 import DiscountSignupForm, { hasDiscountJoined, markDiscountJoined } from "./DiscountSignupForm";
 
-const SEEN_KEY = "houseofmerola-popup-seen";
-
-function hasSeen(): boolean {
-  try {
-    return window.localStorage.getItem(SEEN_KEY) === "1";
-  } catch {
-    return false;
-  }
-}
-
-function markSeen() {
-  try {
-    window.localStorage.setItem(SEEN_KEY, "1");
-  } catch {
-    /* storage unavailable */
-  }
-}
-
-/** First-visit popup: the House-list signup (news + discount code). */
+/** Popup: the House-list signup (news + discount code). Shows on every page
+ * load until the visitor joins the list. */
 export default function DiscountPopup() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    // Mount-only first-visit check; the delayed open is intentional.
+    // Mount-only check; the delayed open is intentional.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (hasSeen() || hasDiscountJoined()) return;
+    if (hasDiscountJoined()) return;
     const t = window.setTimeout(() => setOpen(true), 1400);
     return () => window.clearTimeout(t);
   }, []);
 
   const close = useCallback(() => {
-    markSeen();
     setOpen(false);
   }, []);
 
