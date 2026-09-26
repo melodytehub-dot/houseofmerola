@@ -157,7 +157,7 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
         </h1>
         <p className="mx-auto mt-4 max-w-md leading-relaxed text-navy/70">
           {stripeState === "success"
-            ? "Your payment was successful and your order is confirmed. We’ll be in touch within one working day to arrange delivery."
+            ? "Your payment was successful and your order is confirmed. Your order will be processed shortly."
             : "Your order has been received. We’ll email you within one working day to confirm payment and arrange delivery."}
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">

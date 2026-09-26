@@ -22,6 +22,9 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "orders", label: "Orders" },
 ];
 
+/** Remember the active tab so a refresh returns to it instead of Products. */
+const TAB_KEY = "houseofmerola-admin-tab";
+
 async function jsonFetch(url: string, init?: RequestInit) {
   const res = await fetch(url, {
     ...init,
@@ -36,7 +39,16 @@ export default function AdminApp() {
   const [content, setContent] = useState<Content | null>(null);
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
-  const [tab, setTab] = useState<Tab>("products");
+  const [tab, setTab] = useState<Tab>(() => {
+    if (typeof window === "undefined") return "products";
+    try {
+      const saved = window.localStorage.getItem(TAB_KEY);
+      if (saved && TABS.some((t) => t.id === saved)) return saved as Tab;
+    } catch {
+      /* storage unavailable */
+    }
+    return "products";
+  });
   const [loginError, setLoginError] = useState("");
   const [busy, setBusy] = useState(false);
   const [toast, setToast] = useState("");
@@ -60,6 +72,14 @@ export default function AdminApp() {
       window.removeEventListener("keydown", onKey);
     };
   }, [menuOpen]);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(TAB_KEY, tab);
+    } catch {
+      /* storage unavailable */
+    }
+  }, [tab]);
 
   const loadDashboard = useCallback(async () => {
     const [c, e, o] = await Promise.all([
