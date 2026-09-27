@@ -104,6 +104,60 @@ h6 {
   font-size: 0.68rem;
 }
 
+/* ── Section washes ─────────────────────────────────────────────
+ * Built only from the brand pigments so the bands feel like the
+ * same house as the tiles: Sicilian dusk over the Adriatic, warm
+ * sand underfoot, and a low Mediterranean sun. Deliberately soft
+ * and low-contrast — they should read as light falling across a
+ * wall, never as a coloured panel.
+ * ────────────────────────────────────────────────────────────── */
+
+.bg-wash-dusk {
+  background-color: #0e2a4d;
+  background-image:
+    radial-gradient(115% 85% at 12% 8%, rgb(198 147 43 / 0.22) 0%, transparent 58%),
+    radial-gradient(95% 75% at 88% 96%, rgb(107 15 26 / 0.4) 0%, transparent 62%),
+    linear-gradient(168deg, #081b33 0%, #0e2a4d 52%, #2a1220 100%);
+}
+
+.bg-wash-dusk-soft {
+  background-color: #0e2a4d;
+  background-image:
+    radial-gradient(90% 70% at 50% 0%, rgb(198 147 43 / 0.16) 0%, transparent 60%),
+    linear-gradient(180deg, #0e2a4d 0%, #081b33 100%);
+}
+
+/* Ochre sun bleeding up from the lower left, over deep sea. */
+.bg-wash-sun {
+  background-color: #081b33;
+  background-image:
+    radial-gradient(75% 60% at 18% 100%, rgb(198 147 43 / 0.28) 0%, transparent 62%),
+    radial-gradient(70% 55% at 92% 12%, rgb(76 10 18 / 0.45) 0%, transparent 60%),
+    linear-gradient(200deg, #0e2a4d 0%, #081b33 100%);
+}
+
+/* Warm sand, for the lighter bands that separate the long scroll. */
+.bg-wash-sand {
+  background-color: #faf4e8;
+  background-image:
+    radial-gradient(85% 65% at 78% 8%, rgb(220 169 78 / 0.16) 0%, transparent 60%),
+    linear-gradient(180deg, #fdf9f1 0%, #f6ecda 52%, #efe1c9 100%);
+}
+
+.bg-wash-parchment {
+  background-color: #f6ecda;
+  background-image:
+    radial-gradient(70% 60% at 8% 96%, rgb(14 42 77 / 0.07) 0%, transparent 62%),
+    linear-gradient(180deg, #faf4e8 0%, #f3e6d2 100%);
+}
+
+.bg-wash-rose {
+  background-color: #f3e6d2;
+  background-image:
+    radial-gradient(80% 60% at 88% 90%, rgb(107 15 26 / 0.09) 0%, transparent 62%),
+    linear-gradient(180deg, #faf4e8 0%, #f0e1cb 100%);
+}
+
 /* ── Motion ───────────────────────────────────────────────── */
 
 @keyframes fade-up {

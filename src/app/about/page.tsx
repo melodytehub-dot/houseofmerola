@@ -14,7 +14,7 @@ export default function AboutPage() {
   return (
     <>
       {/* Header */}
-      <section className="border-b border-navy/10 bg-cream">
+      <section className="border-b border-navy/10 bg-wash-sand">
         <Reveal className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:py-24">
           <p className="eyebrow text-ochre">Our story</p>
           <h1 className="mt-4 font-serif text-4xl leading-tight text-navy sm:text-6xl">
@@ -114,7 +114,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="bg-navy py-16 text-cream lg:py-24">
+      <section className="bg-wash-dusk py-16 text-cream lg:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <Reveal className="mb-12 text-center">
             <div className="section-rule justify-center text-ochre-soft">

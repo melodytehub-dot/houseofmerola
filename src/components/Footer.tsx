@@ -13,7 +13,7 @@ export default function Footer({
   const year = new Date().getFullYear();
 
   return (
-    <footer className="grain bg-navy-deep text-cream">
+    <footer className="grain bg-wash-dusk-soft text-cream">
       <Reveal className="mx-auto max-w-7xl px-4 pb-10 pt-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-12">
           {/* Brand */}

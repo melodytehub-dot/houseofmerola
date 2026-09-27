@@ -33,7 +33,7 @@ export default async function BespokePage({
   return (
     <>
       {/* Header */}
-      <section className="border-b border-navy/10 bg-cream">
+      <section className="border-b border-navy/10 bg-wash-sand">
         <Reveal className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:py-24">
           <p className="eyebrow text-ochre">Bespoke &amp; Personalised</p>
           <h1 className="mt-4 font-serif text-4xl leading-tight text-navy sm:text-6xl">
@@ -123,7 +123,7 @@ export default async function BespokePage({
       </section>
 
       {/* Made-to-order pieces */}
-      <section className="bg-cream/50 py-16 lg:py-24">
+      <section className="bg-wash-rose py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal className="mb-10">
             <div className="section-rule">

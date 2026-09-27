@@ -62,7 +62,7 @@ export default async function ShopPage() {
       <ShopGrid products={products} collections={collections} />
 
       {/* Craft strip */}
-      <section className="border-y border-navy/10 bg-cream/60">
+      <section className="border-y border-navy/10 bg-wash-parchment">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:grid-cols-3 sm:px-6 lg:px-8 lg:py-16">
           {[
             {

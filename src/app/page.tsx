@@ -205,7 +205,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="bg-cream/50 py-16 lg:py-24">
+      <section className="bg-wash-sand py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal className="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
             <div>
