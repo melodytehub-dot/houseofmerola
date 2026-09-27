@@ -28,7 +28,7 @@ function OptionGroup({ label, options, active, onChange }: OptionGroupProps) {
               type="button"
               aria-pressed={isActive}
               onClick={() => onChange(index)}
-              className={`rounded-full border px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.12em] transition ${
+              className={`rounded-full border px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.03em] transition ${
                 isActive
                   ? "border-navy bg-navy text-cream"
                   : "border-navy/20 text-navy hover:border-ochre hover:text-ochre"
@@ -127,7 +127,7 @@ export default function ProductConfigurator({ product }: { product: Product }) {
             });
             openCart();
           }}
-          className="flex min-w-0 flex-1 items-center justify-center gap-2.5 whitespace-nowrap rounded-full bg-oxblood px-5 py-3.5 text-[0.74rem] font-semibold uppercase tracking-[0.2em] text-cream shadow-[0_14px_30px_rgb(107_15_26/0.3)] transition hover:bg-oxblood-deep sm:px-8"
+          className="flex min-w-0 flex-1 items-center justify-center gap-2.5 whitespace-nowrap rounded-full bg-oxblood px-5 py-3.5 text-[0.74rem] font-semibold uppercase tracking-[0.07em] text-cream shadow-[0_14px_30px_rgb(107_15_26/0.3)] transition hover:bg-oxblood-deep sm:px-8"
         >
           <BagIcon className="h-[15px] w-[15px] shrink-0" />
           <span className="truncate">Add to cart</span>

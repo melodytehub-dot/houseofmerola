@@ -48,7 +48,7 @@ export default function ShopGrid({
                 key={tab.slug}
                 type="button"
                 onClick={() => setActive(tab.slug)}
-                className={`flex shrink-0 items-center gap-2 rounded-full px-5 py-2 text-[0.68rem] font-medium uppercase tracking-[0.18em] transition ${
+                className={`flex shrink-0 items-center gap-2 rounded-full px-5 py-2 text-[0.68rem] font-medium uppercase tracking-[0.06em] transition ${
                   isActive
                     ? "bg-navy text-cream shadow-[0_8px_20px_rgb(14_42_77/0.2)]"
                     : "border border-navy/15 text-navy/80 hover:border-ochre hover:text-ochre"

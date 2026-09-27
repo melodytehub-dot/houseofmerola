@@ -35,7 +35,7 @@ export default function WishlistButton({
         onClick={handleClick}
         aria-pressed={active}
         aria-label={label}
-        className={`flex items-center justify-center gap-2.5 rounded-full border px-7 py-3.5 text-[0.72rem] font-medium uppercase tracking-[0.22em] transition ${
+        className={`flex items-center justify-center gap-2.5 rounded-full border px-7 py-3.5 text-[0.72rem] font-medium uppercase tracking-[0.08em] transition ${
           active
             ? "border-ochre bg-ochre/10 text-ochre"
             : "border-navy/25 text-navy hover:border-ochre hover:text-ochre"

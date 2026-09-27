@@ -96,7 +96,7 @@ export default function ContactPage() {
               </p>
               <Link
                 href="/bespoke"
-                className="mt-4 inline-flex items-center gap-2 text-[0.72rem] font-medium uppercase tracking-[0.2em] text-navy transition hover:text-ochre"
+                className="mt-4 inline-flex items-center gap-2 text-[0.72rem] font-medium uppercase tracking-[0.07em] text-navy transition hover:text-ochre"
               >
                 Start a bespoke enquiry →
               </Link>
@@ -187,7 +187,7 @@ export default function ContactPage() {
                 )}
                 <button
                   type="submit"
-                  className="rounded-full bg-oxblood px-9 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-cream transition hover:bg-oxblood-deep"
+                  className="rounded-full bg-oxblood px-9 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-cream transition hover:bg-oxblood-deep"
                 >
                   Send message
                 </button>

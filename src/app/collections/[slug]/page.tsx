@@ -51,7 +51,7 @@ export default async function CollectionPage({ params }: PageProps) {
           <h1 className="mt-4 font-serif text-4xl leading-tight text-cream sm:text-5xl lg:text-6xl">
             {collection.name}
           </h1>
-          <p className="mt-3 text-sm uppercase tracking-[0.3em] text-cream/70">
+          <p className="mt-3 text-sm uppercase tracking-[0.1em] text-cream/70">
             {collection.tagline}
           </p>
           <p className="mx-auto mt-6 max-w-xl leading-relaxed text-cream/85">
@@ -60,13 +60,13 @@ export default async function CollectionPage({ params }: PageProps) {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/shop"
-              className="rounded-full bg-ochre px-7 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-navy-deep transition hover:bg-ochre-soft"
+              className="rounded-full bg-ochre px-7 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-navy-deep transition hover:bg-ochre-soft"
             >
               Browse all pieces
             </Link>
             <Link
               href="/contact"
-              className="rounded-full border border-cream/40 px-7 py-3.5 text-[0.72rem] font-medium uppercase tracking-[0.22em] text-cream transition hover:border-ochre-soft hover:text-ochre-soft"
+              className="rounded-full border border-cream/40 px-7 py-3.5 text-[0.72rem] font-medium uppercase tracking-[0.08em] text-cream transition hover:border-ochre-soft hover:text-ochre-soft"
             >
               Commission a piece
             </Link>
@@ -82,7 +82,7 @@ export default async function CollectionPage({ params }: PageProps) {
           </h2>
           <Link
             href="/shop"
-            className="text-[0.72rem] font-medium uppercase tracking-[0.2em] text-steel transition hover:text-ochre"
+            className="text-[0.72rem] font-medium uppercase tracking-[0.07em] text-steel transition hover:text-ochre"
           >
             All pieces →
           </Link>

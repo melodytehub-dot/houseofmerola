@@ -45,7 +45,7 @@ export default function WishlistView({
             </p>
             <Link
               href="/shop"
-              className="rounded-full bg-navy px-8 py-3.5 text-[0.72rem] font-medium uppercase tracking-[0.22em] text-cream transition hover:bg-oxblood"
+              className="rounded-full bg-navy px-8 py-3.5 text-[0.72rem] font-medium uppercase tracking-[0.08em] text-cream transition hover:bg-oxblood"
             >
               Browse the shop
             </Link>

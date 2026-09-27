@@ -123,7 +123,7 @@ export default function Header({
     <>
       <header className="sticky top-0 z-40">
         {settings.announcement && (
-          <div className="bg-navy-deep text-center text-[0.64rem] font-medium uppercase tracking-[0.24em] text-cream">
+          <div className="bg-navy-deep text-center text-[0.64rem] font-medium uppercase tracking-[0.09em] text-cream">
             <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6">{settings.announcement}</div>
           </div>
         )}
@@ -361,7 +361,7 @@ export default function Header({
           <Link
             href="/shop"
             onClick={closeMenu}
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-oxblood px-6 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-cream transition hover:bg-oxblood-deep"
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-oxblood px-6 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-cream transition hover:bg-oxblood-deep"
           >
             Shop all pieces
             <svg

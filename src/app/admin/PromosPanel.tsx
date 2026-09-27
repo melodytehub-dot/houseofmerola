@@ -315,7 +315,7 @@ export default function PromosPanel({
             <button
               type="button"
               onClick={() => setSelected([])}
-              className="text-[0.68rem] tracking-[0.14em] text-steel underline transition hover:text-oxblood"
+              className="text-[0.68rem] tracking-[0.04em] text-steel underline transition hover:text-oxblood"
             >
               Clear all
             </button>
@@ -375,7 +375,7 @@ export default function PromosPanel({
             <button
               type="submit"
               disabled={busy}
-              className="w-full rounded-full bg-oxblood px-6 py-3 text-[0.7rem] font-semibold tracking-[0.18em] text-cream transition hover:bg-oxblood-deep disabled:opacity-60"
+              className="w-full rounded-full bg-oxblood px-6 py-3 text-[0.7rem] font-semibold tracking-[0.06em] text-cream transition hover:bg-oxblood-deep disabled:opacity-60"
             >
               {busy ? "Issuing…" : selected.length > 0 ? `Issue & send to ${selected.length}` : "Issue & send"}
             </button>
@@ -398,7 +398,7 @@ export default function PromosPanel({
             role="tab"
             aria-selected={view === t.id}
             onClick={() => setView(t.id)}
-            className={`rounded-full px-5 py-2.5 text-[0.7rem] font-medium tracking-[0.16em] transition ${
+            className={`rounded-full px-5 py-2.5 text-[0.7rem] font-medium tracking-[0.05em] transition ${
               view === t.id ? "bg-navy text-cream" : "border border-navy/20 text-navy/70 hover:border-navy/40"
             }`}
           >
@@ -422,7 +422,7 @@ export default function PromosPanel({
                   type="button"
                   onClick={() => setAudience("all")}
                   aria-pressed={audience === "all"}
-                  className={`rounded-full px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] transition ${
+                  className={`rounded-full px-4 py-2 text-[0.68rem] font-medium tracking-[0.05em] transition ${
                     audience === "all" ? "bg-navy text-cream" : "border border-navy/20 text-navy/70 hover:border-navy/40"
                   }`}
                 >
@@ -432,7 +432,7 @@ export default function PromosPanel({
                   type="button"
                   onClick={() => setAudience("selected")}
                   aria-pressed={audience === "selected"}
-                  className={`rounded-full px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] transition ${
+                  className={`rounded-full px-4 py-2 text-[0.68rem] font-medium tracking-[0.05em] transition ${
                     audience === "selected" ? "bg-navy text-cream" : "border border-navy/20 text-navy/70 hover:border-navy/40"
                   }`}
                 >
@@ -490,7 +490,7 @@ export default function PromosPanel({
                 <button
                   type="submit"
                   disabled={bcBusy}
-                  className="rounded-full bg-navy px-8 py-3 text-[0.7rem] font-semibold tracking-[0.18em] text-cream transition hover:bg-oxblood disabled:opacity-60"
+                  className="rounded-full bg-navy px-8 py-3 text-[0.7rem] font-semibold tracking-[0.06em] text-cream transition hover:bg-oxblood disabled:opacity-60"
                 >
                   {bcBusy
                     ? "Sending…"
@@ -523,7 +523,7 @@ export default function PromosPanel({
             <button
               type="button"
               onClick={() => setHistoryEmail(null)}
-              className="shrink-0 rounded-full border border-navy/20 px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] text-navy transition hover:border-oxblood hover:text-oxblood"
+              className="shrink-0 rounded-full border border-navy/20 px-4 py-2 text-[0.68rem] font-medium tracking-[0.05em] text-navy transition hover:border-oxblood hover:text-oxblood"
             >
               Close
             </button>
@@ -545,10 +545,10 @@ export default function PromosPanel({
                       <span className="font-mono text-sm font-semibold tracking-wider text-navy">
                         {p.code}
                       </span>
-                      <span className="rounded-full bg-navy px-2.5 py-0.5 text-[0.62rem] font-semibold tracking-[0.14em] text-cream">
+                      <span className="rounded-full bg-navy px-2.5 py-0.5 text-[0.62rem] font-semibold tracking-[0.04em] text-cream">
                         {p.percentOff}% OFF
                       </span>
-                      <span className={`rounded-full px-2.5 py-0.5 text-[0.62rem] font-medium tracking-[0.14em] ${STATUS_CLS[status]}`}>
+                      <span className={`rounded-full px-2.5 py-0.5 text-[0.62rem] font-medium tracking-[0.04em] ${STATUS_CLS[status]}`}>
                         {status}
                       </span>
                     </div>
@@ -594,7 +594,7 @@ export default function PromosPanel({
               <button
                 type="button"
                 onClick={selectShown}
-                className="rounded-full border border-navy/20 px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] text-navy transition hover:bg-navy hover:text-cream"
+                className="rounded-full border border-navy/20 px-4 py-2 text-[0.68rem] font-medium tracking-[0.05em] text-navy transition hover:bg-navy hover:text-cream"
               >
                 Select all
               </button>
@@ -602,7 +602,7 @@ export default function PromosPanel({
                 <button
                   type="button"
                   onClick={() => setSelected([])}
-                  className="rounded-full border border-navy/20 px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] text-navy transition hover:border-oxblood hover:text-oxblood"
+                  className="rounded-full border border-navy/20 px-4 py-2 text-[0.68rem] font-medium tracking-[0.05em] text-navy transition hover:border-oxblood hover:text-oxblood"
                 >
                   Clear ({selected.length})
                 </button>
@@ -658,7 +658,7 @@ export default function PromosPanel({
                     <button
                       type="button"
                       onClick={() => setHistoryEmail(s.email)}
-                      className="rounded-full border border-navy/20 px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] text-navy transition hover:bg-navy hover:text-cream"
+                      className="rounded-full border border-navy/20 px-4 py-2 text-[0.68rem] font-medium tracking-[0.05em] text-navy transition hover:bg-navy hover:text-cream"
                     >
                       History
                     </button>
@@ -668,7 +668,7 @@ export default function PromosPanel({
                         setEmail(s.email);
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
-                      className="rounded-full border border-ochre/50 px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] text-ochre transition hover:bg-ochre hover:text-navy-deep"
+                      className="rounded-full border border-ochre/50 px-4 py-2 text-[0.68rem] font-medium tracking-[0.05em] text-ochre transition hover:bg-ochre hover:text-navy-deep"
                     >
                       Issue code
                     </button>
@@ -713,10 +713,10 @@ export default function PromosPanel({
                         <span className="font-mono text-base font-semibold tracking-wider text-navy">
                           {p.code}
                         </span>
-                        <span className="rounded-full bg-navy px-2.5 py-0.5 text-[0.62rem] font-semibold tracking-[0.14em] text-cream">
+                        <span className="rounded-full bg-navy px-2.5 py-0.5 text-[0.62rem] font-semibold tracking-[0.04em] text-cream">
                           {p.percentOff}% OFF
                         </span>
-                        <span className={`rounded-full px-2.5 py-0.5 text-[0.62rem] font-medium tracking-[0.14em] ${STATUS_CLS[status]}`}>
+                        <span className={`rounded-full px-2.5 py-0.5 text-[0.62rem] font-medium tracking-[0.04em] ${STATUS_CLS[status]}`}>
                           {status}
                         </span>
                       </div>
@@ -741,7 +741,7 @@ export default function PromosPanel({
                       <button
                         type="button"
                         onClick={() => resend(p)}
-                        className="rounded-full border border-navy/20 px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] text-navy transition hover:bg-navy hover:text-cream"
+                        className="rounded-full border border-navy/20 px-4 py-2 text-[0.68rem] font-medium tracking-[0.05em] text-navy transition hover:bg-navy hover:text-cream"
                       >
                         Re-send
                       </button>
@@ -749,14 +749,14 @@ export default function PromosPanel({
                         type="button"
                         onClick={() => toggleActive(p)}
                         disabled={!!p.usedAt}
-                        className="rounded-full border border-navy/20 px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] text-navy transition hover:bg-navy hover:text-cream disabled:opacity-40"
+                        className="rounded-full border border-navy/20 px-4 py-2 text-[0.68rem] font-medium tracking-[0.05em] text-navy transition hover:bg-navy hover:text-cream disabled:opacity-40"
                       >
                         {p.active ? "Disable" : "Enable"}
                       </button>
                       <button
                         type="button"
                         onClick={() => remove(p)}
-                        className="rounded-full border border-oxblood/40 px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] text-oxblood transition hover:bg-oxblood hover:text-cream"
+                        className="rounded-full border border-oxblood/40 px-4 py-2 text-[0.68rem] font-medium tracking-[0.05em] text-oxblood transition hover:bg-oxblood hover:text-cream"
                       >
                         Delete
                       </button>

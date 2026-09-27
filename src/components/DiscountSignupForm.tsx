@@ -103,7 +103,7 @@ export default function DiscountSignupForm({
     <form onSubmit={handleSubmit} noValidate>
       <label
         htmlFor={inputId}
-        className={`mb-1.5 block text-[0.68rem] font-medium uppercase tracking-[0.2em] ${
+        className={`mb-1.5 block text-[0.68rem] font-medium uppercase tracking-[0.07em] ${
           dark ? "text-cream/70" : "text-steel"
         }`}
       >
@@ -127,7 +127,7 @@ export default function DiscountSignupForm({
         <button
           type="submit"
           disabled={busy}
-          className="shrink-0 rounded-full bg-ochre px-7 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-navy-deep transition hover:bg-ochre-soft disabled:opacity-60"
+          className="shrink-0 rounded-full bg-ochre px-7 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-navy-deep transition hover:bg-ochre-soft disabled:opacity-60"
         >
           {busy ? "Joining…" : "Subscribe"}
         </button>

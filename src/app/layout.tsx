@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
-import { Cormorant_Garamond, Montserrat } from "next/font/google";
+import { Cormorant_Garamond, Figtree } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -21,10 +21,10 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
-const montserrat = Montserrat({
+const figtree = Figtree({
   variable: "--font-montserrat",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -77,7 +77,7 @@ export default async function RootLayout({
     "@type": "Organization",
     name: settings.siteName,
     url: baseUrl,
-    logo: `${baseUrl}/icon.svg`,
+    logo: `${baseUrl}/icon.png`,
     sameAs: [
       settings.social.instagram,
       settings.social.pinterest,
@@ -85,7 +85,7 @@ export default async function RootLayout({
     ].filter(Boolean),
   };
   return (
-    <html lang="en" className={`${cormorant.variable} ${montserrat.variable}`}>
+    <html lang="en" className={`${cormorant.variable} ${figtree.variable}`}>
       <body className="flex min-h-svh flex-col bg-cream font-sans text-navy antialiased">
         <noscript>
           <style>

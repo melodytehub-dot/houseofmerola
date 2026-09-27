@@ -105,7 +105,7 @@ export default function CollectionsPanel({
               <button
                 type="button"
                 onClick={() => remove(active.slug)}
-                className="shrink-0 rounded-full border border-oxblood/40 px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] text-oxblood transition hover:bg-oxblood hover:text-cream"
+                className="shrink-0 rounded-full border border-oxblood/40 px-4 py-2 text-[0.68rem] font-medium tracking-[0.05em] text-oxblood transition hover:bg-oxblood hover:text-cream"
               >
                 Delete
               </button>

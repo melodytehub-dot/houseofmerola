@@ -41,7 +41,7 @@ export default function ProductCard({
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
         {product.featured && (
-          <span className="absolute left-3 top-3 rounded-full bg-navy/85 px-3 py-1 text-[0.6rem] font-medium uppercase tracking-[0.18em] text-cream backdrop-blur-sm">
+          <span className="absolute left-3 top-3 rounded-full bg-navy/85 px-3 py-1 text-[0.6rem] font-medium uppercase tracking-[0.06em] text-cream backdrop-blur-sm">
             Featured
           </span>
         )}
@@ -72,7 +72,7 @@ export default function ProductCard({
             {isBespoke ? "Made to order" : formatGBP(product.price)}
           </span>
           {isBespoke ? (
-            <span className="flex h-9 w-full shrink-0 items-center justify-center gap-1.5 rounded-full bg-navy px-4 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-cream sm:w-auto">
+            <span className="flex h-9 w-full shrink-0 items-center justify-center gap-1.5 rounded-full bg-navy px-4 text-[0.6rem] font-semibold uppercase tracking-[0.05em] text-cream sm:w-auto">
               Enquire
               <svg
                 width="12"

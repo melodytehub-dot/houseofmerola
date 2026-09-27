@@ -77,7 +77,7 @@ export default function StripePanel({
         <h2 className="eyebrow mb-5 text-navy">Stripe Payments</h2>
         <div className="flex items-end pb-1">
           <div>
-            <span className="mb-1.5 block text-[0.68rem] font-medium tracking-[0.2em] text-steel">
+            <span className="mb-1.5 block text-[0.68rem] font-medium tracking-[0.07em] text-steel">
               Active mode
               <HelpTip title="sandbox vs live mode">
                 <ol>

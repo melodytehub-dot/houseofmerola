@@ -102,7 +102,7 @@ export default function FaqPage() {
           </p>
           <Link
             href="/contact"
-            className="mt-4 inline-flex items-center gap-2 rounded-full bg-navy px-7 py-3.5 text-[0.72rem] font-medium uppercase tracking-[0.22em] text-cream transition hover:bg-oxblood"
+            className="mt-4 inline-flex items-center gap-2 rounded-full bg-navy px-7 py-3.5 text-[0.72rem] font-medium uppercase tracking-[0.08em] text-cream transition hover:bg-oxblood"
           >
             Ask us anything
           </Link>

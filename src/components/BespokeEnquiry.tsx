@@ -231,7 +231,7 @@ export default function BespokeEnquiry({
         <Link
           href="/bespoke"
           onClick={() => setSent(false)}
-          className="mt-6 rounded-full border border-navy/25 px-7 py-3 text-[0.72rem] font-medium uppercase tracking-[0.22em] text-navy transition hover:border-ochre hover:text-ochre"
+          className="mt-6 rounded-full border border-navy/25 px-7 py-3 text-[0.72rem] font-medium uppercase tracking-[0.08em] text-navy transition hover:border-ochre hover:text-ochre"
         >
           Send another
         </Link>
@@ -426,7 +426,7 @@ export default function BespokeEnquiry({
       {error && <p className="text-sm text-oxblood">{error}</p>}
       <button
         type="submit"
-        className="rounded-full bg-oxblood px-9 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-cream transition hover:bg-oxblood-deep"
+        className="rounded-full bg-oxblood px-9 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-cream transition hover:bg-oxblood-deep"
       >
         Send enquiry
       </button>

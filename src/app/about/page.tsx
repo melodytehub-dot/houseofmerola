@@ -90,7 +90,7 @@ export default function AboutPage() {
             </p>
             <Link
               href="/shop"
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-oxblood px-8 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-cream transition hover:bg-oxblood-deep"
+              className="mt-8 inline-flex items-center gap-2 rounded-full bg-oxblood px-8 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-cream transition hover:bg-oxblood-deep"
             >
               See the pieces
             </Link>

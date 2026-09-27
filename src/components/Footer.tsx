@@ -19,7 +19,7 @@ export default function Footer({
           {/* Brand */}
           <div className="md:col-span-5">
             <p className="brand-wordmark text-2xl text-cream">{settings.siteName}</p>
-            <p className="mt-2 text-xs uppercase tracking-[0.34em] text-ochre-soft">
+            <p className="mt-2 text-xs uppercase tracking-[0.03em] text-ochre-soft">
               {settings.tagline}
             </p>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-cream/70">

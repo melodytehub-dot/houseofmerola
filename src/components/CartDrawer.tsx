@@ -93,7 +93,7 @@ export default function CartDrawer({ settings }: { settings: SiteSettings }) {
             <Link
               href="/shop"
               onClick={closeCart}
-              className="rounded-full bg-navy px-7 py-3 text-[0.72rem] font-medium uppercase tracking-[0.22em] text-cream transition hover:bg-oxblood"
+              className="rounded-full bg-navy px-7 py-3 text-[0.72rem] font-medium uppercase tracking-[0.08em] text-cream transition hover:bg-oxblood"
             >
               Browse the shop
             </Link>
@@ -205,7 +205,7 @@ export default function CartDrawer({ settings }: { settings: SiteSettings }) {
               <Link
                 href="/checkout"
                 onClick={closeCart}
-                className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-oxblood px-6 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-cream transition hover:bg-oxblood-deep"
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-oxblood px-6 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-cream transition hover:bg-oxblood-deep"
               >
                 Checkout
                 <svg

@@ -80,11 +80,7 @@ export default async function ProductPage({ params }: PageProps) {
 
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Image */}
-          <Reveal className="relative">
-            <div
-              className="absolute -inset-2 rounded-2xl border border-ochre/40"
-              aria-hidden="true"
-            />
+          <Reveal>
             <ProductGallery
               sources={[product.image, ...(product.images ?? [])]}
               alt={product.name}
@@ -137,7 +133,7 @@ export default async function ProductPage({ params }: PageProps) {
 
             {product.madeToOrder ? (
               <div className="mt-8">
-                <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-ochre/40 bg-ochre/10 px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-ochre">
+                <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-ochre/40 bg-ochre/10 px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.06em] text-ochre">
                   ● Designed & made to order in Liverpool
                 </p>
                 <BespokeEnquiry

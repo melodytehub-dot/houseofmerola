@@ -180,13 +180,13 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/checkout"
-            className="rounded-full bg-oxblood px-8 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-cream transition hover:bg-oxblood-deep"
+            className="rounded-full bg-oxblood px-8 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-cream transition hover:bg-oxblood-deep"
           >
             Return to checkout
           </Link>
           <Link
             href="/shop"
-            className="rounded-full border border-navy/20 px-8 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-navy transition hover:border-oxblood hover:text-oxblood"
+            className="rounded-full border border-navy/20 px-8 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-navy transition hover:border-oxblood hover:text-oxblood"
           >
             Continue shopping
           </Link>
@@ -212,13 +212,13 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/shop"
-            className="rounded-full bg-oxblood px-8 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-cream transition hover:bg-oxblood-deep"
+            className="rounded-full bg-oxblood px-8 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-cream transition hover:bg-oxblood-deep"
           >
             Continue shopping
           </Link>
           <Link
             href="/"
-            className="rounded-full border border-navy/25 px-8 py-3.5 text-[0.72rem] font-medium uppercase tracking-[0.22em] text-navy transition hover:border-ochre hover:text-ochre"
+            className="rounded-full border border-navy/25 px-8 py-3.5 text-[0.72rem] font-medium uppercase tracking-[0.08em] text-navy transition hover:border-ochre hover:text-ochre"
           >
             Back home
           </Link>
@@ -237,7 +237,7 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
         </p>
         <Link
           href="/shop"
-          className="mt-7 inline-block rounded-full bg-navy px-8 py-3.5 text-[0.72rem] font-medium uppercase tracking-[0.22em] text-cream transition hover:bg-oxblood"
+          className="mt-7 inline-block rounded-full bg-navy px-8 py-3.5 text-[0.72rem] font-medium uppercase tracking-[0.08em] text-cream transition hover:bg-oxblood"
         >
           Browse the shop
         </Link>
@@ -433,7 +433,7 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
                           type="button"
                           onClick={() => setAppliedPromo(null)}
                           aria-label="Remove promo code"
-                          className="rounded-full border border-oxblood/40 px-2 py-0.5 text-[0.62rem] uppercase tracking-[0.14em] transition hover:bg-oxblood hover:text-cream"
+                          className="rounded-full border border-oxblood/40 px-2 py-0.5 text-[0.62rem] uppercase tracking-[0.04em] transition hover:bg-oxblood hover:text-cream"
                         >
                           Remove
                         </button>
@@ -447,7 +447,7 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
                   <div>
                     <label
                       htmlFor="co-promo"
-                      className="mb-1.5 block text-xs font-medium uppercase tracking-[0.14em] text-steel"
+                      className="mb-1.5 block text-xs font-medium uppercase tracking-[0.04em] text-steel"
                     >
                       Promo code
                     </label>
@@ -465,7 +465,7 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
                         type="button"
                         onClick={applyPromo}
                         disabled={promoBusy}
-                        className="shrink-0 rounded-full border border-navy/25 px-5 py-2.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-navy transition hover:border-ochre hover:text-ochre disabled:opacity-60"
+                        className="shrink-0 rounded-full border border-navy/25 px-5 py-2.5 text-[0.68rem] font-semibold uppercase tracking-[0.06em] text-navy transition hover:border-ochre hover:text-ochre disabled:opacity-60"
                       >
                         {promoBusy ? "…" : "Apply"}
                       </button>
@@ -495,7 +495,7 @@ export default function CheckoutClient({ settings }: { settings: SiteSettings })
               <button
                 type="submit"
                 disabled={busy}
-                className="mt-6 w-full rounded-full bg-oxblood px-6 py-4 text-[0.74rem] font-semibold uppercase tracking-[0.22em] text-cream shadow-[0_14px_30px_rgb(107_15_26/0.3)] transition hover:bg-oxblood-deep disabled:opacity-60"
+                className="mt-6 w-full rounded-full bg-oxblood px-6 py-4 text-[0.74rem] font-semibold uppercase tracking-[0.08em] text-cream shadow-[0_14px_30px_rgb(107_15_26/0.3)] transition hover:bg-oxblood-deep disabled:opacity-60"
               >
                 {busy ? "Opening secure checkout…" : "Place order"}
               </button>

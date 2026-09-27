@@ -48,7 +48,7 @@ export default async function ShopPage() {
             ].map((item) => (
               <p
                 key={item}
-                className="flex items-center gap-2 text-[0.66rem] uppercase tracking-[0.2em]"
+                className="flex items-center gap-2 text-[0.66rem] uppercase tracking-[0.07em]"
               >
                 <span className="text-ochre-soft">●</span>
                 {item}
@@ -119,7 +119,7 @@ export default async function ShopPage() {
             </p>
             <Link
               href="/bespoke"
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-ochre px-8 py-4 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-navy-deep transition hover:bg-ochre-soft"
+              className="mt-8 inline-flex items-center gap-2 rounded-full bg-ochre px-8 py-4 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-navy-deep transition hover:bg-ochre-soft"
             >
               Start a commission
             </Link>

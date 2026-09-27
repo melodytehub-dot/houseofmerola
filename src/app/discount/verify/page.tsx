@@ -64,13 +64,13 @@ function VerifyResult() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
                 href="/shop"
-                className="rounded-full bg-oxblood px-8 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-cream transition hover:bg-oxblood-deep"
+                className="rounded-full bg-oxblood px-8 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-cream transition hover:bg-oxblood-deep"
               >
                 Browse the collection
               </Link>
               <Link
                 href="/"
-                className="rounded-full border border-navy/25 px-8 py-3.5 text-[0.72rem] font-medium uppercase tracking-[0.22em] text-navy transition hover:border-ochre hover:text-ochre"
+                className="rounded-full border border-navy/25 px-8 py-3.5 text-[0.72rem] font-medium uppercase tracking-[0.08em] text-navy transition hover:border-ochre hover:text-ochre"
               >
                 Back home
               </Link>
@@ -82,7 +82,7 @@ function VerifyResult() {
             <div className="mt-8">
               <Link
                 href="/#newsletter"
-                className="rounded-full bg-navy px-8 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-cream transition hover:bg-oxblood"
+                className="rounded-full bg-navy px-8 py-3.5 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-cream transition hover:bg-oxblood"
               >
                 Join again
               </Link>

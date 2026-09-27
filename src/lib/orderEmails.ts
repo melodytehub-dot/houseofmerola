@@ -3,7 +3,7 @@ import type { Order } from "./site";
 /* ────────────────────────────────────────────────────────────────
  * Branded order emails (customer confirmation + studio alert).
  * Table-based with inline styles so they render in Gmail, Apple
- * Mail and Outlook. All type is Montserrat with a Helvetica
+ * Mail and Outlook. All type is Figtree with a Helvetica
  * fallback; a Google Fonts link is included for clients that render
  * webfonts. A `prefers-color-scheme` style block (+ Outlook.com
  * `[data-ogsc]` fallbacks) keeps the design legible in dark mode,
@@ -16,7 +16,7 @@ const OCHRE = "#c6932b";
 const STEEL = "#4d6b8a";
 const CREAM = "#f3e6d2";
 const CREAM_SOFT = "#faf4e8";
-const SANS = "Montserrat,Helvetica,Arial,sans-serif";
+const SANS = "Figtree,Helvetica,Arial,sans-serif";
 
 const DARK_BG = "#0b1526";
 const DARK_CARD = "#14213a";
@@ -109,7 +109,7 @@ function totals(order: Order, totalLabel = "Total paid"): string {
 
 function shell(preheader: string, inner: string, siteUrl: string): string {
   const logo = `${siteUrl}/images/logo.png`;
-  return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="color-scheme" content="light dark"><meta name="supported-color-schemes" content="light dark"><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"><style>${DARK_CSS}</style></head><body class="dm-body" style="margin:0;padding:0;background-color:${CREAM};">
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="color-scheme" content="light dark"><meta name="supported-color-schemes" content="light dark"><link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet"><style>${DARK_CSS}</style></head><body class="dm-body" style="margin:0;padding:0;background-color:${CREAM};">
   <span style="display:none;max-height:0;overflow:hidden;opacity:0;">${esc(preheader)}</span>
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="dm-body" style="background-color:${CREAM};">
     <tr><td align="center" style="padding:28px 16px;">

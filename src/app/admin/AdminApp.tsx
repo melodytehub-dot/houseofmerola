@@ -180,7 +180,7 @@ export default function AdminApp() {
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-3 px-4 py-3 sm:px-6">
           <div className="min-w-0">
             <p className="brand-wordmark text-sm text-navy">House of Merola</p>
-            <p className="text-[0.62rem] tracking-[0.24em] text-steel">
+            <p className="text-[0.62rem] tracking-[0.09em] text-steel">
               Studio Admin
             </p>
           </div>
@@ -189,14 +189,14 @@ export default function AdminApp() {
               type="button"
               onClick={save}
               disabled={busy}
-              className="rounded-full bg-oxblood px-4 py-2 text-[0.65rem] font-semibold tracking-[0.18em] text-cream transition hover:bg-oxblood-deep disabled:opacity-60 sm:px-5 sm:py-2.5 sm:text-[0.7rem]"
+              className="rounded-full bg-oxblood px-4 py-2 text-[0.65rem] font-semibold tracking-[0.06em] text-cream transition hover:bg-oxblood-deep disabled:opacity-60 sm:px-5 sm:py-2.5 sm:text-[0.7rem]"
             >
               {busy ? "Saving…" : "Save changes"}
             </button>
             <button
               type="button"
               onClick={handleLogout}
-              className="hidden rounded-full border border-navy/20 px-4 py-2 text-[0.65rem] font-medium tracking-[0.18em] text-navy transition hover:border-oxblood hover:text-oxblood sm:block sm:py-2.5 sm:text-[0.7rem]"
+              className="hidden rounded-full border border-navy/20 px-4 py-2 text-[0.65rem] font-medium tracking-[0.06em] text-navy transition hover:border-oxblood hover:text-oxblood sm:block sm:py-2.5 sm:text-[0.7rem]"
             >
               Log out
             </button>
@@ -236,7 +236,7 @@ export default function AdminApp() {
               type="button"
               onClick={() => setTab(t.id)}
               aria-current={tab === t.id ? "page" : undefined}
-              className={`shrink-0 rounded-full px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] transition ${
+              className={`shrink-0 rounded-full px-4 py-2 text-[0.68rem] font-medium tracking-[0.05em] transition ${
                 tab === t.id
                   ? "bg-navy text-cream"
                   : "text-navy/70 hover:bg-navy/10"
@@ -297,7 +297,7 @@ export default function AdminApp() {
         <div className="flex items-center justify-between border-b border-navy/10 px-6 py-5">
           <div>
             <p className="brand-wordmark text-lg text-navy">House of Merola</p>
-            <p className="text-[0.62rem] tracking-[0.24em] text-steel">
+            <p className="text-[0.62rem] tracking-[0.09em] text-steel">
               Studio Admin
             </p>
           </div>
@@ -342,7 +342,7 @@ export default function AdminApp() {
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <span
-                      className={`text-[0.8rem] font-medium tracking-[0.2em] transition ${
+                      className={`text-[0.8rem] font-medium tracking-[0.07em] transition ${
                         isActive ? "text-navy" : "text-navy/70"
                       }`}
                     >
@@ -361,7 +361,7 @@ export default function AdminApp() {
           <button
             type="button"
             onClick={handleLogout}
-            className="flex w-full items-center justify-center rounded-full border border-navy/20 px-6 py-3.5 text-[0.72rem] font-medium tracking-[0.22em] text-navy transition hover:border-oxblood hover:text-oxblood"
+            className="flex w-full items-center justify-center rounded-full border border-navy/20 px-6 py-3.5 text-[0.72rem] font-medium tracking-[0.08em] text-navy transition hover:border-oxblood hover:text-oxblood"
           >
             Log out
           </button>
@@ -398,7 +398,7 @@ function LoginForm({
       <div>
         <label
           htmlFor="admin-password"
-          className="mb-1.5 block text-[0.68rem] font-medium tracking-[0.2em] text-steel"
+          className="mb-1.5 block text-[0.68rem] font-medium tracking-[0.07em] text-steel"
         >
           Admin password
         </label>
@@ -418,7 +418,7 @@ function LoginForm({
       <button
         type="submit"
         disabled={busy}
-        className="w-full rounded-full bg-oxblood px-6 py-3.5 text-[0.72rem] font-semibold tracking-[0.2em] text-cream transition hover:bg-oxblood-deep disabled:opacity-60"
+        className="w-full rounded-full bg-oxblood px-6 py-3.5 text-[0.72rem] font-semibold tracking-[0.07em] text-cream transition hover:bg-oxblood-deep disabled:opacity-60"
       >
         {busy ? "Signing in…" : "Sign in"}
       </button>

@@ -57,7 +57,7 @@ export default async function HomePage() {
             <div className="mt-8 flex animate-fade-up delay-4 flex-wrap items-center justify-center gap-3 sm:justify-start sm:gap-4">
               <Link
                 href="/shop"
-                className="group flex items-center gap-2 rounded-full bg-oxblood px-6 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-cream shadow-[0_14px_30px_rgb(107_15_26/0.35)] transition hover:bg-oxblood-deep sm:px-8 sm:py-4"
+                className="group flex items-center gap-2 rounded-full bg-oxblood px-6 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.07em] text-cream shadow-[0_14px_30px_rgb(107_15_26/0.35)] transition hover:bg-oxblood-deep sm:px-8 sm:py-4"
               >
                 Shop the collection
                 <svg
@@ -76,7 +76,7 @@ export default async function HomePage() {
               </Link>
               <Link
                 href="/about"
-                className="rounded-full border border-navy/25 px-6 py-3 text-[0.7rem] font-medium uppercase tracking-[0.2em] text-navy transition hover:border-ochre hover:text-ochre sm:px-8 sm:py-4"
+                className="rounded-full border border-navy/25 px-6 py-3 text-[0.7rem] font-medium uppercase tracking-[0.07em] text-navy transition hover:border-ochre hover:text-ochre sm:px-8 sm:py-4"
               >
                 Our story
               </Link>
@@ -183,7 +183,7 @@ export default async function HomePage() {
                 <h3 className="mt-2 font-serif text-2xl text-cream sm:text-3xl">
                   {collection.name}
                 </h3>
-                <span className="mt-3 inline-flex items-center gap-2 text-[0.7rem] font-medium uppercase tracking-[0.2em] text-cream/85 transition group-hover:gap-3 group-hover:text-ochre-soft">
+                <span className="mt-3 inline-flex items-center gap-2 text-[0.7rem] font-medium uppercase tracking-[0.07em] text-cream/85 transition group-hover:gap-3 group-hover:text-ochre-soft">
                   Explore
                   <svg
                     width="12"
@@ -218,7 +218,7 @@ export default async function HomePage() {
             </div>
             <Link
               href="/shop"
-              className="group flex items-center gap-2 text-[0.72rem] font-medium uppercase tracking-[0.22em] text-navy transition hover:text-ochre"
+              className="group flex items-center gap-2 text-[0.72rem] font-medium uppercase tracking-[0.08em] text-navy transition hover:text-ochre"
             >
               View all
               <svg
@@ -296,7 +296,7 @@ export default async function HomePage() {
             </ul>
             <Link
               href="/about"
-              className="mt-8 inline-flex items-center gap-2 rounded-full border border-navy/25 px-7 py-3.5 text-[0.72rem] font-medium uppercase tracking-[0.22em] text-navy transition hover:border-ochre hover:text-ochre"
+              className="mt-8 inline-flex items-center gap-2 rounded-full border border-navy/25 px-7 py-3.5 text-[0.72rem] font-medium uppercase tracking-[0.08em] text-navy transition hover:border-ochre hover:text-ochre"
             >
               Read the full story
             </Link>

@@ -43,11 +43,11 @@ export default function EnquiriesPanel({
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-navy px-3 py-1 text-[0.6rem] font-medium tracking-[0.16em] text-cream">
+                <span className="rounded-full bg-navy px-3 py-1 text-[0.6rem] font-medium tracking-[0.05em] text-cream">
                   {e.kind === "contact" ? "Contact" : "Bespoke"}
                 </span>
                 <span
-                  className={`rounded-full px-3 py-1 text-[0.6rem] font-medium capitalize tracking-[0.16em] ${
+                  className={`rounded-full px-3 py-1 text-[0.6rem] font-medium capitalize tracking-[0.05em] ${
                     e.status === "new"
                       ? "bg-ochre/20 text-ochre"
                       : "bg-navy/10 text-steel"
@@ -81,7 +81,7 @@ export default function EnquiriesPanel({
               <button
                 type="button"
                 onClick={() => toggle(e)}
-                className={`rounded-full border px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] transition ${
+                className={`rounded-full border px-4 py-2 text-[0.68rem] font-medium tracking-[0.05em] transition ${
                   e.status === "new"
                     ? "border-ochre/50 text-ochre hover:bg-ochre hover:text-navy-deep"
                     : "border-navy/20 text-navy hover:bg-navy hover:text-cream"
@@ -95,19 +95,19 @@ export default function EnquiriesPanel({
           <dl className="mt-4 grid grid-cols-1 gap-2 text-sm text-navy/80">
             {e.productName && (
               <div>
-                <dt className="inline tracking-[0.14em] text-steel">Piece: </dt>
+                <dt className="inline tracking-[0.04em] text-steel">Piece: </dt>
                 <dd className="inline">{e.productName}</dd>
               </div>
             )}
             {e.material && (
               <div>
-                <dt className="inline tracking-[0.14em] text-steel">Material: </dt>
+                <dt className="inline tracking-[0.04em] text-steel">Material: </dt>
                 <dd className="inline">{e.material}</dd>
               </div>
             )}
             {e.size && (
               <div>
-                <dt className="inline tracking-[0.14em] text-steel">Size: </dt>
+                <dt className="inline tracking-[0.04em] text-steel">Size: </dt>
                 <dd className="inline">{e.size}</dd>
               </div>
             )}

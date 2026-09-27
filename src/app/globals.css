@@ -14,7 +14,7 @@
   --color-cream-warm: #e9d9be;
 
   --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
-  --font-sans: var(--font-montserrat), "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-montserrat), "Figtree", "Helvetica Neue", Arial, sans-serif;
 }
 
 :root {
@@ -49,12 +49,12 @@ body {
 
 .admin-panel .eyebrow {
   text-transform: none;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.04em;
 }
 
 .admin-panel .brand-wordmark {
   text-transform: none;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.03em;
 }
 
 h1,
@@ -93,14 +93,14 @@ h6 {
   font-family: var(--font-serif);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.08em;
 }
 
 .eyebrow {
   font-family: var(--font-sans);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.38em;
+  letter-spacing: 0.14em;
   font-size: 0.68rem;
 }
 

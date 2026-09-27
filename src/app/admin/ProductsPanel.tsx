@@ -190,7 +190,7 @@ function ProductForm({ product, collections, onPatch, onDelete }: ProductFormPro
         <button
           type="button"
           onClick={onDelete}
-          className="shrink-0 rounded-full border border-oxblood/40 px-4 py-2 text-[0.68rem] font-medium tracking-[0.16em] text-oxblood transition hover:bg-oxblood hover:text-cream"
+          className="shrink-0 rounded-full border border-oxblood/40 px-4 py-2 text-[0.68rem] font-medium tracking-[0.05em] text-oxblood transition hover:bg-oxblood hover:text-cream"
         >
           Delete
         </button>
@@ -381,7 +381,7 @@ function PersonalisationEditor({
         <button
           type="button"
           onClick={() => onChange(undefined)}
-          className="rounded-full border border-oxblood/40 px-3 py-1.5 text-[0.64rem] font-medium tracking-[0.14em] text-oxblood transition hover:bg-oxblood hover:text-cream"
+          className="rounded-full border border-oxblood/40 px-3 py-1.5 text-[0.64rem] font-medium tracking-[0.04em] text-oxblood transition hover:bg-oxblood hover:text-cream"
         >
           Disable
         </button>

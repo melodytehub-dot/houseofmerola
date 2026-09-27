@@ -45,7 +45,7 @@ export default async function BespokePage({
             mock-up for your approval before you commit, then make it to order
             in our Liverpool studio.
           </p>
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[0.68rem] uppercase tracking-[0.2em] text-steel">
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[0.68rem] uppercase tracking-[0.07em] text-steel">
             <span>● UV print onto ceramic &amp; wood</span>
             <span>● Laser engraving &amp; cutting</span>
             <span>● Designed &amp; finished by hand</span>
