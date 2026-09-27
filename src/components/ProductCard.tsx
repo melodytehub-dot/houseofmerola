@@ -61,12 +61,18 @@ export default function ProductCard({
         <p className="mt-1 hidden text-xs leading-relaxed text-steel sm:block sm:line-clamp-2">
           {product.tagline}
         </p>
-        <div className="mt-auto flex items-center justify-between gap-2 pt-2 sm:pt-4">
-          <span className="text-sm font-semibold text-navy sm:text-base">
+        <div
+          className={`mt-auto flex pt-2 sm:pt-4 ${
+            isBespoke
+              ? "flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-between"
+              : "items-center justify-between gap-2"
+          }`}
+        >
+          <span className="whitespace-nowrap text-sm font-semibold text-navy sm:text-base">
             {isBespoke ? "Made to order" : formatGBP(product.price)}
           </span>
           {isBespoke ? (
-            <span className="flex h-9 shrink-0 items-center gap-1.5 rounded-full bg-navy px-4 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-cream">
+            <span className="flex h-9 w-full shrink-0 items-center justify-center gap-1.5 rounded-full bg-navy px-4 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-cream sm:w-auto">
               Enquire
               <svg
                 width="12"

@@ -44,8 +44,10 @@ function getSnapshot(): string[] {
   return slugs;
 }
 
+const SERVER_EMPTY: string[] = [];
+
 function getServerSnapshot(): string[] {
-  return [];
+  return SERVER_EMPTY;
 }
 
 function subscribe(listener: () => void): () => void {

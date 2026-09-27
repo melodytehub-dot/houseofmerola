@@ -16,14 +16,15 @@ export default function ProductGallery({
 
   return (
     <div className="space-y-3">
-      <div className="relative h-[420px] w-full overflow-hidden rounded-xl border border-navy/15 bg-cream-warm shadow-[0_30px_60px_rgb(14_42_77/0.2)] sm:h-[480px] lg:h-[560px]">
+      <div className="relative w-full overflow-hidden rounded-xl border border-navy/15 bg-cream-warm shadow-[0_30px_60px_rgb(14_42_77/0.2)]">
         <Image
           src={active}
           alt={alt}
-          fill
+          width={1200}
+          height={1200}
           priority
           sizes="(min-width: 1024px) 50vw, 100vw"
-          className="object-contain"
+          className="h-auto w-full"
         />
       </div>
 

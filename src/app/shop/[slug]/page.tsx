@@ -82,7 +82,7 @@ export default async function ProductPage({ params }: PageProps) {
           {/* Image */}
           <Reveal className="relative">
             <div
-              className="absolute -inset-3 rounded-2xl border border-ochre/40"
+              className="absolute -inset-2 rounded-2xl border border-ochre/40"
               aria-hidden="true"
             />
             <ProductGallery
