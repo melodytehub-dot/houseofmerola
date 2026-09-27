@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getProducts, getPromos, getSettings, getStripe } from "@/lib/content";
 import { checkPromoForEmail } from "@/lib/promos";
+import type { Product } from "@/lib/products";
 
 export const dynamic = "force-dynamic";
 
@@ -11,6 +12,39 @@ interface Line {
   price: number; // GBP, client-claimed; always re-priced from the catalogue below
   qty: number;
   variant?: string;
+}
+
+/* Option labels themselves contain "·" (e.g. "A3 · 30 × 42 cm"), so the
+ * variant string can never be split on that separator. Instead we rebuild
+ * every label the configurator could have produced and match it exactly —
+ * the same combination the client priced. */
+const BLANK = { label: undefined, priceDelta: 0 };
+function priceFromVariant(product: Product, variant: string): number | null {
+  const materials = product.materialOptions ?? [];
+  const sizes = product.sizeOptions ?? [];
+  if (materials.length === 0 && sizes.length === 0) return product.price;
+  const blanks = [BLANK];
+  for (const material of [...blanks, ...materials]) {
+    for (const size of [...blanks, ...sizes]) {
+      const composed = [material.label, size.label].filter(Boolean).join(" · ");
+      if (composed === variant) {
+        return product.price + material.priceDelta + size.priceDelta;
+      }
+    }
+  }
+  return null;
+}
+
+/** Legacy/free-text fallback: add any label we still recognise. */
+function priceFromKnownLabels(product: Product, variant: string): number {
+  let unit = product.price;
+  for (const part of variant.split("·").map((s) => s.trim()).filter(Boolean)) {
+    const material = (product.materialOptions ?? []).find((o) => o.label === part);
+    const size = (product.sizeOptions ?? []).find((o) => o.label === part);
+    if (material) unit += material.priceDelta;
+    else if (size) unit += size.priceDelta;
+  }
+  return unit;
 }
 
 export async function POST(request: Request) {
@@ -45,17 +79,9 @@ export async function POST(request: Request) {
     const product = catalogue.get(slug);
     const qty = Math.floor(Number(item.qty));
     if (!product || !Number.isInteger(qty) || qty < 1 || qty > 99) return null;
-    let unit = product.price;
     const variant = typeof item.variant === "string" ? item.variant.slice(0, 200) : undefined;
-    if (variant) {
-      for (const part of variant.split("·").map((s) => s.trim()).filter(Boolean)) {
-        const material = (product.materialOptions ?? []).find((o) => o.label === part);
-        const size = (product.sizeOptions ?? []).find((o) => o.label === part);
-        if (material) unit += material.priceDelta;
-        else if (size) unit += size.priceDelta;
-        // Unrecognised parts (e.g. base material names) add nothing.
-      }
-    }
+    const matched = variant ? priceFromVariant(product, variant) : product.price;
+    const unit = matched ?? priceFromKnownLabels(product, variant ?? "");
     if (!Number.isFinite(item.price) || Math.round(item.price * 100) !== Math.round(unit * 100)) {
       return null;
     }
