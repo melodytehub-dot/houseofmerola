@@ -123,6 +123,12 @@ export default function Footer({
           <p className="text-xs text-cream/50">
             © {year} {settings.siteName}. All rights reserved.
           </p>
+          <p className="text-xs text-cream/50">
+            Developed by{" "}
+            <a href="https://melodytehub.com.ng" className="transition hover:text-ochre-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-ochre-soft">
+              Melodyte Hub
+            </a>
+          </p>
           <div className="flex gap-6 text-xs text-cream/50">
             <Link href="/privacy" className="transition hover:text-ochre-soft">
               Privacy
